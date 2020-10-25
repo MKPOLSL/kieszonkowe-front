@@ -1,0 +1,7 @@
+{
+    "/api/*": {
+        "target": "http://localhost:44353/kieszonkowe",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
