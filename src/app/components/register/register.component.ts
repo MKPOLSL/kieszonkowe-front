@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonalData } from './personalData'
 import { personData } from './person-mock'
+import { PersonalDataService } from '@app/services/personal-data.service'
 
 
 @Component({
@@ -10,14 +11,19 @@ import { personData } from './person-mock'
 })
 export class RegisterComponent implements OnInit {
 
-  personalData=personData;
+  personalData:PersonalData;
 
   userData:PersonalData
   
 
-  constructor() { }
+  constructor(public personalDataService: PersonalDataService) { }
 
   ngOnInit(): void {
+    this.getPersonalData();
+  }
+
+  getPersonalData() : void {
+    this.userData = this.personalDataService.getPersonalData(); 
   }
 
   onNameInput (userData: PersonalData): void {
