@@ -30,7 +30,7 @@
           <div class="band-container">
             <div class="band-inner">
               <h1>Kieszonkowe.pl</h1>
-                <p>Ni mom pojęcia co robia {{personal_data.name}}</p>
+                <p>Ni mom pojęcia co robia {{personalData.name}}</p>
             </div>
           </div>
         </section>
@@ -40,7 +40,10 @@
                     <div class="main-agileinfo">
                         <div class="agileits-top">
                             <form action="#" method="post">
-                                <input class="text" type="text" [(ngModel)]="personal_data.name" placeholder="Username" required="">
+                                <input class="text" type="text" [(ngModel)]="userData.name"  placeholder="Username" required="" (input)="onNameInput(userData)">
+                                <div *ngIf="userData.name.length > 0">
+                                  {{userData.name}}
+                                </div>                                
                                 <input class="text email" type="email" name="email" placeholder="Email" required="">
                                 <input class="text" type="password" name="password" placeholder="Password" required="">
                                 <input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="">

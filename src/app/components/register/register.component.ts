@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonalData } from './personalData'
+import { personData } from './person-mock'
 
 
 @Component({
@@ -9,11 +10,18 @@ import { PersonalData } from './personalData'
 })
 export class RegisterComponent implements OnInit {
 
-  personal_data: PersonalData;
+  personalData=personData;
+
+  userData:PersonalData
+  
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onNameInput (userData: PersonalData): void {
+    this.userData = userData; 
   }
 
 }
