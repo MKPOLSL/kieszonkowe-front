@@ -23,11 +23,11 @@ export class RegisterComponent implements OnInit {
   }
 
   getPersonalData() : void {
-    this.userData = this.personalDataService.getPersonalData(); 
+    // this.userData = this.personalDataService.getPersonalData(); 
   }
 
-  onNameInput (userData: PersonalData): void {
-    this.userData = userData; 
-  }
+  // onNameInput (userData: PersonalData): void {
+  //   this.userData = userData; 
+  // }
 
 }
