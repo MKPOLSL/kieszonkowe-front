@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PocketMoneyService {
-  private url: string = 'https://localhost:44353/kieszonkowe';
+  private url: string = 'https://localhost:44353/pocketmoney';
 
   constructor(private httpClient: HttpClient) {}
 
