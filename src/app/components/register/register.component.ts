@@ -31,8 +31,6 @@ export class RegisterComponent implements OnInit {
       birthDate: [''],
       emailAddress: [''],
       password: ['']
-    },{
-      validator: notUniqueUsernameValidator('userName')
     });
   }
 
