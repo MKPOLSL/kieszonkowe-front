@@ -8,6 +8,11 @@ body {
   font-family: "Open Sans", sans-serif;  
 }
 
+.invalid-feedback {
+  color: red;
+  font-weight: bold;
+}
+
 .l-site {
   margin: 0 auto;
   max-width: 1600px;

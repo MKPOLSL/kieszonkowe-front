@@ -40,17 +40,19 @@
                     <div class="main-agileinfo">
                         <div class="agileits-top">
                             <!-- <form action="#" method="post" [formGroup]="registerForm" (ngSubmit)="onSubmit()"> -->
-                              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                              <!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"> -->
+                              <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
                                 <!-- <input class="text" type="text" [(ngModel)]="userData.name" name="userName"  placeholder="Username" required="" (input)="onNameInput(userData)">    -->
                                 <div class="form-group">
                                   <input class="text form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" type="text" formControlName="userName"  name="userName"  placeholder="Username" required="">   
                                   <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
                                     <div *ngIf="f.userName.errors.required">Username is required</div>
+                                    <div *ngIf="f.userName.errors.nonUniqueName">Username must be unique</div>
                                   </div>  
                                 </div>
-                                <input class="text date" type="date" name="birthdate" placeholder="dd.mm.rrrr" required="">
-                                <input class="text email" type="email" name="email" placeholder="Email" required="">
-                                <input class="text" type="password" name="password" placeholder="Password" required="">
+                                <input class="text date" type="date" formControlName="birthDate" name="birthdate" placeholder="dd.mm.rrrr" required="">
+                                <input class="text email" type="email" formControlName="emailAddress" name="email" placeholder="Email" required="">
+                                <input class="text" type="password" formControlName="password" name="password" placeholder="Password" required="">
                                 <input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="">
                                 <div class="wthree-text">
                                     <label class="anim">
@@ -60,9 +62,9 @@
                                     <div class="clear"> </div>
                                 </div>
                                 <input type="submit" value="SIGNUP">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                   <button class="btn btn-primary">Register</button>
-                              </div>
+                              </div> -->
                             </form>
                             <!-- <p>Don't have an Account? <a href="#"> Login Now!</a></p> -->
                         </div>
