@@ -24,10 +24,11 @@ export class RegisterMockComponent implements OnInit {
         private alertService: AlertService
     ) { }
 
+    actualDate = new Date();
+
     ngOnInit() {
         this.form = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
+            birthdate: ['', Validators.required ],
             username: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });

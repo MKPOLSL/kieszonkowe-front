@@ -6,14 +6,14 @@ import { AccountService } from '@app/services';
 @Component({
     selector: 'app-layout',
     templateUrl: './layout.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./dashboard.component.scss']
   })
 export class LayoutComponent {
     constructor(
         private router: Router,
         private accountService: AccountService
     ) {
-        // redirect to home if already logged in
+        // redirect to dashboard if already logged in
         if (this.accountService.userValue) {
             this.router.navigate(['/dashboard']);
         }

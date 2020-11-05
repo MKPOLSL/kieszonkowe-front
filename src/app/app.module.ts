@@ -13,8 +13,10 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterMockComponent } from './components/register-mock/register-mock.component';
 import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor } from './_helpers';
 
+import { AlertComponent } from '@app/_alerts'
+
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, RegisterComponent, DashboardComponent, LoginComponent, RegisterMockComponent],
+  declarations: [AppComponent, HomePageComponent, RegisterComponent, DashboardComponent, LoginComponent, RegisterMockComponent, AlertComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

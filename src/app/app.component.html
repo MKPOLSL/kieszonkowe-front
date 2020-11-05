@@ -1,71 +1,16 @@
-<!-- <!doctype html>
-<html lang="pl">
+<div class="l-nav">
+    <nav class="nav">
+      <ul>
+        <li *ngIf="!user" class="nav-primary"><a routerLink="/home">Strona Główna</a></li>
+        <li *ngIf="!user" class="nav-primary"><a routerLink="/register-mock">Rejestracja</a></li>
+        <li *ngIf="!user" class="nav-primary"><a routerLink="/login">Logowanie</a></li>
+        <li *ngIf="user" class="nav-primary"><a routerLink="/login">Twoje dzieci</a></li>
+        <li *ngIf="user" class="nav-primary"><a routerLink="/login">Statystyki</a></li>
+        <li *ngIf="user" class="nav-primary"><a routerLink="">NIEZBLIŻSIĘTU</a></li>
+        <li *ngIf="user" class="nav-primary"><a (click)="logout()">Wyloguj</a></li>
+      </ul>
+    </nav>
+  </div>     
 
-<head>
-    <meta charset="utf-8">
-    <title>{{title}}</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">    <link rel="stylesheet" href="app.component.scss">
-    <link rel="shortcut icon" href="favicon.png" />
-
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=UCP9WSELq-1_UU5RgXQzM9WmFvnUtCtBc6BNutFS_AiOaHPsL6qRwWFe7oehSZsrV8X1huxdZWgB_rUJdE7zdnDW3h9A5oJbF_fArnm0XeC34N4idJeh2wsPUW_8uYvflrQw5hrD1L7JvnLsPHROiQ" charset="UTF-8"></script></head>
-
-<body>
-    <div class="l-site">
-      <div class="l-nav">
-        <nav class="nav">
-          <ul>
-            <li class="nav-primary"><a href="#">Strona Główna</a></li>
-            <li class="nav-primary"><a href="#">Rejestracja</a></li>
-            <li class="nav-secondary"><a href="lights.html">Statystyki</a></li>
-            <li class="nav-secondary"><a href="source.html">jeszcze coś innego</a></li>
-            <li class="nav-secondary"><a href="minecraft.html">Minecraft free trial</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div class="l-page">
-        <div class="menu">
-          <div class="menu-hamburger"></div>
-        </div>
-        <section class="band band-a">
-          <div class="band-container">
-            <div class="band-inner">
-              <h1>Kieszonkowe.pl</h1>
-                <p>Ni mom pojęcia co robia</p>
-            </div>
-          </div>
-        </section>
-        <section class="band band-a">
-          <div class="band-container">
-            <div class="band-inner">
-              <h1>Proin sed aliquet</h1>
-              <p>Proin sed aliquet tellus. Etiam bibendum ligula in rhoncus imperdiet. Sed a sollicitudin dolor. Integer leo enim, tincidunt vel sagittis vel, vehicula non quam. Nunc mattis bibendum massa vel volutpat. Duis ligula ante, elementum luctus felis ut, ultricies aliquam dolor. Nunc et est mattis, fermentum nisl et, volutpat lacus. Nam ullamcorper urna non odio luctus volutpat. Praesent efficitur in risus at porttitor.</p>
-            </div>
-          </div>
-        </section>
-        <section class="band band-a">
-          <div class="band-container">
-            <div class="band-inner">
-              <h1>Sed consectetur neque</h1>
-              <h2 id="kot">DOLOR SIT AMET</h2>
-              <p>Sed consectetur neque et libero placerat, dapibus laoreet sem condimentum. Nunc suscipit pharetra nunc ac interdum. Quisque justo magna, porttitor quis bibendum eu, ultrices nec justo. Cras mattis ut lectus at ullamcorper. Mauris vestibulum est sed sapien euismod, a pretium arcu lacinia. Donec pharetra non massa ac rhoncus. In in magna felis. Ut porta nec nunc a condimentum. Nullam ultricies sollicitudin enim ac scelerisque. Nam porta, leo in euismod suscipit, elit lorem eleifend neque, non hendrerit quam odio quis felis. Praesent id ullamcorper neque, in fermentum mauris. Curabitur sodales erat sed nisi dictum, sit amet vehicula eros malesuada.</p>
-            </div>
-          </div>
-        </section>
-        <section class="band band-a">
-          <div class="band-container">
-            <div class="band-inner">
-              <h1>Nulla tempor laoreet</h1>
-              <p>Nulla tempor laoreet sagittis. Donec molestie odio sit amet tincidunt egestas. Ut ut nisi nec felis vehicula pharetra. Nunc ullamcorper vitae lectus vitae consectetur. Quisque pharetra lorem metus, at lacinia magna malesuada non. Maecenas tristique risus quis massa convallis tempus in non turpis. Mauris pretium purus sed lacus euismod, eu cursus massa commodo. Nulla in erat ut ex imperdiet iaculis. Aliquam erat volutpat. Sed pellentesque et neque vitae accumsan. Etiam nec dolor quis est dignissim viverra. Nunc et pulvinar felis. Nulla in varius turpis. Curabitur non diam libero. Nam porttitor orci in metus sagittis</p>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-    <!- partial -->
-      <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
-    
-    </body>
-
-</html> --> 
-<!-- <app-home-page></app-home-page> -->
+  <alert></alert>
 <router-outlet></router-outlet>
