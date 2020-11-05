@@ -3,3 +3,5 @@ export interface PersonalData {
     surname: string;
     email: string;
   }
+
+  

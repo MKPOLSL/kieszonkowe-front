@@ -16,6 +16,7 @@
           <ul>
             <li class="nav-primary"><a routerLink="/home">Strona Główna</a></li>
             <li class="nav-primary"><a routerLink="/register">Rejestracja</a></li>
+            <li class="nav-primary"><a routerLink="/login">Logowanie</a></li>
             <!-- <li class="nav-secondary"><a href="lights.html">Statystyki</a></li> -->
             <!-- <li class="nav-secondary"><a href="source.html">jeszcze coś innego</a></li> -->
             <!-- <li class="nav-secondary"><a href="minecraft.html">Minecraft free trial</a></li> -->
@@ -39,12 +40,20 @@
                 <!-- <div class="band-inner"> -->
                     <div class="main-agileinfo">
                         <div class="agileits-top">
-                            <form action="#" method="post">
+                            <!-- <form action="#" method="post" [formGroup]="registerForm" (ngSubmit)="onSubmit()"> -->
+                              <!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"> -->
+                              <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
                                 <!-- <input class="text" type="text" [(ngModel)]="userData.name" name="userName"  placeholder="Username" required="" (input)="onNameInput(userData)">    -->
-                                <input class="text" type="text" [(ngModel)]="userData.name" name="userName"  placeholder="Username" required="">   
-                                <input class="text date" type="date" name="birthdate" placeholder="dd.mm.rrrr" required="">
-                                <input class="text email" type="email" name="email" placeholder="Email" required="">
-                                <input class="text" type="password" name="password" placeholder="Password" required="">
+                                <div class="form-group">
+                                  <input class="text form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" type="text" formControlName="userName"  name="userName"  placeholder="Username" required="">   
+                                  <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.userName.errors.required">Username is required</div>
+                                    <div *ngIf="f.userName.errors.nonUniqueName">Username must be unique</div>
+                                  </div>  
+                                </div>
+                                <input class="text date" type="date" formControlName="birthDate" name="birthdate" placeholder="dd.mm.rrrr" required="">
+                                <input class="text email" type="email" formControlName="emailAddress" name="email" placeholder="Email" required="">
+                                <input class="text" type="password" formControlName="password" name="password" placeholder="Password" required="">
                                 <input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="">
                                 <div class="wthree-text">
                                     <label class="anim">
@@ -54,6 +63,9 @@
                                     <div class="clear"> </div>
                                 </div>
                                 <input type="submit" value="SIGNUP">
+                                <!-- <div class="form-group">
+                                  <button class="btn btn-primary">Register</button>
+                              </div> -->
                             </form>
                             <!-- <p>Don't have an Account? <a href="#"> Login Now!</a></p> -->
                         </div>

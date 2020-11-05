@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AccountService } from './services';
+import { User } from './_models';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Serwis kieszonkowe.pl';
+  user: User;
+
+    constructor(private accountService: AccountService) {
+        this.accountService.user.subscribe(x => this.user = x);
+    }
+
+    logout() {
+        this.accountService.logout();
+    }
 }
