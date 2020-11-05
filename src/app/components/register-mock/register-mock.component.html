@@ -21,7 +21,7 @@
             </div>    
             <div class="form-group">
                 <label for="birthdate">Birthdate</label>
-                <input type="date" formControlName="birthdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.birthdate.errors }" />
+                <input type="date" max="{{isAdult}}" formControlName="birthdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.birthdate.errors }" />
                 <div *ngIf="submitted && f.birthdate.errors" class="invalid-feedback">
                     <div *ngIf="f.birthdate.errors.required">Birthdate is required</div>
                 </div>

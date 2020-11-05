@@ -24,14 +24,23 @@ export class RegisterMockComponent implements OnInit {
         private alertService: AlertService
     ) { }
 
-    actualDate = new Date();
+    isAdult: string;
 
     ngOnInit() {
+        this.isAdult = this.setMaxDate();
         this.form = this.formBuilder.group({
             birthdate: ['', Validators.required ],
             username: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
+    }
+
+    setMaxDate() {
+        let actualDate = new Date().toISOString().substring(0,10);
+        let minusEighteen = parseInt(actualDate.substr(0,4)) - 18;
+        actualDate = actualDate.slice(4);
+        actualDate = minusEighteen.toString() + actualDate;
+        return actualDate;
     }
 
     // convenience getter for easy access to form fields
