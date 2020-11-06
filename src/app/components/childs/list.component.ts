@@ -11,6 +11,7 @@ import { AccountService } from '@app/services';
   })
 export class ListComponent implements OnInit {
     users = null;
+    childs = null;
 
     constructor(private accountService: AccountService) {}
 
@@ -22,7 +23,7 @@ export class ListComponent implements OnInit {
         let user = JSON.parse(localStorage.getItem('user'));
         this.accountService.getChilds(user.id)
             .pipe(first())
-            .subscribe(users => this.users = users);
+            .subscribe(childs => this.childs = childs);
     }
 
     deleteUser(id: string) {

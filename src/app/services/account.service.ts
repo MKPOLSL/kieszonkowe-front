@@ -48,7 +48,7 @@ export class AccountService {
     }
 
     addChild(child: Child, id: string) {
-        return this.http.post(`${environment.apiUrl}/addChild/${id}`, child);
+        return this.http.post(`${environment.apiUrl}/profile/addChild/${id}`, child);
     }
 
     getAll() {
@@ -56,7 +56,7 @@ export class AccountService {
     }
 
     getChilds(id: string) {
-        return this.http.get<User[]>(`${environment.apiUrl}/childs/${id}`);
+        return this.http.get<User[]>(`${environment.apiUrl}/profile/childs/${id}`);
     }
 
     getById(id: string) {
