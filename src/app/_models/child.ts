@@ -1,8 +1,18 @@
 export class Child {
     id: string;
     // name: string;
-    education: string;
-    region: string;
-    predictedAmount: number;
-    realAmount: number;
+    education: Education;
+    region: Region;
+    plannedAmount: number;
+    actualAmount: number;
+}
+
+class Education {
+    educationDegree: string;
+    id: string;
+}
+
+class Region {
+    regionName: string;
+    id: string;
 }

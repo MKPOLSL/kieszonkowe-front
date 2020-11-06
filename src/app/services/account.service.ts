@@ -56,7 +56,7 @@ export class AccountService {
     }
 
     getChilds(id: string) {
-        return this.http.get<User[]>(`${environment.apiUrl}/profile/childs/${id}`);
+        return this.http.get<Child[]>(`${environment.apiUrl}/profile/childs/${id}`);
     }
 
     getById(id: string) {

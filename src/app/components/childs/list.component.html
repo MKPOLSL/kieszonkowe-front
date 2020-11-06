@@ -4,17 +4,19 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th style="width: 30%">Name</th>
-                <th style="width: 30%">Education</th>
+                <th style="width: 30%">Planned amount</th>
+                <th style="width: 30%">Actual amount</th>
+                <th style="width: 30%">Education degree</th>
                 <th style="width: 30%">Region</th>
                 <th style="width: 10%"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let child of childs">
-                <td>{{child.name}}</td>
-                <td>{{child.education}}</td>
-                <td>{{child.region}}</td>
+                <td>{{child.plannedAmount}}</td>
+                <td>{{child.actualAmount}}</td>
+                <td>{{child.education.educationDegree}}</td>
+                <td>{{child.region.regionName}}</td>
                 <td style="white-space: nowrap">
                     <a routerLink="edit/{{child.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
                     <button (click)="deleteUser(child.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="child.isDeleting">
