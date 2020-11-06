@@ -26,3 +26,4 @@ import { AlertComponent } from '@app/_alerts'
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+

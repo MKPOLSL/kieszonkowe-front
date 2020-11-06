@@ -7,8 +7,8 @@ import { RegisterMockComponent } from './components/register-mock/register-mock.
 import { RegisterComponent } from './components/register/register.component';
 import { AuthGuard } from './_helpers';
 
-// const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
-// const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
+// const accountModule = () => import('@app/components/register-mock/account.module').then(x => x.AccountModule);
+const usersModule = () => import('@app/components/childs/users.module').then(x => x.UsersModule);
 
 const routes: Routes = [
 { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,7 +16,8 @@ const routes: Routes = [
 { path: 'register', component: RegisterComponent },
 { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 { path: 'login', component: LoginComponent },
-{ path: 'register-mock', component: RegisterMockComponent }
+{ path: 'register-mock', component: RegisterMockComponent },
+{ path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
