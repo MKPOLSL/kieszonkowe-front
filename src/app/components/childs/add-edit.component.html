@@ -1,31 +1,32 @@
-﻿<h1 *ngIf="isAddMode">Add User</h1>
-<h1 *ngIf="!isAddMode">Edit User</h1>
+﻿<h1 *ngIf="isAddMode">Add child</h1>
+<h1 *ngIf="!isAddMode">Edit child</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="adding-child">
     <div class="form-row">
         <div class="form-group col">
-            <label for="firstName">First Name</label>
-            <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
-            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                <div *ngIf="f.firstName.errors.required">First Name is required</div>
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Name is required</div>
             </div>
         </div>
         <div class="form-group col">
-            <label for="lastName">Last Name</label>
-            <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+            <label for="education">Education</label>
+            <input type="text" formControlName="education" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.education.errors }" />
+            <div *ngIf="submitted && f.education.errors" class="invalid-feedback">
+                <div *ngIf="f.education.errors.required">Education is required</div>
             </div>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col">
-            <label for="username">Username</label>
-            <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                <div *ngIf="f.username.errors.required">Username is required</div>
+            <label for="region">Region</label>
+            <input type="text" formControlName="region" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.region.errors }" />
+            <div *ngIf="submitted && f.region.errors" class="invalid-feedback">
+                <div *ngIf="f.region.errors.required">Region is required</div>
             </div>
         </div>
-        <div class="form-group col">
+        
+        <!-- <div class="form-group col">
             <label for="password">
                 Password
                 <em *ngIf="!isAddMode">(Leave blank to keep the same password)</em>
@@ -34,6 +35,22 @@
             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                 <div *ngIf="f.password.errors.required">Password is required</div>
                 <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+            </div>
+        </div> -->
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label for="plannedAmount">Planned amount</label>
+            <input type="text" formControlName="plannedAmount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
+            <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
+                <div *ngIf="f.plannedAmount.errors.required">Planned amount is required</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label for="realAmount">Actual amount</label>
+            <input type="text" formControlName="realAmount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.realAmount.errors }" />
+            <div *ngIf="submitted && f.realAmount.errors" class="invalid-feedback">
+                <div *ngIf="f.realAmount.errors.required">Planned amount is required</div>
             </div>
         </div>
     </div>

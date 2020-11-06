@@ -2,6 +2,7 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import  { Child } from '@app/_models/child'
 
 import { AccountService, AlertService } from '@app/services';
 @Component({
@@ -34,11 +35,19 @@ export class AddEditComponent implements OnInit {
             passwordValidators.push(Validators.required);
         }
 
+        // this.form = this.formBuilder.group({
+        //     firstName: ['', Validators.required],
+        //     lastName: ['', Validators.required],
+        //     username: ['', Validators.required],
+        //     password: ['', passwordValidators]
+        // });
+
         this.form = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', passwordValidators]
+            name: ['', Validators.required],
+            education: ['', Validators.required],
+            region: ['', Validators.required],
+            plannedAmount: ['', Validators.required],
+            realAmount: ['', Validators.required]
         });
 
         if (!this.isAddMode) {
@@ -66,27 +75,34 @@ export class AddEditComponent implements OnInit {
             return;
         }
 
+        // this.loading = true;
+        // if (this.isAddMode) {
+        //     this.createUser();
+        // } else {
+        //     this.updateUser();
+        // }
+
         this.loading = true;
         if (this.isAddMode) {
-            this.createUser();
+            this.createChild();
         } else {
             this.updateUser();
         }
     }
 
-    private createUser() {
-        this.accountService.register(this.form.value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.alertService.success('User added successfully', { keepAfterRouteChange: true });
-                    this.router.navigate(['.', { relativeTo: this.route }]);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
-    }
+    // private createUser() {
+    //     this.accountService.register(this.form.value)
+    //         .pipe(first())
+    //         .subscribe(
+    //             data => {
+    //                 this.alertService.success('User added successfully', { keepAfterRouteChange: true });
+    //                 this.router.navigate(['.', { relativeTo: this.route }]);
+    //             },
+    //             error => {
+    //                 this.alertService.error(error);
+    //                 this.loading = false;
+    //             });
+    // }
 
     private updateUser() {
         this.accountService.update(this.id, this.form.value)
@@ -101,4 +117,21 @@ export class AddEditComponent implements OnInit {
                     this.loading = false;
                 });
     }
+
+    private createChild() {
+        let user = JSON.parse(localStorage.getItem('user'));
+        this.accountService.addChild(this.form.value, user.id)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.alertService.success('Child added successfully', { keepAfterRouteChange: true });
+                    this.router.navigate(['.', { relativeTo: this.route }]);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
+    }
+  
+
 }

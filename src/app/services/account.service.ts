@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment'
 
 import { User } from '@app/_models';
+import { Child } from '@app/_models/child';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -44,6 +45,10 @@ export class AccountService {
 
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/users/register`, user);
+    }
+
+    addChild(child: Child, id: string) {
+        return this.http.post(`${environment.apiUrl}/addChild/${id}`, child);
     }
 
     getAll() {
