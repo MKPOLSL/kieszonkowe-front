@@ -55,6 +55,10 @@ export class AccountService {
         return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }
 
+    getChilds(id: string) {
+        return this.http.get<User[]>(`${environment.apiUrl}/childs/${id}`);
+    }
+
     getById(id: string) {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
