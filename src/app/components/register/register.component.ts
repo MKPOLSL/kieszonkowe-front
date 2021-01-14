@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
     //   (response) =>console.log(response),
     //   (error) => console.log(error)
     // )
-    this.http.post('https://8e1c9b2d-7a9f-498c-9671-133a422cef11.mock.pstmn.io/profile/register',formData).subscribe(
+    this.http.post('https://localhost:44353/profile/register',formData).subscribe(
       (response) => {
         console.log(response);
         this.requestResponse = response
