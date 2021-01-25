@@ -2,7 +2,7 @@
     <nav class="nav">
       <ul>
         <li *ngIf="!user" class="nav-primary"><a routerLink="/home">Strona Główna</a></li>
-        <li *ngIf="!user" class="nav-primary"><a routerLink="/register">Rejestracja</a></li>
+        <li *ngIf="!user" class="nav-primary"><a routerLink="/register-mock">Rejestracja</a></li>
         <li *ngIf="!user" class="nav-primary"><a routerLink="/login">Logowanie</a></li>
         <li *ngIf="user" class="nav-primary"><a routerLink="/users" routerLinkActive>Twoje dzieci</a></li>
         <li *ngIf="user" class="nav-primary"><a routerLink="/statistics" >Statystyki</a></li>
