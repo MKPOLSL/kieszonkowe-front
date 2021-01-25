@@ -1,0 +1,25 @@
+<div class="adding-child">
+    <h1>Regions</h1>
+    <table class="table table-striped">
+        <thead>
+        </thead>
+        <tbody>
+            <tr *ngFor="let region of regions">
+                <td>{{region.regionName}}</td>
+                <td style="white-space: nowrap">
+                    <button >
+                        <span>Choose</span>
+                    </button>
+                </td>
+            </tr>   
+            <tr *ngFor="let education of educations">
+                <td>{{education.educationName}}</td>
+                <td style="white-space: nowrap">
+                    <button >
+                        <span>Choose</span>
+                    </button>
+                </td>
+            </tr>          
+        </tbody>
+    </table>
+</div>
