@@ -28,8 +28,22 @@ export class StatisticsService {
     getRegions(){
         return this.http.get<Region[]>(`${environment.apiUrl}/pocketmoney/regions`);
     }
+
+    // return this.http.post<User>(`${environment.apiUrl}/profile/authenticate`, { username, password })
+    // .pipe(map(user => {
+    //     // store user details and jwt token in local storage to keep user logged in between page refreshes
+    //     localStorage.setItem('user', JSON.stringify(user));
+    //     this.userSubject.next(user);
+    //     return user;
+    // }));
     getEducations() {
-        return this.http.get<Education[]>(`${environment.apiUrl}/pocketmoney/educations`);
+        let temp: Education[];
+        return this.http.get<Education[]>(`${environment.apiUrl}/pocketmoney/educations`)
+        .pipe(map(Education => {
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                
+                return temp;
+            }));
     }
 
 }

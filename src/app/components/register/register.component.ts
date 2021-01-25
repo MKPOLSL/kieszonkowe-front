@@ -1,106 +1,74 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PersonalData } from './personalData'
-import { personData } from './person-mock'
-import { PersonalDataService } from '@app/services/personal-data.service'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { notUniqueUsernameValidator } from '@app/components/register/register-validators.directive'
-import { Router, ActivatedRoute } from '@angular/router';
 
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+
+import { AccountService, AlertService } from '@app/services';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-register-mock',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterMockComponent implements OnInit {
+    form: FormGroup;
+    loading = false;
+    submitted = false;
 
-  personalData:PersonalData;
+    constructor(
+        private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private accountService: AccountService,
+        private alertService: AlertService
+    ) { }
 
-  userData:PersonalData
-  
-  registerForm: FormGroup;
-  submitted = false;
+    isAdult: string;
 
-  
+    ngOnInit() {
+        this.isAdult = this.setMaxDate();
+        this.form = this.formBuilder.group({
+            email: ['', Validators.required ],
+            birthdate: ['', Validators.required ],
+            username: ['', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(6)]]
+        });
+    }
 
-  constructor(public personalDataService: PersonalDataService,private formBuilder: FormBuilder, private http: HttpClient) { }
+    setMaxDate() {
+        let actualDate = new Date().toISOString().substring(0,10);
+        let minusEighteen = parseInt(actualDate.substr(0,4)) - 18;
+        actualDate = actualDate.slice(4);
+        actualDate = minusEighteen.toString() + actualDate;
+        return actualDate;
+    }
 
-  ngOnInit(): void {
-    this.getPersonalData();
-    this.registerForm = this.formBuilder.group({      
-      userName: ['',[ Validators.required, Validators.minLength(6)]],
-      birthDate: [''],
-      emailAddress: [''],
-      password: ['']
-    });
-  }
+    // convenience getter for easy access to form fields
+    get f() { return this.form.controls; }
 
-  getPersonalData() : void {
-    this.userData = this.personalDataService.getPersonalData(); 
-  }
+    onSubmit() {
+        this.submitted = true;
 
-  // convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
+        // reset alerts on submit
+        this.alertService.clear();
 
-  // httpOptions = {
-  //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  // };
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
 
-  // httpOptions = {
-  //   headers: new HttpHeaders({'Content-Type': 'multipart/form-data; charset=utf-8'})
-  // }
-
-  requestResponse;
-
-  submitForm() {
-    console.log(this.registerForm.value)
-    var formData: any = new FormData();
-    formData.append("userName", this.registerForm.get('userName').value);
-    formData.append("birthDate", this.registerForm.get('birthDate').value);
-    formData.append("emailAddress", this.registerForm.get('emailAddress').value);
-    formData.append("password", this.registerForm.get('password').value);
-
-    var userData = 
-            {
-              "userName": this.registerForm.get('userName').value,
-              "birthDate": this.registerForm.get('birthDate').value,
-              "emailAddress": this.registerForm.get('emailAddress').value,
-              "password": this.registerForm.get('password').value
-            }
-
-    // this.http.post('https://localhost:44353/profile/register',formData, this.httpOptions).subscribe(
-    //   (response) =>console.log(response),
-    //   (error) => console.log(error)
-    // )
-    this.http.post('https://localhost:44353/profile/register',formData).subscribe(
-      (response) => {
-        console.log(response);
-        this.requestResponse = response
-      },
-      (error) => {
-        console.log(error);
-        this.requestResponse = error.error.text;
-        
-      }        
-    )
-
-    
-  }
-
-
-  // onSubmit() {
-  //     this.submitted = true;
-
-  //     // stop here if form is invalid
-  //     if (this.registerForm.invalid) {
-  //         return;
-  //     }
-  //     alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
-  // }
-
-  // onNameInput (userData: PersonalData): void {
-  //   this.userData = userData; 
-  // }
-
+        this.loading = true;
+        this.accountService.register(this.form.value)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.alertService.success('Registration successful', { keepAfterRouteChange: true });
+                    this.router.navigate(['/login'], { relativeTo: this.route });
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
+    }
 }

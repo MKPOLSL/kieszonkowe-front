@@ -7,10 +7,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/register-unused/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterMockComponent } from './components/register-mock/register-mock.component';
+import { RegisterMockComponent } from './components/register/register.component';
 import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor } from './_helpers';
 
 import { AlertComponent } from '@app/_alerts';
