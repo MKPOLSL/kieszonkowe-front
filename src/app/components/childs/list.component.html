@@ -1,32 +1,34 @@
 ﻿<div class="adding-child">
-    <h1>Your childs</h1>
-    <a routerLink="add" class="btn btn-sm btn-success mb-2">Add Child</a>
+    <h1>Twoje dzieci</h1>
+    <a routerLink="add" class="btn btn-sm btn-success mb-2">Dodaj dziecko</a>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th style="width: 30%">Planned amount</th>
-                <th style="width: 30%">Actual amount</th>
-                <th style="width: 30%">Education degree</th>
-                <th style="width: 30%">Region</th>
-                <th style="width: 10%"></th>
+                <th style="width: 15%">Imię</th>
+                <th style="width: 20%">Stopień edukacji</th>
+                <th style="width: 20%">Region</th>
+                <th style="width: 20%">Kwota planowana</th>
+                <th style="width: 20%">Kwota wybrana</th>
+                <th style="width: 5%"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let child of childs">
-                <td>{{child.plannedAmount}}</td>
-                <td>{{child.actualAmount}}</td>
+                <td>{{child.name}}</td>
                 <td>{{child.education.educationDegree}}</td>
                 <td>{{child.region.regionName}}</td>
+                <td>{{child.plannedAmount}} pln</td>
+                <td>{{child.actualAmount}} pln</td>
                 <td style="white-space: nowrap">
-                    <a routerLink="edit/{{child.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                    <a routerLink="edit/{{child.id}}" class="btn btn-sm btn-primary mr-1">Edytuj</a>
                     <button (click)="deleteUser(child.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="child.isDeleting">
                         <span *ngIf="child.isDeleting" class="spinner-border spinner-border-sm"></span>
-                        <span *ngIf="!child.isDeleting">Delete</span>
+                        <span *ngIf="!child.isDeleting">Usuń</span>
                     </button>
                 </td>
             </tr>
-            <tr *ngIf="!users">
-                <td colspan="4" class="text-center">
+            <tr *ngIf="loading">
+                <td colspan="6" class="text-center">
                     <span class="spinner-border spinner-border-lg align-center"></span>
                 </td>
             </tr>
