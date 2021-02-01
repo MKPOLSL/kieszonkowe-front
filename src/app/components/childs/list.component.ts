@@ -12,6 +12,7 @@ import { AccountService } from '@app/services';
 export class ListComponent implements OnInit {
     users = null;
     childs = null;
+    loading: any = true;
 
     constructor(private accountService: AccountService) {}
 
@@ -20,10 +21,12 @@ export class ListComponent implements OnInit {
         //     .pipe(first())
         //     .subscribe(users => this.users = users);
         
-        let user = JSON.parse(localStorage.getItem('user'));
+        let user = JSON.parse(localStorage.getItem('user'))
         this.accountService.getChilds(user.id)
             .pipe(first())
-            .subscribe(childs => this.childs = childs);
+            .subscribe(childs => {
+                this.childs = childs
+                this.loading = false});
     }
 
     deleteUser(id: string) {
