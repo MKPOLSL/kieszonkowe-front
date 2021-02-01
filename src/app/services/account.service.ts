@@ -48,7 +48,7 @@ export class AccountService {
     }
 
     addChild(child: Child, id: string) {
-        return this.http.post(`${environment.apiUrl}/profile/addChild/${id}`, child);
+        return this.http.post(`${environment.apiUrl}/children/addChild?id=${id}`, child);
     }
 
     getAll() {

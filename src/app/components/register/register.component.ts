@@ -30,7 +30,7 @@ export class RegisterMockComponent implements OnInit {
         this.isAdult = this.setMaxDate();
         this.form = this.formBuilder.group({
             email: ['', Validators.required ],
-            birthdate: ['', Validators.required ],
+            birthdate: ['', Validators.required],
             username: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
