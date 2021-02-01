@@ -1,6 +1,6 @@
 export class Child {
     id: string;
-    // name: string;
+    name: string;
     education: Education;
     region: Region;
     plannedAmount: number;
