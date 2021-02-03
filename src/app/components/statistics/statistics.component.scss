@@ -1,24 +1,45 @@
 .box{
-    width: 300px;
-    border: 15px solid green;
-    padding: 50px;
-    margin-left: 100px;
+    border:5px solid lightsteelblue;
+
+    width: 1000px;
+    height: 350px;
+
+    top: 20%;
+    left: 35%;
+    margin-top: 100px;
+    margin-left: 560px;
 }
 
 .reg-and-ed {
-    border:15px solid mediumseagreen;
-    border-inline-end-width: 40px;
-    padding: 50px;
-    margin-left: 400px;
-    width: 400px;
-    font-size: 50px;
-    white-space: nowrap;
-    
+    width: 300px;
+    margin-top: 50px;
+    margin-left: 350px;
+    font-size: 32px;
 }
 
 .select {
-    size: 200px;
-    position:relative;
-    width: 300px;
-    font-size: 40px;
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 3px ;
+    border-radius: 0.1em;
+    padding: 0.5em 0.55em;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 3.0;
+    background-color: rgb(230, 219, 250);
+    background-image: linear-gradient(to top, #f9f9f9, #fff 66%);
 }
+
+.button {
+    background-color: #2f3964; 
+    border: none;
+    color: white;
+    padding: 15px 45px;
+    margin-left: 75px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  
