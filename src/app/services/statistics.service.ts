@@ -33,7 +33,7 @@ export class StatisticsService {
         return this.http.get<Education[]>(`${environment.apiUrl}/pocketmoney/educations`);
     }
 
-    sendRegionAndEducation(Education, Region){
-        return this.http.post(`${environment.apiUrl}/pocketmoney/statistics`, { Education, Region});
+    sendRegionAndEducation(educationId, regionId){
+        return this.http.post(`${environment.apiUrl}/pocketmoney/statistics`, { educationId, regionId});
     }
 }
