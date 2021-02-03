@@ -37,13 +37,7 @@ export class StatisticsService {
     //     return user;
     // }));
     getEducations() {
-        let temp: Education[];
-        return this.http.get<Education[]>(`${environment.apiUrl}/pocketmoney/educations`)
-        .pipe(map(Education => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                
-                return temp;
-            }));
+        return this.http.get<Education[]>(`${environment.apiUrl}/pocketmoney/educations`);
     }
 
 }
