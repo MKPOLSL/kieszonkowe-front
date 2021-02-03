@@ -1,25 +1,16 @@
-<div class="reg-and-ed">
-    <h1>Regions</h1>
-    <table class="table table-striped">
-        <thead>
-        </thead>
-        <tbody>
-            <tr *ngFor="let region of regions">
-                <td>{{region.regionName}}</td>
-                <td style="white-space: nowrap">
-                    <button >
-                        <span>Choose</span>
-                    </button>
-                </td>
-            </tr>   
-            <tr *ngFor="let education of educations">
-                <td>{{education.educationDegree}}</td>
-                <td style="white-space: nowrap">
-                    <button >
-                        <span>Choose</span>
-                    </button>
-                </td>
-            </tr>          
-        </tbody>
-    </table>
+
+<div class="reg-and-ed" style="width:200px;" >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Regiony</h2>
+    <select formControlName="region" class = "select" [(ngModel)]="selectedRegion" (change)="changeRegion($event)">
+        <option *ngFor="let region of regions" [value]="region.id">{{region.regionName}} </option>
+     </select>
+
+    <h2>Stopnie edukacji</h2>
+    <select formControlName="education" class = "select" [(ngModel)]="selectedEducation" (change)="changeEducationDegree($event)">
+        <option *ngFor="let education of educations" [value]="education.id">{{education.educationDegree}}</option>
+     </select>   
+      <button type="submit"> Zatwierdź </button>
+      </form>
 </div>
+
