@@ -1,3 +1,6 @@
+import { Education } from "./education";
+import { Region } from "./region";
+
 export class Child {
     id: string;
     name: string;
@@ -5,14 +8,4 @@ export class Child {
     region: Region;
     plannedAmount: number;
     actualAmount: number;
-}
-
-class Education {
-    educationDegree: string;
-    id: string;
-}
-
-class Region {
-    regionName: string;
-    id: string;
 }

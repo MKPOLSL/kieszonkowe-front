@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '@app/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { Statistics } from '@app/_models/statistics';
 
 @Component({
   selector: 'app-statistics',
@@ -22,6 +23,7 @@ export class StatisticsComponent implements OnInit {
     educations = null;
     selectedRegion = null;
     selectedEducation = null;
+    statistics : Statistics = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,7 +89,9 @@ export class StatisticsComponent implements OnInit {
     this.statisticsService.sendRegionAndEducation(this.f.education.value, this.f.region.value)
         .pipe(first())
         .subscribe(
-            data => {
+            data => {               
+                this.statistics = Object.assign(new Statistics(), data);
+                this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
                 this.router.navigate([this.returnUrl]);
             },
             error => {

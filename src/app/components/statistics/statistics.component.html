@@ -1,16 +1,41 @@
-<div class="box">
-    <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmit()">
-        <h2>Regiony</h2>
-        <select formControlName="region" class="select" [(ngModel)]="selectedRegion" (change)="changeRegion($event)">
-            <option *ngFor="let region of regions" [value]="region.id">{{region.regionName}} </option>
-        </select>
+<div class="statistics_page">
+    <div class="box">
+        <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmit()">
+            <h2>Regiony</h2>
+            <select formControlName="region" class="select" [(ngModel)]="selectedRegion"
+                (change)="changeRegion($event)">
+                <option *ngFor="let region of regions" [value]="region.id">{{region.regionName}} </option>
+            </select>
 
-        <h2>Stopnie edukacji</h2>
-        <select formControlName="education" class="select" [(ngModel)]="selectedEducation"
-            (change)="changeEducationDegree($event)">
-            <option *ngFor="let education of educations" [value]="education.id">{{education.educationDegree}}</option>
-        </select>
-        <button type="submit" class="button"> Zatwierdź </button>
-    </form>
+            <h2>Stopnie edukacji</h2>
+            <select formControlName="education" class="select" [(ngModel)]="selectedEducation"
+                (change)="changeEducationDegree($event)">
+                <option *ngFor="let education of educations" [value]="education.id">{{education.educationDegree}}
+                </option>
+            </select>
+            <button type="submit" class="button"> Zatwierdź </button>
+        </form>
+
+    </div>
+
+<div *ngIf="statistics" class="table">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 15%">Średnia</th>
+                <th style="width: 20%">Mediana</th>
+                <th style="width: 20%">Dominanta</th>
+                <th style="width: 20%">Odchylenie standardowe</th>
+            </tr>
+        </thead>        
+        <td>{{statistics.meanAmount}} PLN</td>
+        <td>{{statistics.medianAmount}} PLN</td>
+        <td>{{statistics.modeAmount}} PLN</td>
+        <td>{{statistics.standardDeviationAmount}} PLN</td>
+        <tbody>           
+            
+        </tbody>
+    </table>
+</div>
 
 </div>
