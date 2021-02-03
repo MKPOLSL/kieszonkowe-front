@@ -63,6 +63,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     var myChart = new Chart("myChart", {
       type: 'bar',
       data: {
@@ -98,7 +99,8 @@ export class StatisticsComponent implements OnInit {
               }]
           }
       }
-  });
+    });
+
     this.statisticsService
     .getEducations()
     .pipe(first())
@@ -112,6 +114,8 @@ export class StatisticsComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
+    this.statistics = null;
 
     // reset alerts on submit
     this.alertService.clear();
@@ -127,9 +131,11 @@ export class StatisticsComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {               
-                this.statistics = Object.assign(new Statistics(), data);
-                this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
-                this.router.navigate([this.returnUrl]);
+                if(data != null) {
+                  this.statistics = Object.assign(new Statistics(), data);
+                  this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
+                  this.router.navigate([this.returnUrl]);
+                }
             },
             error => {
                 this.alertService.error(error);
