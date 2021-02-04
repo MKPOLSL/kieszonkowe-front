@@ -7,6 +7,7 @@ https://jasonwatmore.com/post/2020/04/28/angular-9-user-registration-and-login-e
 
 Żeby kolego sympatyczny Ci to w ogóle działało to tak:
 npm install chart.js -> do wykresów
+
 npm install radio -> żeby ci grał rmf przy developerce haha
 
 
