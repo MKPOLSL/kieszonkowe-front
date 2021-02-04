@@ -147,7 +147,7 @@ export class StatisticsComponent implements OnInit {
           }
         },
         error => {
-          this.alertService.error(error);
+          this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
           this.loading = false;
         });
   }
