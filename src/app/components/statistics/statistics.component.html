@@ -32,29 +32,30 @@
                 (change)="changeEducationDegree($event)">
                 <option *ngFor="let education of educations" [value]="education.id">{{education.educationDegree}}
                 </option>
-            </select> 
-            <p>
-                <label class="checkbox">
-                    <input type="checkbox" class="radio-button" name="chartSelector" value="visualizeStatistics"
-                        [(ngModel)]="visualizeStatistics">
-                    Statystyki ogólnokrajowe dla stopnia edukacji
-                </label>
-            </p>
+            </select>
             <button type="submit" class="button"> Zatwierdź </button>
         </form>
-
+        <p>
+            <label class="checkbox">
+                <input type="checkbox" class="radio-button" name="chartSelector" value="visualizeStatistics"
+                    [(ngModel)]="visualizeStatistics">
+                Statystyki ogólnokrajowe dla stopnia edukacji
+            </label>
+        </p>
     </div>
 
     <div *ngIf="statistics" class="table">
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th style="width: 25%">Region</th>
                     <th style="width: 15%">Średnia</th>
                     <th style="width: 20%">Mediana</th>
                     <th style="width: 20%">Dominanta</th>
                     <th style="width: 20%">Odchylenie standardowe</th>
                 </tr>
             </thead>
+            <td>{{statistics.regionName}}</td>
             <td>{{statistics.meanAmount}} PLN</td>
             <td>{{statistics.medianAmount}} PLN</td>
             <td>{{statistics.modeAmount}} PLN</td>

@@ -47,7 +47,7 @@ export class AddEditComponent implements OnInit {
             education: ['', Validators.required],
             region: ['', Validators.required],
             plannedAmount: ['', Validators.required],
-            realAmount: ['', Validators.required]
+            actualAmount: ['', Validators.required]
         });
 
         if (!this.isAddMode) {

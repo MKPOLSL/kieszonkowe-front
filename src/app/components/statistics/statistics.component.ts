@@ -30,7 +30,9 @@ export class StatisticsComponent implements OnInit {
   educations = null;
   selectedRegion = null;
   selectedEducation = null;
+
   statistics: Statistics = null;
+  statisticsArray: Statistics[] = null;
 
   regionSelector : string = "Województwa";
   regionOptions : string[] = ['Miasta', 'Województwa'];
@@ -148,8 +150,8 @@ export class StatisticsComponent implements OnInit {
     }
 
     this.loading = true;
-
-    this.statisticsService.sendRegionAndEducation(this.f.education.value, this.f.region.value)
+    if(!this.visualizeStatistics) {
+      this.statisticsService.sendRegionAndEducation(this.f.education.value, this.f.region.value)
       .pipe(first())
       .subscribe(
         data => {
@@ -163,5 +165,22 @@ export class StatisticsComponent implements OnInit {
           this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
           this.loading = false;
         });
+    }
+    else {
+      this.statisticsService.sendEducation(this.f.education.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data != null) {
+            this.statisticsArray = Object.assign(new Array(), data);
+            this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
+            this.router.navigate([this.returnUrl]);
+          }
+        },
+        error => {
+          this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
+          this.loading = false;
+        });
+    }
   }
 }
