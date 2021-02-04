@@ -79,13 +79,40 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var myChart = new Chart("myChart", {
+    this.statisticsService
+      .getEducations()
+      .pipe(first())
+      .subscribe(educations => (this.educations = educations));
+
+    this.statisticsService
+      .getRegions()
+      .pipe(first())
+      .subscribe(regions => {
+        this.regions = regions;//Object.assign(Region[], regions);
+        regions.forEach(element => {
+          if(element.isCity == true){
+            this.cities.push(element);
+          } else {
+            this.voivodeships.push(element);
+          }
+        });
+      });
+  }
+
+  displayDataonChart(statisticsArray){
+    var regionsTable: String[] = new Array();
+    var meansTable: number[] = new Array();
+    statisticsArray.forEach(element => {
+      regionsTable.push(element.regionName);
+      meansTable.push(element.meanAmount)
+    });
+    var myChart = new Chart("Statystyki_w_słupku_ty_dupku", {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: regionsTable,
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          label: 'Statystyki_w_słupku_ty_dupku',
+          data: meansTable,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -115,25 +142,6 @@ export class StatisticsComponent implements OnInit {
         }
       }
     });
-
-    this.statisticsService
-      .getEducations()
-      .pipe(first())
-      .subscribe(educations => (this.educations = educations));
-
-    this.statisticsService
-      .getRegions()
-      .pipe(first())
-      .subscribe(regions => {
-        this.regions = regions;//Object.assign(Region[], regions);
-        regions.forEach(element => {
-          if(element.isCity == true){
-            this.cities.push(element);
-          } else {
-            this.voivodeships.push(element);
-          }
-        });
-      });
   }
 
   onSubmit() {
@@ -167,12 +175,13 @@ export class StatisticsComponent implements OnInit {
         });
     }
     else {
-      this.statisticsService.sendEducation(this.f.education.value)
+      this.statisticsService.sendEducation(this.f.education.value, (this.regionSelector=="Miasta"))
       .pipe(first())
       .subscribe(
         data => {
           if (data != null) {
             this.statisticsArray = Object.assign(new Array(), data);
+            this.displayDataonChart(this.statisticsArray);
             this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
             this.router.navigate([this.returnUrl]);
           }
