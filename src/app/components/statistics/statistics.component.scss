@@ -1,6 +1,20 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300,600,800,400);
 
-.box{
+.radio-group {
+    display: inline-flex;
+    flex-direction: column;
+    margin-left: 40%;
+}
+  
+.radio-button {
+    margin: 5px;
+}
+  
+.selected-value {
+    margin: 15px 0;
+}
+
+.formBorder{
     border:5px solid lightsteelblue;
     width: 55%;
     height: 35%;
@@ -13,17 +27,14 @@
 
 #divChart {
     display: block;
-    margin-top: 50px;
-    margin-left: 650px;
-    width: 800px;
-    height: 800px;
+    margin-left: 36%;
+    width: 40%;
 }
 
 .table {
-    width: 75%;
-    margin-top: 200px;
-    margin-left: 200px;
-    margin-right: 20%;
+    width: 74%;
+    margin-top: 4%;
+    margin-left: 16%;
 }
 
 .reg-and-ed {
