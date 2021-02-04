@@ -4,7 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import  { Child } from '@app/_models/child'
 
-import { AccountService, AlertService } from '@app/services';
+import { AccountService, AlertService} from '@app/services';
+import {  StatisticsService } from 'app/services/statistics.service';
+import { Region } from '@app/_models/region';
+import { Education } from '@app/_models/education';
+
 @Component({
     selector: 'add-edit',
     templateUrl: 'add-edit.component.html',
@@ -16,8 +20,15 @@ export class AddEditComponent implements OnInit {
     isAddMode: boolean;
     loading = false;
     submitted = false;
+    // Pobrać te dane z backendu             <----          TODO
+    educations : Education[] = new Array();
+    cities : Region[] = new Array();
+    voivodeships : Region[] = new Array();
+    selectedEducation: string = null;
+    selectedRegion: string = null;
 
     constructor(
+        private statisticsService: StatisticsService,
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
@@ -34,6 +45,7 @@ export class AddEditComponent implements OnInit {
         if (this.isAddMode) {
             passwordValidators.push(Validators.required);
         }
+        
 
         // this.form = this.formBuilder.group({
         //     firstName: ['', Validators.required],
@@ -59,6 +71,25 @@ export class AddEditComponent implements OnInit {
                     this.f.username.setValue(x.username);
                 });
         }
+
+        this.statisticsService
+        .getEducations()
+        .pipe(first())
+        .subscribe(educations => this.educations = educations);
+  
+      this.statisticsService
+        .getRegions()
+        .pipe(first())
+        .subscribe(regions => {
+            regions.forEach(element => {
+              if(element.isCity == true){
+                this.cities.push(element);
+              } else {
+                this.voivodeships.push(element);
+              }
+            });
+          });
+
     }
 
     // convenience getter for easy access to form fields
