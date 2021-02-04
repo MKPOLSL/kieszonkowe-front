@@ -6,7 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Statistics } from '@app/_models/statistics';
 import { Chart } from 'chart.js'
-//import {MatRadioModule} from '@angular/material/radio';
+import {MatRadioModule} from '@angular/material/radio';
+import {FormsModule} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-statistics',
@@ -15,6 +17,10 @@ import { Chart } from 'chart.js'
 })
 
 export class StatisticsComponent implements OnInit {
+
+  isSubmitted = false;
+
+
   loading = false;
   submitted = false;
   returnUrl: string;

@@ -1,17 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300,600,800,400);
 
 .radio-group {
-    display: inline-flex;
-    flex-direction: column;
-    margin-left: 40%;
+    display: inline;
+    margin-left: 35%;
 }
   
 .radio-button {
-    margin: 5px;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 10px;
 }
   
 .selected-value {
-    margin: 15px 0;
+    margin-left: 30%;
 }
 
 .formBorder{

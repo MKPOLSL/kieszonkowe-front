@@ -121,12 +121,22 @@
     "ora" "5.0.0"
     "rxjs" "6.6.2"
 
-"@angular/animations@~10.2.0", "@angular/animations@10.2.0":
+"@angular/animations@^10.0.0 || ^11.0.0-0", "@angular/animations@^10.2.0", "@angular/animations@10.2.0":
   "integrity" "sha512-lKjC2Jm2Al4GCW2zKutdskMWqe5S23gknPvp65ybmR5D1Pz/YgzDOHXmTHqDn5qXJgzpFt/fJgNi805XrAOm4g=="
   "resolved" "https://registry.yarnpkg.com/@angular/animations/-/animations-10.2.0.tgz"
   "version" "10.2.0"
   dependencies:
     "tslib" "^2.0.0"
+
+"@angular/cdk@^10.2.7", "@angular/cdk@10.2.7":
+  "integrity" "sha512-ZQjDfTRTn7JuAKsf3jiIdU2XBaxxGBi/ZWYv5Pb3HCl6B4PISsIE5VWRhkoUogoAB0MiFHpjnWeIqknJEm11YQ=="
+  "resolved" "https://registry.npmjs.org/@angular/cdk/-/cdk-10.2.7.tgz"
+  "version" "10.2.7"
+  dependencies:
+    "parse5" "^5.0.0"
+    "tslib" "^2.0.0"
+  optionalDependencies:
+    "parse5" "^5.0.0"
 
 "@angular/cli@~10.2.0":
   "integrity" "sha512-YBzwkFBmG6CdUJk8onsPXxHX/ByU5MERBQgYhLC873e2nZlXMUu+Ttq2Wai6apyskGvsXKxZNPOQSFZTGKXzXg=="
@@ -154,7 +164,7 @@
     "universal-analytics" "0.4.23"
     "uuid" "8.3.0"
 
-"@angular/common@~10.2.0", "@angular/common@10.2.0":
+"@angular/common@^10.0.0 || ^11.0.0-0", "@angular/common@~10.2.0", "@angular/common@10.2.0":
   "integrity" "sha512-4q7cb6Z18R1nQ8dN8uj6cckuk4jzY40lF7kpxf/wja0pQBUBtWwExwXsdHTVWGZ/mgQv9a5dTAPQq8/tSmf+hw=="
   "resolved" "https://registry.yarnpkg.com/@angular/common/-/common-10.2.0.tgz"
   "version" "10.2.0"
@@ -192,17 +202,24 @@
   "resolved" "https://registry.yarnpkg.com/@angular/compiler/-/compiler-9.0.0.tgz"
   "version" "9.0.0"
 
-"@angular/core@~10.2.0", "@angular/core@10.2.0", "@angular/core@9.0.0":
+"@angular/core@^10.0.0 || ^11.0.0-0", "@angular/core@~10.2.0", "@angular/core@10.2.0", "@angular/core@9.0.0":
   "integrity" "sha512-pj+0cIDHMfeTFFrxbxM1qanSqhnA3ybCYMQm+Fs/WAPlLSvB6s/vVhq6tCdicHzd7/fujGXPcb8Hvtx+km8TqQ=="
   "resolved" "https://registry.yarnpkg.com/@angular/core/-/core-10.2.0.tgz"
   "version" "10.2.0"
   dependencies:
     "tslib" "^2.0.0"
 
-"@angular/forms@~10.2.0":
+"@angular/forms@^10.0.0 || ^11.0.0-0", "@angular/forms@~10.2.0":
   "integrity" "sha512-pRQP5AWyB37rJWtgvZRWA3H+EMcP9M7QybOAfCf7z9CMRhKK+jVvd5yQqyqOYWOEBuS0kUD3HM/vrpZywhK/6g=="
   "resolved" "https://registry.yarnpkg.com/@angular/forms/-/forms-10.2.0.tgz"
   "version" "10.2.0"
+  dependencies:
+    "tslib" "^2.0.0"
+
+"@angular/material@^10.2.7":
+  "integrity" "sha512-uk6JkRrKHaM9VFMzX7pWC83YNLVgXPB3D8U1yjSOafCdWwrRZgUHGr8MPlSILCr3o2nxgg5SsKdWcWwHuXXUZA=="
+  "resolved" "https://registry.npmjs.org/@angular/material/-/material-10.2.7.tgz"
+  "version" "10.2.7"
   dependencies:
     "tslib" "^2.0.0"
 
@@ -6465,6 +6482,11 @@
   "version" "6.0.1"
   dependencies:
     "parse5" "^6.0.1"
+
+"parse5@^5.0.0":
+  "integrity" "sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug=="
+  "resolved" "https://registry.npmjs.org/parse5/-/parse5-5.1.1.tgz"
+  "version" "5.1.1"
 
 "parse5@^6.0.1", "parse5@6.0.1":
   "integrity" "sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw=="

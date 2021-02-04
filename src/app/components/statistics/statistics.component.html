@@ -1,14 +1,19 @@
 <div class="statistics_page">
     <div class="formBorder">
-        
-        <mat-radio-group class="radio-group" [(ngModel)]="selectedRegion">
-            <mat-radio-button class="radio-button" *ngFor="let option of regionOptions" [value]="option">
-                {{option}}
-            </mat-radio-button>
-        </mat-radio-group>
+        <div class="radio-group">
+            <label class="radio-button">
+                <input type="radio" class="radio-button" name="regionSelector" value="Miasta"
+                    [(ngModel)]="regionSelector">
+                Miasta
+            </label>
+            <label class="radio-button">
+                <input type="radio" name="regionSelector" value="Województwa" [(ngModel)]="regionSelector">
+                Województwa
+            </label>
+        </div>
 
         <div class="selected-value">
-            Wybrany format wyszukiwania: {{selectedRegion}}
+            Wybrany format wyszukiwania: <b><i>{{regionSelector}}</i></b>
         </div>
 
         <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmit()">
