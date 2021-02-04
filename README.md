@@ -2,9 +2,13 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
-##Zajebany kod
-stąd jest zajebany cały front. Trochu chamsko ale działa:
+Inspiracje:
 https://jasonwatmore.com/post/2020/04/28/angular-9-user-registration-and-login-example-tutorial#users-list-component-ts
+
+Żeby kolego sympatyczny Ci to w ogóle działało to tak:
+npm install chart.js -> do wykresów
+npm install radio -> żeby ci grał rmf przy developerce haha
+
 
 ## Development server
 
