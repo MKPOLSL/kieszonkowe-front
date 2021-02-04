@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Education } from '@app/_models/education';
-import { Region } from '@app/_models/region';
 import { StatisticsService } from 'app/services/statistics.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '@app/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Statistics } from '@app/_models/statistics';
+import { Chart } from 'chart.js'
+import {MatRadioModule} from '@angular/material/radio';
+import {FormsModule} from '@angular/forms';
+import { NgForm } from '@angular/forms';
+import { Region } from '@app/_models/region';
 
 @Component({
   selector: 'app-statistics',
@@ -15,15 +18,29 @@ import { Statistics } from '@app/_models/statistics';
 })
 
 export class StatisticsComponent implements OnInit {
-    loading = false;
-    submitted = false;
-    returnUrl: string;
 
-    regions = null;
-    educations = null;
-    selectedRegion = null;
-    selectedEducation = null;
-    statistics : Statistics = null;
+  isSubmitted = false;
+
+
+  loading = false;
+  submitted = false;
+  returnUrl: string;
+
+  regions : Region[] = null;
+  educations = null;
+  selectedRegion = null;
+  selectedEducation = null;
+
+  statistics: Statistics = null;
+  statisticsArray: Statistics[] = null;
+
+  regionSelector : string = "Województwa";
+  regionOptions : string[] = ['Miasta', 'Województwa'];
+
+  cities : Region[] = new Array();
+  voivodeships : Region[] = new Array();
+
+  visualizeStatistics = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,7 +49,7 @@ export class StatisticsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
 
-  ) {}
+  ) { }
 
   get f() { return this.form.controls; }
 
@@ -63,40 +80,116 @@ export class StatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.statisticsService
-    .getEducations()
-    .pipe(first())
-    .subscribe(educations => (this.educations = educations));
+      .getEducations()
+      .pipe(first())
+      .subscribe(educations => (this.educations = educations));
 
     this.statisticsService
-    .getRegions()
-    .pipe(first())
-    .subscribe(regions => (this.regions = regions));
+      .getRegions()
+      .pipe(first())
+      .subscribe(regions => {
+        this.regions = regions;//Object.assign(Region[], regions);
+        regions.forEach(element => {
+          if(element.isCity == true){
+            this.cities.push(element);
+          } else {
+            this.voivodeships.push(element);
+          }
+        });
+      });
+  }
+
+  displayDataonChart(statisticsArray){
+    var regionsTable: String[] = new Array();
+    var meansTable: number[] = new Array();
+    statisticsArray.forEach(element => {
+      regionsTable.push(element.regionName);
+      meansTable.push(element.meanAmount)
+    });
+    var myChart = new Chart("Statystyki_w_słupku_ty_dupku", {
+      type: 'bar',
+      data: {
+        labels: regionsTable,
+        datasets: [{
+          label: 'Statystyki_w_słupku_ty_dupku',
+          data: meansTable,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
   }
 
   onSubmit() {
     this.submitted = true;
+
+    this.statistics = null;
 
     // reset alerts on submit
     this.alertService.clear();
 
     // stop here if form is invalid
     if (this.form.invalid) {
-        return;
+      return;
     }
 
     this.loading = true;
-
-    this.statisticsService.sendRegionAndEducation(this.f.education.value, this.f.region.value)
-        .pipe(first())
-        .subscribe(
-            data => {               
-                this.statistics = Object.assign(new Statistics(), data);
-                this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
-                this.router.navigate([this.returnUrl]);
-            },
-            error => {
-                this.alertService.error(error);
-                this.loading = false;
-            });
-}
+    if(!this.visualizeStatistics) {
+      this.statisticsService.sendRegionAndEducation(this.f.education.value, this.f.region.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data != null) {
+            this.statistics = Object.assign(new Statistics(), data);
+            this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
+            this.router.navigate([this.returnUrl]);
+          }
+        },
+        error => {
+          this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
+          this.loading = false;
+        });
+    }
+    else {
+      this.statisticsService.sendEducation(this.f.education.value, (this.regionSelector=="Miasta"))
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data != null) {
+            this.statisticsArray = Object.assign(new Array(), data);
+            this.displayDataonChart(this.statisticsArray);
+            this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
+            this.router.navigate([this.returnUrl]);
+          }
+        },
+        error => {
+          this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
+          this.loading = false;
+        });
+    }
+  }
 }

@@ -1,6 +1,26 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300,600,800,400);
 
-.box{
+.checkbox{
+    margin-left: 5%;
+    font-size: 15px;
+}
+
+.radio-group {
+    display: inline;
+    margin-left: 35%;
+}
+  
+.radio-button {
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+  
+.selected-value {
+    margin-left: 30%;
+}
+
+.formBorder{
     border:5px solid lightsteelblue;
     width: 55%;
     height: 35%;
@@ -11,11 +31,16 @@
     margin-left: 28%;
 }
 
+#divChart {
+    display: block;
+    margin-left: 36%;
+    width: 40%;
+}
+
 .table {
-    width: 75%;
-    margin-top: 200px;
-    margin-left: 200px;
-    margin-right: 20%;
+    width: 74%;
+    margin-top: 4%;
+    margin-left: 16%;
 }
 
 .reg-and-ed {
