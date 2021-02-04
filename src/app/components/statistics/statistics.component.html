@@ -2,8 +2,7 @@
     <div class="formBorder">
         <div class="radio-group">
             <label class="radio-button">
-                <input type="radio" class="radio-button" name="regionSelector" value="Miasta"
-                    [(ngModel)]="regionSelector">
+                <input type="radio" class="radio-button" name="regionSelector" value="Miasta" [(ngModel)]="regionSelector">
                 Miasta
             </label>
             <label class="radio-button">
@@ -20,7 +19,12 @@
             <h2>Regiony</h2>
             <select formControlName="region" class="select" [(ngModel)]="selectedRegion"
                 (change)="changeRegion($event)">
-                <option *ngFor="let region of regions" [value]="region.id">{{region.regionName}} </option>
+                <ng-template [ngIf]="regionSelector === 'Miasta'" [ngIfElse]="voivodeshipsBlock">
+                    <option *ngFor="let region of cities" [value]="region.id">{{region.regionName}} </option>
+                </ng-template>
+                <ng-template #voivodeshipsBlock>
+                    <option *ngFor="let region of voivodeships" [value]="region.id">{{region.regionName}} </option>
+                </ng-template>
             </select>
 
             <h2>Stopnie edukacji</h2>

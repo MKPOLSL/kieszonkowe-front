@@ -9,6 +9,7 @@ import { Chart } from 'chart.js'
 import {MatRadioModule} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
 import { NgForm } from '@angular/forms';
+import { Region } from '@app/_models/region';
 
 @Component({
   selector: 'app-statistics',
@@ -25,15 +26,17 @@ export class StatisticsComponent implements OnInit {
   submitted = false;
   returnUrl: string;
 
-  regions = null;
+  regions : Region[] = null;
   educations = null;
   selectedRegion = null;
   selectedEducation = null;
   statistics: Statistics = null;
 
-  regionSelector : string;
+  regionSelector : string = "Województwa";
   regionOptions : string[] = ['Miasta', 'Województwa'];
 
+  cities : Region[] = new Array();
+  voivodeships : Region[] = new Array();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -72,7 +75,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     var myChart = new Chart("myChart", {
       type: 'bar',
       data: {
@@ -118,7 +120,16 @@ export class StatisticsComponent implements OnInit {
     this.statisticsService
       .getRegions()
       .pipe(first())
-      .subscribe(regions => (this.regions = regions));
+      .subscribe(regions => {
+        this.regions = regions;//Object.assign(Region[], regions);
+        regions.forEach(element => {
+          if(element.isCity == true){
+            this.cities.push(element);
+          } else {
+            this.voivodeships.push(element);
+          }
+        });
+      });
   }
 
   onSubmit() {
