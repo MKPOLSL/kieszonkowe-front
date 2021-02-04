@@ -2,7 +2,8 @@
     <div class="formBorder">
         <div class="radio-group">
             <label class="radio-button">
-                <input type="radio" class="radio-button" name="regionSelector" value="Miasta" [(ngModel)]="regionSelector">
+                <input type="radio" class="radio-button" name="regionSelector" value="Miasta"
+                    [(ngModel)]="regionSelector">
                 Miasta
             </label>
             <label class="radio-button">
@@ -10,7 +11,6 @@
                 Województwa
             </label>
         </div>
-
         <div class="selected-value">
             Wybrany format wyszukiwania: <b><i>{{regionSelector}}</i></b>
         </div>
@@ -32,7 +32,14 @@
                 (change)="changeEducationDegree($event)">
                 <option *ngFor="let education of educations" [value]="education.id">{{education.educationDegree}}
                 </option>
-            </select>
+            </select> 
+            <p>
+                <label class="checkbox">
+                    <input type="checkbox" class="radio-button" name="chartSelector" value="visualizeStatistics"
+                        [(ngModel)]="visualizeStatistics">
+                    Statystyki ogólnokrajowe dla stopnia edukacji
+                </label>
+            </p>
             <button type="submit" class="button"> Zatwierdź </button>
         </form>
 

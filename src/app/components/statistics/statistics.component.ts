@@ -38,6 +38,8 @@ export class StatisticsComponent implements OnInit {
   cities : Region[] = new Array();
   voivodeships : Region[] = new Array();
 
+  visualizeStatistics = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private statisticsService: StatisticsService,
