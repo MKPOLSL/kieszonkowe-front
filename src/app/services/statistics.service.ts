@@ -40,4 +40,12 @@ export class StatisticsService {
     sendEducation(educationId, isCity) {
         return this.http.get(`${environment.apiUrl}/pocketmoney/statisticsEducation?educationId=${educationId}&isCity=${isCity}`);
     }
+
+    sendRegionAndEducationActual(educationId, regionId){
+        return this.http.post(`${environment.apiUrl}/pocketmoney/statisticsActual`, { educationId, regionId});
+    }
+
+    sendEducationActual(educationId, isCity) {
+        return this.http.get(`${environment.apiUrl}/pocketmoney/statisticsEducationActual?educationId=${educationId}&isCity=${isCity}`);
+    }
 }

@@ -10,6 +10,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { Region } from '@app/_models/region';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-statistics',
@@ -181,6 +182,7 @@ export class StatisticsComponent implements OnInit {
               this.statistics = Object.assign(new Statistics(), data);
               this.statistics = this.roundStatistics(this.statistics)
             }
+            this.loading = false;
           },
           error => {
             this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
@@ -199,6 +201,58 @@ export class StatisticsComponent implements OnInit {
                 element = this.roundStatistics(element)
               )
             }
+            this.loading = false;
+          },
+          error => {
+            this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
+            this.loading = false;
+          });
+    }
+  }
+
+  onSubmitActual() {
+    this.submitted = true;
+
+    this.statistics = null;
+
+    // reset alerts on submit
+    this.alertService.clear();
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    if (!this.visualizeStatistics) {
+      this.statisticsService.sendRegionAndEducationActual(this.f.education.value, this.f.region.value)
+        .pipe(first())
+        .subscribe(
+          data => {
+            if (data != null) {
+              this.statistics = Object.assign(new Statistics(), data);
+              this.statistics = this.roundStatistics(this.statistics)
+            }
+            this.loading = false;
+          },
+          error => {
+            this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
+            this.loading = false;
+          });
+    }
+    else {
+      this.statisticsService.sendEducationActual(this.f.education.value, (this.regionSelector == "Miasta"))
+        .pipe(first())
+        .subscribe(
+          data => {
+            if (data != null) {
+              this.statisticsArray = Object.assign(new Array(), data);
+              this.displayDataonChart(this.statisticsArray);
+              this.statisticsArray.forEach((element) => 
+                element = this.roundStatistics(element)
+              )
+            }
+            this.loading = false;
           },
           error => {
             this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
