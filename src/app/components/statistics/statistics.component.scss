@@ -2,12 +2,15 @@
 
 .checkbox{
     margin-left: 5%;
-    font-size: 15px;
+    font-size: 16px;
+    margin-top: 5%;
+    color: black;
+    
 }
 
 .radio-group {
     display: inline;
-    margin-left: 35%;
+    margin-left: 39%;
 }
   
 .radio-button {
@@ -15,13 +18,14 @@
     margin-left: 5px;
     margin-right: 10px;
 }
+
   
 .selected-value {
-    margin-left: 30%;
+    margin-left: 34%;
 }
 
 .formBorder{
-    border:5px solid lightsteelblue;
+    border:5px solid #766caa;
     width: 55%;
     height: 35%;
     font-family: "Open Sans", sans-serif;  
@@ -66,7 +70,7 @@
 }
 
 .button {
-    background-color: #2f3964; 
+    background-color:#2a2544; 
     border: none;
     color: white;
     padding: 15px 45px;

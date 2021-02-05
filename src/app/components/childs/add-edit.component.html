@@ -1,83 +1,135 @@
-﻿<h1 *ngIf="isAddMode">Dodaj rekord dziecka</h1>
-<h1 *ngIf="!isAddMode">Edycja rekordu dziecka</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="adding-child">
-    <div class="form-row">
-        <div class="form-group col">
-            <label for="name">Imię</label>
-            <input type="text" formControlName="name" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                <div *ngIf="f.name.errors.required">Imię jest wymagane!</div>
+﻿<div *ngIf="isAddMode">
+    <h1>Dodaj rekord dziecka</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="adding-child">
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="name">Imię</label>
+                <input type="text" formControlName="name" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Imię jest wymagane!</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label for="education">Stopień edukacji</label>
-            <select formControlName="education" class="form-control" [(ngModel)]="selectedEducation"
-                [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
-                <option *ngFor="let education of educations" [value]="education.educationDegree">
-                    {{education.educationDegree}}
-                </option>
-            </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label for="education">Region</label>
-            <select formControlName="region" class="form-control" [(ngModel)]="selectedRegion"
-                [ngClass]="{ 'is-invalid': submitted && f.region.errors }">
-                <optgroup label ="Miasta">
-                <option *ngFor="let city of cities" [value]="city.regionName">
-                            {{city.regionName}}
-                </option>
-                </optgroup>
-                <optgroup label ="Województwa">
-                    <option *ngFor="let voivodeship of voivodeships" [value]="voivodeship.regionName">
-                                {{voivodeship.regionName}}
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="education">Stopień edukacji</label>
+                <select formControlName="education" class="form-control" [(ngModel)]="selectedEducation"
+                    [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
+                    <option *ngFor="let education of educations" [value]="education.educationDegree">
+                        {{education.educationDegree}}
                     </option>
-                </optgroup>
-
-            </select>
-            <div>{{selectedEducation}} {{selectedRegion}}</div>
-        </div>
-    </div>
-
-    <!-- <div class="form-group col">
-            <label for="password">
-                Password
-                <em *ngIf="!isAddMode">(Leave blank to keep the same password)</em>
-            </label>
-            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.password.errors.required">Password is required</div>
-                <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-            </div>
-        </div> -->
-
-    <div class="form-row">
-        <div class="form-group col">
-            <label for="plannedAmount">Planned amount</label>
-            <input type="number" formControlName="plannedAmount" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
-            <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
-                <div *ngIf="f.plannedAmount.errors.required">Planned amount is required</div>
+                </select>
             </div>
         </div>
-        <div class="form-group col">
-            <label for="realAmount">Actual amount</label>
-            <input type="number" formControlName="realAmount" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.realAmount.errors }" />
-            <div *ngIf="submitted && f.realAmount.errors" class="invalid-feedback">
-                <div *ngIf="f.realAmount.errors.required">Planned amount is required</div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="education">Region</label>
+                <select formControlName="region" class="form-control" [(ngModel)]="selectedRegion"
+                    [ngClass]="{ 'is-invalid': submitted && f.region.errors }">
+                    <optgroup label="Miasta">
+                        <option *ngFor="let city of cities" [value]="city.regionName">
+                            {{city.regionName}}
+                        </option>
+                    </optgroup>
+                    <optgroup label="Województwa">
+                        <option *ngFor="let voivodeship of voivodeships" [value]="voivodeship.regionName">
+                            {{voivodeship.regionName}}
+                        </option>
+                    </optgroup>
+
+                </select>
+                <div>{{selectedEducation}} {{selectedRegion}}</div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Zapisz
-        </button>
-        <a routerLink="/children" class="btn btn-link">Cofnij</a>
-    </div>
-</form>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="plannedAmount">Planned amount</label>
+                <input type="number" formControlName="plannedAmount" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
+                <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
+                    <div *ngIf="f.plannedAmount.errors.required">Planned amount is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Zapisz
+            </button>
+            <a routerLink="/children" class="btn btn-link">Cofnij</a>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="!isAddMode">
+    <h1>Edycja rekordu dziecka</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="adding-child">
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="name">Imię</label>
+                <input type="text" formControlName="name" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Imię jest wymagane!</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="education">Stopień edukacji</label>
+                <select formControlName="education" class="form-control" [(ngModel)]="selectedEducation"
+                    [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
+                    <option *ngFor="let education of educations" [value]="education.educationDegree">
+                        {{education.educationDegree}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="education">Region</label>
+                <select formControlName="region" class="form-control" [(ngModel)]="selectedRegion"
+                    [ngClass]="{ 'is-invalid': submitted && f.region.errors }">
+                    <optgroup label="Miasta">
+                        <option *ngFor="let city of cities" [value]="city.regionName">
+                            {{city.regionName}}
+                        </option>
+                    </optgroup>
+                    <optgroup label="Województwa">
+                        <option *ngFor="let voivodeship of voivodeships" [value]="voivodeship.regionName">
+                            {{voivodeship.regionName}}
+                        </option>
+                    </optgroup>
+
+                </select>
+                <div>{{selectedEducation}} {{selectedRegion}}</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="plannedAmount">Planned amount</label>
+                <input type="number" formControlName="plannedAmount" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
+                <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
+                    <div *ngIf="f.plannedAmount.errors.required">Planned amount is required</div>
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="realAmount">Actual amount</label>
+                <input type="number" formControlName="realAmount" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.realAmount.errors }" />
+                <div *ngIf="submitted && f.realAmount.errors" class="invalid-feedback">
+                    <div *ngIf="f.realAmount.errors.required">Planned amount is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Zapisz
+            </button>
+            <a routerLink="/children" class="btn btn-link">Cofnij</a>
+        </div>
+    </form>
+</div>
