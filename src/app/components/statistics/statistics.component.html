@@ -2,8 +2,6 @@
     <div class="formBorder">
 
         <mat-tab-group>
-
-
             <mat-tab label="Kwota planowana">
                 <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmit()">
                     <h2>Regiony</h2>
@@ -80,8 +78,7 @@
         </div>
 
         <label class="checkbox">
-            <input type="checkbox" name="chartSelector" value="visualizeStatistics"
-                [(ngModel)]="visualizeStatistics">
+            <input type="checkbox" name="chartSelector" value="visualizeStatistics" [(ngModel)]="visualizeStatistics">
             Statystyki ogólnokrajowe dla stopnia edukacji
         </label>
 
