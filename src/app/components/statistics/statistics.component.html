@@ -27,7 +27,7 @@
                         </ng-template>
                         <ng-template #voivodeshipsBlock>
                             <option hidden [value]="" selected></option>
-                            <option *ngFor="let region of voivodeships" [value]="region.id" selected>
+                            <option *ngFor="let region of voivodeships" [value]="region.id">
                                 {{region.regionName}}
                             </option>
                         </ng-template>
@@ -68,23 +68,23 @@
                     Wybrany format wyszukiwania: <b><i>{{regionSelector}}</i></b>
                 </div>
 
-                <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmitActual()">
+                <form [formGroup]="formActual" class="reg-and-ed" (ngSubmit)="onSubmitActual()">
                     <h2>Regiony</h2>
-                    <select formControlName="region" class="select" (change)="changeRegion($event)">
+                    <select formControlName="regionActual" class="select" (change)="changeRegionActual($event)">
                         <ng-template [ngIf]="regionSelector === 'Miasta'" [ngIfElse]="voivodeshipsBlock">
                             <option hidden [value]="" selected></option>
                             <option *ngFor="let region of cities" [value]="region.id">{{region.regionName}} </option>
                         </ng-template>
                         <ng-template #voivodeshipsBlock>
                             <option hidden [value]="" selected></option>
-                            <option *ngFor="let region of voivodeships" [value]="region.id" selected>
+                            <option *ngFor="let region of voivodeships" [value]="region.id">
                                 {{region.regionName}}
                             </option>
                         </ng-template>
                     </select>
 
                     <h2>Stopnie edukacji</h2>
-                    <select formControlName="education" class="select" (change)="changeEducationDegree($event)">
+                    <select formControlName="educationActual" class="select" (change)="changeEducationDegreeActual($event)">
                         <option *ngFor="let education of educations" [value]="education.id">
                             {{education.educationDegree}}
                         </option>

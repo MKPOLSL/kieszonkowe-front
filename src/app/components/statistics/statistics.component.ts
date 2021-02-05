@@ -52,10 +52,16 @@ export class StatisticsComponent implements OnInit {
   ) { }
 
   get f() { return this.form.controls; }
+  get fActual() { return this.formActual.controls; }
 
   form = this.formBuilder.group({
     region: [''],
     education: ['', [Validators.required]]
+  });
+
+  formActual = this.formBuilder.group({
+    regionActual: [''],
+    educationActual: ['', [Validators.required]]
   });
 
   changeRegion(e) {
@@ -70,12 +76,32 @@ export class StatisticsComponent implements OnInit {
     })
   }
 
+  changeRegionActual(e) {
+    this.regionActual.setValue(e.target.value, {
+      onlySelf: true
+    })
+  }
+
+  changeEducationDegreeActual(e) {
+    this.educationActual.setValue(e.target.value, {
+      onlySelf: true
+    })
+  }
+
   get region() {
     return this.form.get('region');
   }
 
   get education() {
     return this.form.get('education')
+  }
+
+  get regionActual() {
+    return this.formActual.get('regionActual');
+  }
+
+  get educationActual() {
+    return this.formActual.get('educationActual')
   }
 
   ngOnInit(): void {
@@ -219,13 +245,13 @@ export class StatisticsComponent implements OnInit {
     this.alertService.clear();
 
     // stop here if form is invalid
-    if (this.form.invalid) {
+    if (this.formActual.invalid) {
       return;
     }
 
     this.loading = true;
     if (!this.visualizeStatistics) {
-      this.statisticsService.sendRegionAndEducationActual(this.f.education.value, this.f.region.value)
+      this.statisticsService.sendRegionAndEducationActual(this.fActual.educationActual.value, this.fActual.regionActual.value)
         .pipe(first())
         .subscribe(
           data => {
@@ -241,7 +267,7 @@ export class StatisticsComponent implements OnInit {
           });
     }
     else {
-      this.statisticsService.sendEducationActual(this.f.education.value, (this.regionSelector == "Miasta"))
+      this.statisticsService.sendEducationActual(this.fActual.educationActual.value, (this.regionSelector == "Miasta"))
         .pipe(first())
         .subscribe(
           data => {
