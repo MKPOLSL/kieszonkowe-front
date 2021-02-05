@@ -53,12 +53,12 @@ export class DeleteComponent implements OnInit {
         this.user = JSON.parse(localStorage.getItem('user'));
 
         if(this.user.password == this.f.password.value){
-            this.alertService.error("Wpisano piękne hasło");
-            this.accountService.deleteChild(this.id)
+            this.accountService.hideChild(this.id)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.alertService.success('Usunięto rekord dziecka', { keepAfterRouteChange: true });
+                    this.router.navigate(['.', { relativeTo: this.route }]);
                 },
                 error => {
                     this.alertService.error(error);
@@ -66,7 +66,7 @@ export class DeleteComponent implements OnInit {
                 });
         }
         else{
-            this.alertService.error("Wpisano chujowe hasło");
+            this.alertService.error("Wpisano złe hasło");
             this.loading = false;
         }
     }

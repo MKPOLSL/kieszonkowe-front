@@ -112,7 +112,7 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Child added successfully', { keepAfterRouteChange: true });
+                    this.alertService.success('Rekord dziecka został dodany', { keepAfterRouteChange: true });
                     this.router.navigate(['.', { relativeTo: this.route }]);
                 },
                 error => {
@@ -128,7 +128,7 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Child added successfully', { keepAfterRouteChange: true });
+                    this.alertService.success('Zmodyfikowano rekord dziecka', { keepAfterRouteChange: true });
                     this.router.navigate(['.', { relativeTo: this.route }]);
                 },
                 error => {

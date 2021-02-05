@@ -44,7 +44,7 @@ export class AccountService {
     }
 
     deleteChild(childId: string){
-        return this.http.get(`${environment.apiUrl}/children/deleteChild?childId=${childId}`);
+        return this.http.post(`${environment.apiUrl}/children/deleteChild`, { childId });
     }
 
     register(user: User) {
@@ -68,7 +68,7 @@ export class AccountService {
     }
     
     hideChild(childId: string) {
-        return this.http.get(`${environment.apiUrl}/children/hide?childId=${childId}`);
+        return this.http.post(`${environment.apiUrl}/children/hide`, { childId });
     }   
 
     completeChildRecord(childId: string, actualAmount: number) {
