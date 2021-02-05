@@ -43,6 +43,10 @@ export class AccountService {
         this.router.navigate(['/home']);
     }
 
+    deleteChild(childId: string){
+        return this.http.get(`${environment.apiUrl}/children/deleteChild?childId=${childId}`);
+    }
+
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/profile/register`, user);
     }

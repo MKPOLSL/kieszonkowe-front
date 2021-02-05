@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { CompleteComponent } from './complete.component';
+import { DeleteComponent } from './delete.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,7 @@ const routes: Routes = [
             { path: 'add', component: AddEditComponent },
             { path: 'edit/:id', component: AddEditComponent },
             { path: 'complete/:id', component: CompleteComponent },
+            { path: 'delete/:id', component: DeleteComponent },
         ]
     }
 ];

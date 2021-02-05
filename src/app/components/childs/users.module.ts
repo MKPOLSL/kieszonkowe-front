@@ -7,6 +7,7 @@ import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { CompleteComponent } from './complete.component';
+import { DeleteComponent } from './delete.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { CompleteComponent } from './complete.component';
         LayoutComponent,
         ListComponent,
         AddEditComponent,
-        CompleteComponent
+        CompleteComponent,
+        DeleteComponent
     ]
 })
 export class UsersModule { }

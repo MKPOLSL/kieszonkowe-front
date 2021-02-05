@@ -20,12 +20,12 @@
                 <td>{{child.plannedAmount}} pln</td>
                 <td>{{child.actualAmount}} pln</td>
                 <td style="white-space: nowrap">
-                    <a *ngIf="child.actualAmount" routerLink="edit/{{child.id}}" class="btn btn-sm btn-primary mr-1">Edytuj</a>
-                    <a *ngIf="!child.actualAmount" routerLink="complete/{{child.id}}" class="btn btn-sm btn-primary mr-1">Dokończ</a>
-                    <button (click)="deleteUser(child.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="child.isDeleting">
+                    <a *ngIf="child.actualAmount" routerLink="edit/{{child.id}}" class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</a>
+                    <a *ngIf="!child.actualAmount" routerLink="complete/{{child.id}}" class="btn-ed-del btn btn-sm btn-primary mr-1">Dokończ</a>
+                    <a routerLink="delete/{{child.id}}" class="btn-ed-del btn btn-sm btn-danger btn-delete-user" [disabled]="child.isDeleting">
                         <span *ngIf="child.isDeleting" class="spinner-border spinner-border-sm"></span>
                         <span *ngIf="!child.isDeleting">Usuń</span>
-                    </button>
+                    </a>
                 </td>
             </tr>
             <tr *ngIf="loading">
