@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="adding-child">
+    <div class="form-row">
+        <div class="form-group col">
+            <label for="actualAmount">Kwota faktyczna</label>
+            <input type="number" formControlName="actualAmount" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.actualAmount.errors }" />
+            <div *ngIf="submitted && f.actualAmount.errors" class="invalid-feedback">
+                <div *ngIf="f.actualAmount.errors.required">Kwota faktyczna jest wymagana</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Zapisz
+        </button>
+        <a routerLink="/children" class="btn btn-link">Cofnij</a>
+    </div>
+</form>

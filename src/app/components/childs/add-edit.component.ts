@@ -2,10 +2,10 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import  { Child } from '@app/_models/child'
+import { Child } from '@app/_models/child'
 
-import { AccountService, AlertService} from '@app/services';
-import {  StatisticsService } from 'app/services/statistics.service';
+import { AccountService, AlertService } from '@app/services';
+import { StatisticsService } from 'app/services/statistics.service';
 import { Region } from '@app/_models/region';
 import { Education } from '@app/_models/education';
 
@@ -13,19 +13,17 @@ import { Education } from '@app/_models/education';
     selector: 'add-edit',
     templateUrl: 'add-edit.component.html',
     styleUrls: ['./child.component.scss'],
-  })
+})
 export class AddEditComponent implements OnInit {
-    form: FormGroup;
     id: string;
     isAddMode: boolean;
     loading = false;
     submitted = false;
-    // Pobrać te dane z backendu             <----          TODO
-    educations : Education[] = new Array();
-    cities : Region[] = new Array();
-    voivodeships : Region[] = new Array();
-    selectedEducation: string = null;
-    selectedRegion: string = null;
+    
+    child: Child = null;
+    educations: Education[] = new Array();
+    cities: Region[] = new Array();
+    voivodeships: Region[] = new Array();
 
     constructor(
         private statisticsService: StatisticsService,
@@ -34,124 +32,99 @@ export class AddEditComponent implements OnInit {
         private router: Router,
         private accountService: AccountService,
         private alertService: AlertService
-    ) {}
+    ) { }
+
+    formAdd = this.formBuilder.group({
+        name: ['', Validators.required],
+        education: ['', Validators.required],
+        region: ['', Validators.required],
+        plannedAmount: ['', Validators.required],
+    });
+
+    
+    formEdit = this.formBuilder.group({
+        name: ['', Validators.required],
+        education: ['', Validators.required],
+        region: ['', Validators.required],
+        plannedAmount: ['', Validators.required],
+        actualAmount: ['', Validators.required]
+    });
 
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
-        
-        // password not required in edit mode
-        const passwordValidators = [Validators.minLength(6)];
-        if (this.isAddMode) {
-            passwordValidators.push(Validators.required);
-        }
-        
 
-        // this.form = this.formBuilder.group({
-        //     firstName: ['', Validators.required],
-        //     lastName: ['', Validators.required],
-        //     username: ['', Validators.required],
-        //     password: ['', passwordValidators]
-        // });
-
-        this.form = this.formBuilder.group({
-            name: ['', Validators.required],
-            education: ['', Validators.required],
-            region: ['', Validators.required],
-            plannedAmount: ['', Validators.required],
-            actualAmount: ['', Validators.required]
-        });
-
-        if (!this.isAddMode) {
-            this.accountService.getById(this.id)
+        if(!this.isAddMode) {
+            this.accountService.getChild(this.id)
                 .pipe(first())
-                .subscribe(x => {
-                    this.f.firstName.setValue(x.email);
-                    this.f.lastName.setValue(x.id);
-                    this.f.username.setValue(x.username);
-                });
+                .subscribe(child => this.child = child)
         }
 
         this.statisticsService
-        .getEducations()
-        .pipe(first())
-        .subscribe(educations => this.educations = educations);
-  
-      this.statisticsService
-        .getRegions()
-        .pipe(first())
-        .subscribe(regions => {
-            regions.forEach(element => {
-              if(element.isCity == true){
-                this.cities.push(element);
-              } else {
-                this.voivodeships.push(element);
-              }
+            .getEducations()
+            .pipe(first())
+            .subscribe(educations => this.educations = educations);
+
+        this.statisticsService
+            .getRegions()
+            .pipe(first())
+            .subscribe(regions => {
+                regions.forEach(element => {
+                    if (element.isCity == true) {
+                        this.cities.push(element);
+                    } else {
+                        this.voivodeships.push(element);
+                    }
+                });
             });
-          });
 
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.form.controls; }
+    get fAdd() { return this.formAdd.controls; }
+    get fEdit() { return this.formEdit.controls; }
 
-    onSubmit() {
+    onSubmitAdd() {
         this.submitted = true;
-
-        // reset alerts on submit
         this.alertService.clear();
-
-        // stop here if form is invalid
-        if (this.form.invalid) {
+        if (this.formAdd.invalid) {
             return;
         }
-
-        // this.loading = true;
-        // if (this.isAddMode) {
-        //     this.createUser();
-        // } else {
-        //     this.updateUser();
-        // }
-
         this.loading = true;
-        if (this.isAddMode) {
-            this.createChild();
-        } else {
-            this.updateUser();
-        }
+        this.createChild();
     }
 
-    // private createUser() {
-    //     this.accountService.register(this.form.value)
-    //         .pipe(first())
-    //         .subscribe(
-    //             data => {
-    //                 this.alertService.success('User added successfully', { keepAfterRouteChange: true });
-    //                 this.router.navigate(['.', { relativeTo: this.route }]);
-    //             },
-    //             error => {
-    //                 this.alertService.error(error);
-    //                 this.loading = false;
-    //             });
-    // }
+    onSubmitEdit() {
+        this.submitted = true;
+        this.alertService.clear();
+        if (this.formEdit.invalid) {
+            return;
+        }
+        this.updateChild();
+    }
 
-    private updateUser() {
-        this.accountService.update(this.id, this.form.value)
+
+    private updateChild() {
+        let user = JSON.parse(localStorage.getItem('user'));
+        this.accountService.hideChild(this.child.id)
+            .pipe(first())
+            .subscribe();
+        this.accountService.addChild(this.formEdit.value, user.id)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Update successful', { keepAfterRouteChange: true });
-                    this.router.navigate(['..', { relativeTo: this.route }]);
+                    this.alertService.success('Child added successfully', { keepAfterRouteChange: true });
+                    this.router.navigate(['.', { relativeTo: this.route }]);
                 },
                 error => {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+
     }
 
     private createChild() {
         let user = JSON.parse(localStorage.getItem('user'));
-        this.accountService.addChild(this.form.value, user.id)
+        this.accountService.addChild(this.formAdd.value, user.id)
             .pipe(first())
             .subscribe(
                 data => {
@@ -163,6 +136,6 @@ export class AddEditComponent implements OnInit {
                     this.loading = false;
                 });
     }
-  
+
 
 }

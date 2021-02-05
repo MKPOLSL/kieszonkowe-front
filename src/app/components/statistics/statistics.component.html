@@ -1,23 +1,8 @@
-<div class="statistics_page">
+<div class="statisticPage">
     <div class="formBorder">
+
         <mat-tab-group>
             <mat-tab label="Kwota planowana">
-                <div class="radio-group">
-                    <label class="radio-button">
-                        <input type="radio" class="radio-button" name="regionSelector" value="Miasta"
-                            [(ngModel)]="regionSelector">
-                        Miasta
-                    </label>
-                    <label class="radio-button">
-                        <input type="radio" name="regionSelector" value="Województwa" [(ngModel)]="regionSelector"
-                            checked>
-                        Województwa
-                    </label>
-                </div>
-                <div class="selected-value">
-                    Wybrany format wyszukiwania: <b><i>{{regionSelector}}</i></b>
-                </div>
-
                 <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmit()">
                     <h2>Regiony</h2>
                     <select formControlName="region" class="select" (change)="changeRegion($event)">
@@ -27,7 +12,7 @@
                         </ng-template>
                         <ng-template #voivodeshipsBlock>
                             <option hidden [value]="" selected></option>
-                            <option *ngFor="let region of voivodeships" [value]="region.id" selected>
+                            <option *ngFor="let region of voivodeships" [value]="region.id">
                                 {{region.regionName}}
                             </option>
                         </ng-template>
@@ -39,69 +24,64 @@
                             {{education.educationDegree}}
                         </option>
                     </select>
-                    <button [disabled]="loading" class="button"> Zatwierdź 
+                    <button [disabled]="loading" class="button"> Zatwierdź
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     </button>
                 </form>
-                <p>
-                    <label class="checkbox">
-                        <input type="checkbox" class="radio-button" name="chartSelector" value="visualizeStatistics"
-                            [(ngModel)]="visualizeStatistics">
-                        Statystyki ogólnokrajowe dla stopnia edukacji
-                    </label>
-                </p>
             </mat-tab>
             <mat-tab label="Kwota faktyczna">
-                <div class="radio-group">
-                    <label class="radio-button">
-                        <input type="radio" class="radio-button" name="regionSelector" value="Miasta"
-                            [(ngModel)]="regionSelector">
-                        Miasta
-                    </label>
-                    <label class="radio-button">
-                        <input type="radio" name="regionSelector" value="Województwa" [(ngModel)]="regionSelector"
-                            checked>
-                        Województwa
-                    </label>
-                </div>
-                <div class="selected-value">
-                    Wybrany format wyszukiwania: <b><i>{{regionSelector}}</i></b>
-                </div>
-
-                <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmitActual()">
+                <form [formGroup]="formActual" class="reg-and-ed" (ngSubmit)="onSubmitActual()">
                     <h2>Regiony</h2>
-                    <select formControlName="region" class="select" (change)="changeRegion($event)">
+                    <select formControlName="regionActual" class="select" (change)="changeRegionActual($event)">
                         <ng-template [ngIf]="regionSelector === 'Miasta'" [ngIfElse]="voivodeshipsBlock">
                             <option hidden [value]="" selected></option>
                             <option *ngFor="let region of cities" [value]="region.id">{{region.regionName}} </option>
                         </ng-template>
                         <ng-template #voivodeshipsBlock>
                             <option hidden [value]="" selected></option>
-                            <option *ngFor="let region of voivodeships" [value]="region.id" selected>
+                            <option *ngFor="let region of voivodeships" [value]="region.id">
                                 {{region.regionName}}
                             </option>
                         </ng-template>
                     </select>
 
                     <h2>Stopnie edukacji</h2>
-                    <select formControlName="education" class="select" (change)="changeEducationDegree($event)">
+                    <select formControlName="educationActual" class="select"
+                        (change)="changeEducationDegreeActual($event)">
                         <option *ngFor="let education of educations" [value]="education.id">
                             {{education.educationDegree}}
                         </option>
                     </select>
-                    <button [disabled]="loading" class="button"> Zatwierdź 
+                    <button [disabled]="loading" class="button"> Zatwierdź
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     </button>
                 </form>
-                <p>
-                    <label class="checkbox">
-                        <input type="checkbox" class="radio-button" name="chartSelector" value="visualizeStatistics"
-                            [(ngModel)]="visualizeStatistics">
-                        Statystyki ogólnokrajowe dla stopnia edukacji
-                    </label>
-                </p>
             </mat-tab>
+
+
+
         </mat-tab-group>
+        <div class="radio-group">
+            <label class="radio-button">
+                <input type="radio" class="radio-button" name="regionSelector" value="Miasta"
+                    [(ngModel)]="regionSelector">
+                Miasta
+            </label>
+            <label class="radio-button">
+                <input type="radio" name="regionSelector" value="Województwa" [(ngModel)]="regionSelector" checked>
+                Województwa
+            </label>
+        </div>
+
+        <div class="selected-value">
+            Wybrany format wyszukiwania: <b><i>{{regionSelector}}</i></b>
+        </div>
+
+        <label class="checkbox">
+            <input type="checkbox" name="chartSelector" value="visualizeStatistics" [(ngModel)]="visualizeStatistics">
+            Statystyki ogólnokrajowe dla stopnia edukacji
+        </label>
+
 
 
     </div>

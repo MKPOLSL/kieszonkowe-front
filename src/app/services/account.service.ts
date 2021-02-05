@@ -43,22 +43,38 @@ export class AccountService {
         this.router.navigate(['/home']);
     }
 
+    deleteChild(childId: string){
+        return this.http.get(`${environment.apiUrl}/children/deleteChild?childId=${childId}`);
+    }
+
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/profile/register`, user);
     }
 
-    addChild(child: Child, id: string) {
-        return this.http.post(`${environment.apiUrl}/children/addChild`, { id, child });
+    addChild(child: Child, parentId: string) {
+        return this.http.post(`${environment.apiUrl}/children/addChild`, { parentId, child });
     }
 
     getAll() {
         return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }
 
-    getChilds(id: string) {
-        return this.http.get<Child[]>(`${environment.apiUrl}/children/childs?id=${id}`);
+    getChildren(parentId: string) {
+        return this.http.get<Child[]>(`${environment.apiUrl}/children/children?parentId=${parentId}`);
+    }
+
+    getChild(childId: string) {
+        return this.http.get<Child>(`${environment.apiUrl}/children/child?childId=${childId}`);
     }
     
+    hideChild(childId: string) {
+        return this.http.get(`${environment.apiUrl}/children/hide?childId=${childId}`);
+    }   
+
+    completeChildRecord(childId: string, actualAmount: number) {
+        return this.http.post(`${environment.apiUrl}/children/complete`, { childId, actualAmount });
+    }
+
     getById(id: string) {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
@@ -73,7 +89,7 @@ export class AccountService {
                     localStorage.setItem('user', JSON.stringify(user));
 
                     // publish updated user to subscribers
-                    this.userSubject.next(user);
+                    this.userSubject.next(user);        
                 }
                 return x;
             }));
