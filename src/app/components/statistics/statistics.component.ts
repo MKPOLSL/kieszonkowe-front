@@ -28,8 +28,6 @@ export class StatisticsComponent implements OnInit {
 
   regions: Region[] = null;
   educations = null;
-  selectedRegion = null;
-  selectedEducation = null;
 
   statistics: Statistics = null;
   statisticsArray: Statistics[] = null;
@@ -55,7 +53,7 @@ export class StatisticsComponent implements OnInit {
   get f() { return this.form.controls; }
 
   form = this.formBuilder.group({
-    region: ['', [Validators.required]],
+    region: [''],
     education: ['', [Validators.required]]
   });
 
@@ -108,12 +106,12 @@ export class StatisticsComponent implements OnInit {
       meansTable.push(element.meanAmount)
     });
     if (!this.myChart) {
-      this.myChart = new Chart("Statystyki_w_słupku_ty_dupku", {
+      this.myChart = new Chart("Statistics", {
         type: 'bar',
         data: {
           labels: regionsTable,
           datasets: [{
-            label: 'Statystyki_w_słupku_ty_dupku',
+            label: 'Średnia dla danego regionu',
             data: meansTable,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
@@ -144,8 +142,20 @@ export class StatisticsComponent implements OnInit {
           }
         }
       });
+    } else {
+        this.myChart.data.labels = regionsTable;
+        this.myChart.data.datasets[0].data = meansTable;
+        this.myChart.update();
     }
    
+  }
+
+  roundStatistics(statistics: Statistics) {
+    statistics.standardDeviationAmount = Math.round((statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
+    statistics.meanAmount = Math.round((statistics.meanAmount + Number.EPSILON) * 100) / 100
+    statistics.medianAmount = Math.round((statistics.medianAmount + Number.EPSILON) * 100) / 100
+    statistics.modeAmount = Math.round((statistics.modeAmount + Number.EPSILON) * 100) / 100
+    return statistics
   }
 
   onSubmit() {
@@ -169,8 +179,7 @@ export class StatisticsComponent implements OnInit {
           data => {
             if (data != null) {
               this.statistics = Object.assign(new Statistics(), data);
-              this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
-              this.router.navigate([this.returnUrl]);
+              this.statistics = this.roundStatistics(this.statistics)
             }
           },
           error => {
@@ -186,8 +195,9 @@ export class StatisticsComponent implements OnInit {
             if (data != null) {
               this.statisticsArray = Object.assign(new Array(), data);
               this.displayDataonChart(this.statisticsArray);
-              this.statistics.standardDeviationAmount = Math.round((this.statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
-              this.router.navigate([this.returnUrl]);
+              this.statisticsArray.forEach((element) => 
+                element = this.roundStatistics(element)
+              )
             }
           },
           error => {

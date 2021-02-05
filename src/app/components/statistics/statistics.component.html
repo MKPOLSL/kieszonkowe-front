@@ -17,21 +17,20 @@
 
         <form [formGroup]="form" class="reg-and-ed" (ngSubmit)="onSubmit()">
             <h2>Regiony</h2>
-            <select formControlName="region" class="select" [(ngModel)]="selectedRegion"
-                (change)="changeRegion($event)">
+            <select formControlName="region" class="select" (change)="changeRegion($event)">
                 <ng-template [ngIf]="regionSelector === 'Miasta'" [ngIfElse]="voivodeshipsBlock">
-                    <option hidden [value]=""  selected></option>
+                    <option hidden [value]="" selected></option>
                     <option *ngFor="let region of cities" [value]="region.id">{{region.regionName}} </option>
                 </ng-template>
                 <ng-template #voivodeshipsBlock>
-                    <option hidden [value]=""  selected></option>
-                    <option *ngFor="let region of voivodeships" [value]="region.id" selected>{{region.regionName}} </option>
+                    <option hidden [value]="" selected></option>
+                    <option *ngFor="let region of voivodeships" [value]="region.id" selected>{{region.regionName}}
+                    </option>
                 </ng-template>
             </select>
 
             <h2>Stopnie edukacji</h2>
-            <select formControlName="education" class="select" [(ngModel)]="selectedEducation"
-                (change)="changeEducationDegree($event)">
+            <select formControlName="education" class="select" (change)="changeEducationDegree($event)">
                 <option *ngFor="let education of educations" [value]="education.id">{{education.educationDegree}}
                 </option>
             </select>
@@ -67,7 +66,32 @@
             </tbody>
         </table>
     </div>
+    <div *ngIf="statisticsArray" class="table">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width: 25%">Region</th>
+                    <th style="width: 15%">Średnia</th>
+                    <th style="width: 20%">Mediana</th>
+                    <th style="width: 20%">Dominanta</th>
+                    <th style="width: 20%">Odchylenie standardowe</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr *ngFor="let statistics of statisticsArray">
+                    <td>{{statistics.regionName}}</td>
+                    <td>{{statistics.meanAmount}} PLN</td>
+                    <td>{{statistics.medianAmount}} PLN</td>
+                    <td>{{statistics.modeAmount}} PLN</td>
+                    <td>{{statistics.standardDeviationAmount}} PLN</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <div id="divChart">
-    <canvas id="Statystyki_w_słupku_ty_dupku"></canvas>
+    <p>
+        <canvas id="Statistics"></canvas>
+    </p>
 </div>
