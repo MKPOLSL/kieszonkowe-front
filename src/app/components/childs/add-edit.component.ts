@@ -94,7 +94,7 @@ export class AddEditComponent implements OnInit {
     }
 
     onSubmitEdit() {
-            this.submitted = true;
+        this.submitted = true;
         this.alertService.clear();
         if (this.formEdit.invalid) {
             return;
