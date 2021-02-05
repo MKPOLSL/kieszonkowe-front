@@ -42,6 +42,28 @@ export class StatisticsComponent implements OnInit {
   visualizeStatistics = false;
   myChart: Chart = null;
 
+  selectedTabIndex = 0;
+
+  backgroundColors = [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(255, 159, 64, 0.2)'
+  ]
+
+  borderColors = [
+    'rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)'
+  ]
+
+
+
   constructor(
     private formBuilder: FormBuilder,
     private statisticsService: StatisticsService,
@@ -114,7 +136,7 @@ export class StatisticsComponent implements OnInit {
       .getRegions()
       .pipe(first())
       .subscribe(regions => {
-        this.regions = regions;//Object.assign(Region[], regions);
+        this.regions = regions;
         regions.forEach(element => {
           if (element.isCity == true) {
             this.cities.push(element);
@@ -132,30 +154,26 @@ export class StatisticsComponent implements OnInit {
       regionsTable.push(element.regionName);
       meansTable.push(element.meanAmount)
     });
-    if (!this.myChart) {
-      this.myChart = new Chart("Statistics", {
+    if(this.myChart){
+      this.myChart.destroy();
+    }
+    var bgColors = [];
+    for (var i = 0; i < regionsTable.length; i++) {
+      bgColors.push(this.backgroundColors[i % this.backgroundColors.length]);  
+    }
+    var bColors = [];
+    for (var i = 0; i < regionsTable.length; i++) {
+      bColors.push(this.borderColors[i % this.borderColors.length]);  
+    }
+    this.myChart = new Chart("Statistics", {
         type: 'bar',
         data: {
           labels: regionsTable,
           datasets: [{
             label: 'Średnia dla danego regionu',
             data: meansTable,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
+            backgroundColor: bgColors,
+            borderColor: bColors,
             borderWidth: 1
           }]
         },
@@ -168,14 +186,9 @@ export class StatisticsComponent implements OnInit {
             }]
           }
         }
-      });
-    } else {
-        this.myChart.data.labels = regionsTable;
-        this.myChart.data.datasets[0].data = meansTable;
-        this.myChart.update();
-    }
-   
-  }
+    });
+  } 
+
 
   roundStatistics(statistics: Statistics) {
     statistics.standardDeviationAmount = Math.round((statistics.standardDeviationAmount + Number.EPSILON) * 100) / 100
@@ -284,6 +297,13 @@ export class StatisticsComponent implements OnInit {
             this.alertService.error("Za mało wyników w bazie dla tego regionu i stopnia edukacji");
             this.loading = false;
           });
+    }
+  }
+
+  onTabChanged(e) {
+    let clickedIndex = e.index;
+    if(clickedIndex == 1){
+      this.displayDataonChart(this.statisticsArray);
     }
   }
 }
