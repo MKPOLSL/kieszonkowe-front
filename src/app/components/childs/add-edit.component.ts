@@ -15,18 +15,15 @@ import { Education } from '@app/_models/education';
     styleUrls: ['./child.component.scss'],
 })
 export class AddEditComponent implements OnInit {
-    formAdd: FormGroup;
-    formEdit: FormGroup;
     id: string;
     isAddMode: boolean;
     loading = false;
     submitted = false;
-    // Pobrać te dane z backendu             <----          TODO
+    
+    child: Child = null;
     educations: Education[] = new Array();
     cities: Region[] = new Array();
     voivodeships: Region[] = new Array();
-    selectedEducation: string = null;
-    selectedRegion: string = null;
 
     constructor(
         private statisticsService: StatisticsService,
@@ -37,25 +34,32 @@ export class AddEditComponent implements OnInit {
         private alertService: AlertService
     ) { }
 
+    formAdd = this.formBuilder.group({
+        name: ['', Validators.required],
+        education: ['', Validators.required],
+        region: ['', Validators.required],
+        plannedAmount: ['', Validators.required],
+    });
+
+    
+    formEdit = this.formBuilder.group({
+        name: ['', Validators.required],
+        education: ['', Validators.required],
+        region: ['', Validators.required],
+        plannedAmount: ['', Validators.required],
+        actualAmount: ['', Validators.required]
+    });
+
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
 
-        this.formAdd = this.formBuilder.group({
-            name: ['', Validators.required],
-            education: ['', Validators.required],
-            region: ['', Validators.required],
-            plannedAmount: ['', Validators.required],
-        });
+        if(!this.isAddMode) {
+            this.accountService.getChild(this.id)
+                .pipe(first())
+                .subscribe(child => this.child = child)
+        }
 
-        this.formEdit = this.formBuilder.group({
-            name: ['', Validators.required],
-            education: ['', Validators.required],
-            region: ['', Validators.required],
-            plannedAmount: ['', Validators.required],
-            actualAmount: ['', Validators.required]
-        });
-        
         this.statisticsService
             .getEducations()
             .pipe(first())
@@ -90,7 +94,7 @@ export class AddEditComponent implements OnInit {
     }
 
     onSubmitEdit() {
-        this.submitted = true;
+            this.submitted = true;
         this.alertService.clear();
         if (this.formEdit.invalid) {
             return;
@@ -101,6 +105,9 @@ export class AddEditComponent implements OnInit {
 
     private updateChild() {
         let user = JSON.parse(localStorage.getItem('user'));
+        this.accountService.hideChild(this.child.id)
+            .pipe(first())
+            .subscribe();
         this.accountService.addChild(this.formEdit.value, user.id)
             .pipe(first())
             .subscribe(
