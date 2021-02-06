@@ -202,6 +202,8 @@ export class StatisticsComponent implements OnInit {
     this.submitted = true;
 
     this.statistics = null;
+    this.statisticsArray = null;
+    this.selectedTabIndex = 0;
 
     // reset alerts on submit
     this.alertService.clear();
@@ -253,6 +255,8 @@ export class StatisticsComponent implements OnInit {
     this.submitted = true;
 
     this.statistics = null;
+    this.statisticsArray = null;
+    this.selectedTabIndex = 0;
 
     // reset alerts on submit
     this.alertService.clear();
@@ -304,6 +308,11 @@ export class StatisticsComponent implements OnInit {
     let clickedIndex = e.index;
     if(clickedIndex == 1){
       this.displayDataonChart(this.statisticsArray);
+    }
+  }
+  onCheckboxChange(event) {
+    if(!this.visualizeStatistics){
+      this.selectedTabIndex = 0;
     }
   }
 }

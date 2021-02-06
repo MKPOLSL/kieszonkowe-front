@@ -78,14 +78,15 @@
         </div>
 
         <label class="checkbox">
-            <input type="checkbox" name="chartSelector" value="visualizeStatistics" [(ngModel)]="visualizeStatistics">
+            <input type="checkbox" name="chartSelector" value="visualizeStatistics" [(ngModel)]="visualizeStatistics"
+            (change)="onCheckboxChange($event)"> 
             Statystyki ogólnokrajowe dla stopnia edukacji
         </label>
 
 
 
     </div>
-    <div class="formBorder" *ngIf="statistics || statisticsArray">
+    <div class="statisticsBorder">
         <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChanged($event)">
             <mat-tab label="Statystyki">
                 <div *ngIf="statistics" class="table">

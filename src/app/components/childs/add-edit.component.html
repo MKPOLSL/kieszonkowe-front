@@ -1,13 +1,13 @@
 ﻿<div *ngIf="isAddMode">
     <h1>Dodaj rekord dziecka</h1>
-    <form [formGroup]="formAdd" (ngSubmit)="onSubmitAdd()" class="adding-child">
+    <form [formGroup]="form" (ngSubmit)="onSubmitAdd()" class="adding-child">
         <div class="form-row">
             <div class="form-group col">
                 <label for="name">Imię</label>
                 <input type="text" formControlName="name" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && fAdd.name.errors }" />
-                <div *ngIf="submitted && fAdd.name.errors" class="invalid-feedback">
-                    <div *ngIf="fAdd.name.errors.required">Imię jest wymagane!</div>
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Imię jest wymagane!</div>
                 </div>
             </div>
         </div>
@@ -15,7 +15,7 @@
             <div class="form-group col">
                 <label for="education">Stopień edukacji</label>
                 <select formControlName="education" class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && fAdd.education.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
                     <option *ngFor="let education of educations" [value]="education.educationDegree">
                         {{education.educationDegree}}
                     </option>
@@ -26,7 +26,7 @@
             <div class="form-group col">
                 <label for="education">Region</label>
                 <select formControlName="region" class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && fAdd.region.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && f.region.errors }">
                     <optgroup label="Miasta">
                         <option *ngFor="let city of cities" [value]="city.regionName">
                             {{city.regionName}}
@@ -46,9 +46,9 @@
             <div class="form-group col">
                 <label for="plannedAmount">Planned amount</label>
                 <input type="number" formControlName="plannedAmount" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && fAdd.plannedAmount.errors }" />
+                    [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
                 <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
-                    <div *ngIf="fAdd.plannedAmount.errors.required">Planned amount is required</div>
+                    <div *ngIf="f.plannedAmount.errors.required">Planned amount is required</div>
                 </div>
             </div>
         </div>
@@ -64,14 +64,14 @@
 
 <div *ngIf="!isAddMode">
     <h1>Edycja rekordu dziecka</h1>
-    <form [formGroup]="formEdit" (ngSubmit)="onSubmitEdit()" class="adding-child">
+    <form [formGroup]="form" (ngSubmit)="onSubmitEdit()" class="adding-child">
         <div class="form-row">
             <div class="form-group col">
                 <label for="name">Imię</label>
                 <input type="text" formControlName="name" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && fEdit.name.errors }" />
-                <div *ngIf="submitted && fEdit.name.errors" class="invalid-feedback">
-                    <div *ngIf="fEdit.name.errors.required">Imię jest wymagane!</div>
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Imię jest wymagane!</div>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
             <div class="form-group col">
                 <label for="education">Stopień edukacji</label>
                 <select formControlName="education" class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && fEdit.education.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
                     <option *ngFor="let education of educations" [value]="education.educationDegree">
                         {{education.educationDegree}}
                     </option>
@@ -90,7 +90,7 @@
             <div class="form-group col">
                 <label for="education">Region</label>
                 <select formControlName="region" class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && fEdit.region.errors }">
+                    [ngClass]="{ 'is-invalid': submitted && f.region.errors }">
                     <optgroup label="Miasta">
                         <option *ngFor="let city of cities" [value]="city.regionName">
                             {{city.regionName}}
@@ -108,19 +108,11 @@
         </div>
         <div class="form-row">
             <div class="form-group col">
-                <label for="plannedAmount">Planned amount</label>
+                <label for="plannedAmount">Kwota planowana</label>
                 <input type="number" formControlName="plannedAmount" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && fEdit.plannedAmount.errors }" />
-                <div *ngIf="submitted && fEdit.plannedAmount.errors" class="invalid-feedback">
-                    <div *ngIf="fEdit.plannedAmount.errors.required">Planned amount is required</div>
-                </div>
-            </div>
-            <div class="form-group col">
-                <label for="actualAmount">Actual amount</label>
-                <input type="number" formControlName="actualAmount" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && fEdit.actualAmount.errors }" />
-                <div *ngIf="submitted && fEdit.actualAmount.errors" class="invalid-feedback">
-                    <div *ngIf="fEdit.actualAmount.errors.required">Planned amount is required</div>
+                    [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
+                <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
+                    <div *ngIf="f.plannedAmount.errors.required">Kwota planowana jest wymagana</div>
                 </div>
             </div>
         </div>
