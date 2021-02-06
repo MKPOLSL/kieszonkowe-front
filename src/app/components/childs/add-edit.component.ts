@@ -8,6 +8,7 @@ import { AccountService, AlertService } from '@app/services';
 import { StatisticsService } from 'app/services/statistics.service';
 import { Region } from '@app/_models/region';
 import { Education } from '@app/_models/education';
+import { AppRoutingModule } from '@app/app-routing.module';
 
 @Component({
     selector: 'add-edit',
@@ -31,7 +32,8 @@ export class AddEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private appRoutingModule: AppRoutingModule
     ) { }
 
     form = this.formBuilder.group({
@@ -108,7 +110,7 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Rekord dziecka został dodany', { keepAfterRouteChange: true });
+                    this.alertService.success('Zmodyfikowano rekord dziecka', { keepAfterRouteChange: true });
                     this.router.navigate(['.', { relativeTo: this.route }]);
                 },
                 error => {
@@ -128,8 +130,10 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Zmodyfikowano rekord dziecka', { keepAfterRouteChange: true });
-                    this.router.navigate(['.', { relativeTo: this.route }]);
+                    this.router.navigate(['.', { relativeTo: this.route }])
+                       .then(() => {
+                           window.location.reload();
+                       });
                 },
                 error => {
                     this.alertService.error(error);

@@ -29,7 +29,7 @@ export class RegisterMockComponent implements OnInit {
     ngOnInit() {
         this.isAdult = this.setMaxDate();
         this.form = this.formBuilder.group({
-            email: ['', Validators.required ],
+            email: ['', [Validators.required, Validators.email]],
             birthdate: ['', Validators.required],
             username: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(6)]]
@@ -58,12 +58,18 @@ export class RegisterMockComponent implements OnInit {
             return;
         }
 
+        var date = parseInt(this.f.birthdate.value.substring(0, 4));
+        var currentDate = parseInt(new Date().toISOString().substring(0,4));
+        if(currentDate - date < 18) {
+            this.alertService.error('Aby korzystać z tej strony musisz mieć conajmniej 18 lat!', { keepAfterRouteChange: true });
+            return;
+        }
         this.loading = true;
         this.accountService.register(this.form.value)
             .pipe(first())
             .subscribe(
                 data => {
-                    this.alertService.success('Registration successful', { keepAfterRouteChange: true });
+                    this.alertService.success('Rejestracja powiodła się', { keepAfterRouteChange: true });
                     this.router.navigate(['/login'], { relativeTo: this.route });
                 },
                 error => {

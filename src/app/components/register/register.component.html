@@ -11,7 +11,7 @@
             </div>    
             <div class="form-group">
                 <label for="birthdate">Data urodzenia</label>
-                <input type="date" max="{{isAdult}}" formControlName="birthdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.birthdate.errors }" />
+                <input type="date" max="{{isAdult}}" formControlName="birthdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.birthdate.errors }"/>
                 <div *ngIf="submitted && f.birthdate.errors" class="invalid-feedback">
                     <div *ngIf="f.birthdate.errors.required">Data urodzenia jest wymagana!</div>
                 </div>
@@ -21,6 +21,7 @@
                 <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                 <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <div *ngIf="f.email.errors.required">E-mail jest wymagany!</div>
+                    <div *ngIf="f.email.errors.email">Niepoprawny format adresu e-mail</div>
                 </div>
             </div>                   
             <div class="form-group">
