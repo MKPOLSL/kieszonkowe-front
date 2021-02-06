@@ -120,6 +120,10 @@ export class AddEditComponent implements OnInit {
 
     private createChild() {
         let user = JSON.parse(localStorage.getItem('user'));
+        if(!user.isActive) {
+            user.isActive = true;
+            localStorage.setItem('user', JSON.stringify(user));
+        }
         this.accountService.addChild(this.form.value, user.id)
             .pipe(first())
             .subscribe(

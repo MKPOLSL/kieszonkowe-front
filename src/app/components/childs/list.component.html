@@ -18,7 +18,7 @@
                 <td>{{child.education.educationDegree}}</td>
                 <td>{{child.region.regionName}}</td>
                 <td>{{child.plannedAmount}} pln</td>
-                <td>{{child.actualAmount}} pln</td>
+                <td><div *ngIf="child.actualAmount != null">{{child.actualAmount}} pln</div></td>
                 <td style="white-space: nowrap">
                     <a *ngIf="child.actualAmount" routerLink="edit/{{child.id}}" class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</a>
                     <a *ngIf="!child.actualAmount" routerLink="complete/{{child.id}}" class="btn-ed-del btn btn-sm btn-primary mr-1">Dokończ</a>
