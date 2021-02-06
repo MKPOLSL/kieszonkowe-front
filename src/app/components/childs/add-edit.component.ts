@@ -15,7 +15,6 @@ import { Education } from '@app/_models/education';
     styleUrls: ['./child.component.scss'],
 })
 export class AddEditComponent implements OnInit {
-    name = new FormControl('ab');
     id: string;
     isAddMode: boolean;
     loading = false;
@@ -36,7 +35,7 @@ export class AddEditComponent implements OnInit {
     ) { }
 
     form = this.formBuilder.group({
-        name: [this.name.value, Validators.required],
+        name: ['', Validators.required],
         education: ['', Validators.required],
         region: ['', Validators.required],
         plannedAmount: ['', Validators.required],
