@@ -7,6 +7,8 @@ import { RegisterMockComponent } from './components/register/register.component'
 import { RegisterComponent } from './components/register-unused/register.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AuthGuard } from './_helpers';
+import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
 
 // const accountModule = () => import('@app/components/register-mock/account.module').then(x => x.AccountModule);
 const usersModule = () => import('@app/components/childs/users.module').then(x => x.UsersModule);
@@ -18,7 +20,9 @@ const routes: Routes = [
 { path: 'login', component: LoginComponent },
 { path: 'register', component: RegisterMockComponent },
 { path: 'children', loadChildren: usersModule, canActivate: [AuthGuard] },
-{ path: 'statistics', component: StatisticsComponent }
+{ path: 'statistics', component: StatisticsComponent },
+{ path: 'profile', component: ProfileComponent },
+{ path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({
