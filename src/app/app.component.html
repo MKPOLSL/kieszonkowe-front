@@ -2,12 +2,14 @@
     <nav class="nav">
       <ul>
         <li class="nav-primary"><a routerLink="/home">Strona Główna</a></li>
-        <li class="nav-primary"><a routerLink="/profile">Profil</a></li>
+        <li *ngIf="admin" class="nav-primary"><a routerLink="/panel">Panel administratora</a></li>
+        <li *ngIf="user" class="nav-primary"><a routerLink="/profile">Profil</a></li>
         <li *ngIf="!user" class="nav-primary"><a routerLink="/register">Rejestracja</a></li>
         <li *ngIf="!user" class="nav-primary"><a routerLink="/login">Logowanie</a></li>
         <li *ngIf="user" class="nav-primary"><a routerLink="/children" routerLinkActive>Twoje dzieci</a></li>
         <li *ngIf="user && user.isActive" class="nav-primary"><a routerLink="/statistics" >Statystyki</a></li>
         <li *ngIf="user" class="nav-primary"><a (click)="logout()">Wyloguj</a></li>
+        <li *ngIf="admin" class="nav-primary"><a (click)="adminLogout()">Wyloguj</a></li>
       </ul>
     </nav>
   </div>     
