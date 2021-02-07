@@ -14,14 +14,16 @@ export class ProfileComponent implements OnInit {
   dataForm: FormGroup;
   passwordForm: FormGroup;
 
-  loading = false;
+  loadingPasswordForm = false;
+  loadingDataForm
+
   isAdult = false;
 
-  passwordChanged = false;
+  passwordChanged = false; // <---------------------------- Komunikaty 
   passwordSubmitted = false;
   passwordNotConfirmed = true;
 
-  dataChanged = false;
+  dataChanged = false; // <---------------------------- Komunikaty 
   dataSubmitted = false;
 
   user : User;
@@ -51,12 +53,8 @@ export class ProfileComponent implements OnInit {
           
     this.dataF.login.setValue(this.user.username);
     this.dataF.email.setValue(this.user.email);
-    this.dataF.birthdate.setValue(this.user.)
+    this.dataF.birthdate.setValue(this.user.birthDate);
 
-        this.f.name.setValue(child.name);
-        this.f.education.setValue(child.education.educationDegree);
-        this.f.region.setValue(child.region.regionName);
-        this.f.plannedAmount.setValue(child.plannedAmount);
 
   }
 
@@ -91,7 +89,7 @@ export class ProfileComponent implements OnInit {
         return;
     }
 
-    this.loading = true;
+    this.loadingDataForm = true;
 
   }
 
@@ -104,7 +102,7 @@ export class ProfileComponent implements OnInit {
         return;
     }
 
-
+    this.loadingPasswordForm = true;
   }
 
 }
