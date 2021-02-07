@@ -46,12 +46,12 @@ export class PanelComponent implements OnInit {
     password: ['', Validators.required],
     email: ['', Validators.required],
     birthdate: ['', Validators.required],
-    isActive: ['', Validators.required]
+    isActive: [false, Validators.required]
   });
 
   formRegion = this.formBuilder.group({
     regionName: ['', Validators.required],
-    isCity: ['', Validators.required]
+    isCity: [false, Validators.required]
   });
 
   formEducation = this.formBuilder.group({
@@ -181,6 +181,7 @@ export class PanelComponent implements OnInit {
           data => {
             var child = Object.assign(new Child(), data);
             this.children.push(child);
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -196,6 +197,7 @@ export class PanelComponent implements OnInit {
             this.children = this.children.filter(element => element.id != child.id);
             this.children.push(child);
             this.children.sort();
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -219,6 +221,7 @@ export class PanelComponent implements OnInit {
           data => {
             var parent = Object.assign(new User(), data);
             this.users.push(parent);
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -234,6 +237,7 @@ export class PanelComponent implements OnInit {
             this.users = this.users.filter(element => element.id != parent.id);
             this.users.push(parent);
             this.users.sort();
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -258,6 +262,7 @@ export class PanelComponent implements OnInit {
           data => {
             var region = Object.assign(new Region(), data);
             this.regions.push(region);
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -273,6 +278,7 @@ export class PanelComponent implements OnInit {
             this.regions = this.regions.filter(element => element.id != region.id);
             this.regions.push(region);
             this.regions.sort();
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -297,6 +303,7 @@ export class PanelComponent implements OnInit {
           data => {
             var education = Object.assign(new Education(), data);
             this.educations.push(education);
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -312,6 +319,7 @@ export class PanelComponent implements OnInit {
             this.educations = this.educations.filter(element => element.id != education.id);
             this.educations.push(education);
             this.educations.sort();
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -335,6 +343,7 @@ export class PanelComponent implements OnInit {
           data => {
             var admin = Object.assign(new Admin(), data);
             this.admins.push(admin);
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);
@@ -350,6 +359,7 @@ export class PanelComponent implements OnInit {
             this.admins = this.admins.filter(element => element.id != admin.id);
             this.admins.push(admin);
             this.admins.sort();
+            this.loading = false;
           },
           error => {
             this.alertService.error(error);

@@ -41,10 +41,13 @@
                     </div>
                     <div class="form-group col">
                         <label for="isActive">Czy aktywny</label>
-                        <input type="text" formControlName="isActive" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && fParent.isActive.errors }" />
-                        <div *ngIf="submitted && fParent.isActive.errors" class="invalid-feedback">
-                            <div *ngIf="fParent.isActive.errors.required">E-mail jest wymagany!</div>
+                        <select formControlName="isActive" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fParent.isActive.errors }">
+                            <option [ngValue]="true">true</option>
+                            <option [ngValue]="false">false</option>
+                        </select>
+                        <div *ngIf="submitted && fParent.isCity.errors" class="invalid-feedback">
+                            <div *ngIf="fParent.isCity.errors.required">Pole czy aktywny jest wymagane!</div>
                         </div>
                     </div>
                 </div>
@@ -95,7 +98,7 @@
             </table>
         </mat-tab>
         <mat-tab label="Rekordy dziecka">
-            <form [formGroup]="formChild" class="form"  (ngSubmit)="onSubmitChild()">
+            <form [formGroup]="formChild" class="form" (ngSubmit)="onSubmitChild()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="name">ID rodzica</label>
@@ -159,48 +162,47 @@
                     </button>
                 </div>
             </form>
-            <div class="pane">
-                <table class="table table-striped">
-                    <tr>
-                        <th style="width: 10%">ID</th>
-                        <th style="width: 15%">Imię</th>
-                        <th style="width: 20%">Region</th>
-                        <th style="width: 15%">Stopień edukacji</th>
-                        <th style="width: 15%">Kwota planowana</th>
-                        <th style="width: 15%">Kwota faktyczna</th>
-                        <th style="width: 10%">ID rodzica</th>
-                        <th style="width: 5%"></th>
+            <table class="table table-striped">
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 15%">Imię</th>
+                    <th style="width: 15%">Region</th>
+                    <th style="width: 15%">Stopień edukacji</th>
+                    <th style="width: 10%">Kwota planowana</th>
+                    <th style="width: 10%">Kwota faktyczna</th>
+                    <th style="width: 15%">ID rodzica</th>
+                    <th style="width: 5%"></th>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let child of children">
+                        <td>{{child.id}}</td>
+                        <td>{{child.name}}</td>
+                        <td>{{child.region.regionName}}</td>
+                        <td>{{child.education.educationDegree}}</td>
+                        <td>{{child.plannedAmount}}</td>
+                        <td>{{child.actualAmount}}</td>
+                        <td>{{child.parentId}}</td>
+                        <td style="white-space: nowrap">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1"
+                                (click)="editChild(child.id)">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user"
+                                (click)="deleteChild(child.id)">
+                                Usuń
+                            </button>
+                        </td>
                     </tr>
-                    <tbody>
-                        <tr *ngFor="let child of children">
-                            <td>{{child.id}}</td>
-                            <td>{{child.name}}</td>
-                            <td>{{child.region.regionName}}</td>
-                            <td>{{child.education.educationDegree}}</td>
-                            <td>{{child.plannedAmount}}</td>
-                            <td>{{child.actualAmount}}</td>
-                            <td>{{child.parentId}}</td>
-                            <td style="white-space: nowrap">
-                                <button class="btn-ed-del btn btn-sm btn-primary mr-1"
-                                    (click)="editChild(child.id)">Edytuj</button>
-                                <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user"
-                                    (click)="deleteChild(child.id)">
-                                    Usuń
-                                </button>
-                            </td>
-                        </tr>
-                        <tr *ngIf="loading">
-                            <td colspan="6" class="text-center">
-                                <span class="spinner-border spinner-border-lg align-center"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <tr *ngIf="loading">
+                        <td colspan="6" class="text-center">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-            </div>
+
         </mat-tab>
         <mat-tab label="Regiony">
-            <form [formGroup]="formRegion" class="form"  (ngSubmit)="onSubmitRegion()">
+            <form [formGroup]="formRegion" class="form" (ngSubmit)="onSubmitRegion()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="regionName">Nazwa regionu</label>
@@ -214,8 +216,8 @@
                     <div class="form-group col">
                         <label for="isCity">Czy miasto</label>
                         <select formControlName="isCity" class="form-control">
-                            <option value="true">true</option>
-                            <option value="false">false</option>
+                            <option [ngValue]="true">true</option>
+                            <option [ngValue]="false">false</option>
                         </select>
                         <div *ngIf="submitted && fRegion.isCity.errors" class="invalid-feedback">
                             <div *ngIf="fRegion.isCity.errors.required">Pole czy miasto jest wymagane!</div>
@@ -265,14 +267,15 @@
 
         </mat-tab>
         <mat-tab label="Stopnie edukacji">
-            <form [formGroup]="formEducation" class="form"  (ngSubmit)="onSubmitEducation()">
+            <form [formGroup]="formEducation" class="form" (ngSubmit)="onSubmitEducation()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="educationDegree">Stopień edukacji</label>
                         <input type="text" formControlName="educationDegree" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && fEducation.educationDegree.errors }" />
                         <div *ngIf="submitted && fEducation.educationDegree.errors" class="invalid-feedback">
-                            <div *ngIf="fEducation.educationDegree.errors.required">Stopień edukacji jest wymagany!</div>
+                            <div *ngIf="fEducation.educationDegree.errors.required">Stopień edukacji jest wymagany!
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -317,7 +320,7 @@
 
         </mat-tab>
         <mat-tab label="Administratorzy">
-            <form [formGroup]="formAdmin" class="form"  (ngSubmit)="onSubmitAdmin()">
+            <form [formGroup]="formAdmin" class="form" (ngSubmit)="onSubmitAdmin()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="username">Nazwa użytkownika</label>
@@ -362,8 +365,10 @@
                         <td>{{admin.username}}</td>
                         <td>{{admin.password}}</td>
                         <td style="white-space: nowrap">
-                            <button class="btn-ed-del btn btn-sm btn-primary mr-1" (click)="editAdmin(admin.id)">Edytuj</button>
-                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user" (click)="editAdmin(admin.id)">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1"
+                                (click)="editAdmin(admin.id)">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user"
+                                (click)="editAdmin(admin.id)">
                                 Usuń
                             </button>
                         </td>
