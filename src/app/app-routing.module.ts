@@ -7,8 +7,8 @@ import { RegisterMockComponent } from './components/register/register.component'
 import { RegisterComponent } from './components/register-unused/register.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { AuthGuard } from './_helpers';
-import { ProfileComponent } from './profile/profile.component';
-import { AdminComponent } from './admin/admin.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 // const accountModule = () => import('@app/components/register-mock/account.module').then(x => x.AccountModule);
 const usersModule = () => import('@app/components/childs/users.module').then(x => x.UsersModule);
