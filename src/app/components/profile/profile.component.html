@@ -1,1 +1,69 @@
-<p>profile works!</p>
+<div class="card">
+    <h4 class="card-header">Panel edycji profilu</h4>
+    <h4 class="card-body">Witaj użytkowniku!</h4>
+    <div class="card-body">
+
+        <form [formGroup]="dataForm" (ngSubmit)="onSubmitDataChange()">
+            <div class="form-group">
+                <label for="login">Nazwa użytkownika</label>
+                <input type="text" formControlName="login" class="form-control"
+                    [ngClass]="{ 'is-invalid': dataSubmitted && dataF.login.errors }" />
+                <div *ngIf="dataSubmitted && dataF.login.errors" class="invalid-feedback">
+                    <div *ngIf="dataF.login.errors.required">Nazwa użytkownika jest wymagana!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Data urodzenia</label>
+                <input type="date" max="{{isAdult}}" formControlName="birthdate" class="form-control"
+                    [ngClass]="{ 'is-invalid': dataSubmitted && dataF.birthdate.errors }" />
+                <div *ngIf="dataSubmitted && dataF.birthdate.errors" class="invalid-feedback">
+                    <div *ngIf="dataF.birthdate.errors.required">Data urodzenia jest wymagana!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Adres e-mail</label>
+                <input type="email" formControlName="email" class="form-control"
+                    [ngClass]="{ 'is-invalid': dataSubmitted && dataF.email.errors }" />
+                <div *ngIf="dataSubmitted && dataF.email.errors" class="invalid-feedback">
+                    <div *ngIf="dataF.email.errors.required">E-mail jest wymagany!</div>
+                    <div *ngIf="dataF.email.errors.email">Niepoprawny format adresu e-mail</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Zapisz zmiany
+                </button>
+            </div>
+        </form>
+
+
+        <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPasswordChange()">
+            <div class="form-group">
+                <label for="password">Hasło</label>
+                <input type="password" formControlName="password" class="form-control"
+                    [ngClass]="{ 'is-invalid': passwordSubmitted && passwordF.password.errors }" />
+                <div *ngIf="passwordSubmitted && passwordF.password.errors" class="invalid-feedback">
+                    <div *ngIf="passwordF.password.errors.required">Hasło jest wymagane!</div>
+                    <div *ngIf="passwordF.password.errors.minlength">Hasło musi składać się z przynajmniej 6 znaków</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmation">Potwierdź Hasło</label>
+                <input type="password" formControlName="confirmation" class="form-control"
+                    [ngClass]="{ 'is-invalid': passwordSubmitted && passwordNotConfirmed }" />
+                <div *ngIf="passwordSubmitted && passwordNotConfirmed" class="invalid-feedback">
+                    Wprowadzone Hasła są różne!
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Zapisz zmiany
+                </button>
+            </div>
+        </form>
+
+        
+    </div>
+</div>
