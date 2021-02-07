@@ -43,6 +43,14 @@ export class AccountService {
         this.router.navigate(['/home']);
     }
 
+    updateParentPassword(Id, password){
+        return this.http.post(`${environment.apiUrl}/profile/updateUserPassword`, {Id, password});
+    }
+
+    updateParentData(Id, username, email, birthDate){
+        return this.http.post(`${environment.apiUrl}/profile/updateUserData`, {Id, username, email, birthDate});
+    }
+
     deleteChild(childId: string){
         return this.http.post(`${environment.apiUrl}/children/deleteChild`, JSON.stringify(childId), {'headers': { 'content-type': 'application/json'}});
     }

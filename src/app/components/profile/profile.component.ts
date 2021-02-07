@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@app/services';
 import { AccountService } from '@app/services/account.service';
 import { User } from '@app/_models/user';
+import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -30,8 +30,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private accountService: AccountService,
     private alertService: AlertService
   ) { }
@@ -50,12 +48,14 @@ export class ProfileComponent implements OnInit {
     })
     
     this.user = JSON.parse(localStorage.getItem('user'));
-          
+    this.updateDataFormFields();
+
+  }
+
+  updateDataFormFields(){
     this.dataF.username.setValue(this.user.username);
     this.dataF.email.setValue(this.user.email);
     this.dataF.birthDate.setValue(this.user.birthDate);
-
-
   }
 
   setMaxDate() {
@@ -75,14 +75,13 @@ export class ProfileComponent implements OnInit {
 
   onSubmitDataChange(){
     this.dataSubmitted = true;
-
     this.alertService.clear();
        
     if (this.dataForm.invalid) {
         return;
     }
 
-    var date = parseInt(this.dataF.birthdate.value.substring(0, 4));
+    var date = parseInt(this.dataF.birthDate.value.substring(0, 4));
     var currentDate = parseInt(new Date().toISOString().substring(0,4));
     if(currentDate - date < 18) {
         this.alertService.error('Aby korzystać z tej strony musisz mieć conajmniej 18 lat!', { keepAfterRouteChange: true });
@@ -90,7 +89,20 @@ export class ProfileComponent implements OnInit {
     }
 
     this.loadingDataForm = true;
-
+    this.accountService.updateParentData(
+      this.user.id, this.dataF.username.value,
+      this.dataF.email.value, this.dataF.birthDate.value)
+            .pipe(first())
+            .subscribe(data => {
+              this.user = Object.assign(new User(), data);
+              localStorage.setItem('user', JSON.stringify(this.user));
+              this.updateDataFormFields();
+              this.loadingDataForm = false;
+            },
+            error => {
+              this.alertService.error(error);
+              this.loadingDataForm = false;
+          });         
   }
 
   onSubmitPasswordChange(){
@@ -103,6 +115,17 @@ export class ProfileComponent implements OnInit {
     }
 
     this.loadingPasswordForm = true;
+    this.accountService.updateParentPassword(
+      this.user.id, this.passwordF.password.value)
+      .pipe(first()).subscribe(data => {
+        this.user = Object.assign(new User(), data);
+              localStorage.setItem('user', JSON.stringify(this.user));
+              this.loadingPasswordForm = false;
+      },
+      error => {
+        this.alertService.error(error);
+        this.loadingPasswordForm = false;
+    });
   }
 
 }
