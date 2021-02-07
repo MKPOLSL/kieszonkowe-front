@@ -20,7 +20,7 @@ export class PanelComponent implements OnInit {
   regions: Region[] = null;
   admins: Admin[] = null;
   children: Child[] = null;
-  users = null;
+  users: User[] = null;
   educations: Education[] = null;
 
   loading = false;
@@ -132,7 +132,7 @@ export class PanelComponent implements OnInit {
     this.fParent.username.setValue(user.username);
     this.fParent.password.setValue(user.password);
     this.fParent.email.setValue(user.email);
-    this.fParent.birthdate.setValue(user.birthdate);
+    this.fParent.birthdate.setValue(user.birthDate);
     this.fParent.isActive.setValue(user.isActive);
   }
 
@@ -140,13 +140,96 @@ export class PanelComponent implements OnInit {
     this.users = this.users.filter(element => element.id != userId);
   }
 
+  editAdmin(adminId) {  
+    this.isAddMode = false;
+    var admin = this.admins.find(admin => admin.id === adminId);
+    this.fAdmin.ID.setValue(admin.id);
+    this.fAdmin.username.setValue(admin.username);
+    this.fAdmin.password.setValue(admin.password);
+  }
+
+  deleteAdmin(adminId) {
+    this.admins = this.admins.filter(element => element.id != adminId);
+  }
+
+  editRegion(regionId) {  
+    this.isAddMode = false;
+    var region = this.regions.find(region => region.id === regionId);
+    this.fRegion.ID.setValue(region.id);
+    this.fRegion.regionName.setValue(region.regionName);
+    this.fRegion.isCity.setValue(region.isCity);
+  }
+
+  deleteRegion(regionId) {
+    this.regions = this.regions.filter(element => element.id != regionId);
+  }
+
+  editEducation(educationId) {  
+    this.isAddMode = false;
+    var education = this.educations.find(user => user.id === educationId);
+    this.fEducation.ID.setValue(education.id);
+    this.fEducation.educationDegree.setValue(education.educationDegree);
+  }
+
+  deleteEducation(educationId) {
+    this.educations = this.educations.filter(element => element.id != educationId);
+  }
+
 
   onSubmitChild() {
+    this.submitted = true;
 
+    this.alertService.clear();
+
+    if (this.formChild.invalid) {
+        return;
+    }
+
+    this.loading = true;
+    if(this.isAddMode){
+      this.adminService.addChild(this.formChild.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var child = Object.assign(new Child(), data);
+            this.children.push(child);
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+    }
+    else {
+      this.adminService.updateChild(this.formChild.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var child = Object.assign(new Child(), data);
+            this.children = this.children.filter(element => element.id != child.id);
+            this.children.push(child);
+            this.children.sort();
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+        }
   }
 
   onSubmitParent() {
-    
+
+  }
+
+  onSubmitRegion() {
+
+  }
+
+  onSubmitEducation() {
+
+  }
+
+  onSubmitAdmin() {
+
   }
 
 }
