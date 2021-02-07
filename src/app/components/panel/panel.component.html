@@ -4,12 +4,6 @@
             <form [formGroup]="formParent" (ngSubmit)="onSubmitParent()">
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="ID">ID</label>
-                        <input type="text" formControlName="ID" class="form-control"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col">
                         <label for="username">Nazwa użytkownika</label>
                         <input type="text" formControlName="username" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && fParent.username.errors }" />
@@ -47,10 +41,10 @@
                     </div>
                     <div class="form-group col">
                         <label for="isActive">Czy aktywny</label>
-                        <input type="text" formControlName="birthdate" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && fParent.email.errors }" />
-                        <div *ngIf="submitted && fParent.email.errors" class="invalid-feedback">
-                            <div *ngIf="fParent.email.errors.required">E-mail jest wymagany!</div>
+                        <input type="text" formControlName="isActive" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fParent.isActive.errors }" />
+                        <div *ngIf="submitted && fParent.isActive.errors" class="invalid-feedback">
+                            <div *ngIf="fParent.isActive.errors.required">E-mail jest wymagany!</div>
                         </div>
                     </div>
                 </div>
@@ -58,6 +52,10 @@
                     <button [disabled]="loading" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Dodaj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                        class="btn btn-success">
+                        Dodawanie
                     </button>
                 </div>
             </form>
@@ -80,8 +78,10 @@
                         <td>{{user.birthDate}}</td>
                         <td>{{user.isActive}}</td>
                         <td style="white-space: nowrap">
-                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
-                            <button (click)="deleteUser(user.id)" class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1"
+                                (click)="editUser(user.id)">Edytuj</button>
+                            <button (click)="deleteUser(user.id)"
+                                class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
                                 Usuń
                             </button>
                         </td>
@@ -98,12 +98,8 @@
             <form [formGroup]="formChild" (ngSubmit)="onSubmitChild()">
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="name">ID</label>
-                        <input type="text" formControlName="ID" class="form-control"/>
-                    </div>
-                    <div class="form-group col">
                         <label for="name">ID rodzica</label>
-                        <input type="text" formControlName="parentID" class="form-control"/>
+                        <input type="text" formControlName="parentID" class="form-control" />
                     </div>
                 </div>
                 <div class="form-row">
@@ -119,7 +115,7 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="education">Stopień edukacji</label>
-                        <select formControlName="education" class="form-control" 
+                        <select formControlName="education" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && fChild.education.errors }">
                             <option *ngFor="let education of educations" [value]="education.educationDegree">
                                 {{education.educationDegree}}
@@ -130,11 +126,11 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="education">Region</label>
-                        <select formControlName="region" class="form-control" 
+                        <select formControlName="region" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && fChild.region.errors }">
-                                <option *ngFor="let region of regions" [value]="region.regionName">
-                                    {{region.regionName}}
-                                </option>
+                            <option *ngFor="let region of regions" [value]="region.regionName">
+                                {{region.regionName}}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -149,17 +145,21 @@
                     </div>
                     <div class="form-group col">
                         <label for="actualAmount">Kwota faktyczna</label>
-                        <input type="number" formControlName="actualAmount" class="form-control"/>
+                        <input type="number" formControlName="actualAmount" class="form-control" />
                     </div>
                     <div class="form-group col">
                         <label for="isHidden">Czy ukryty</label>
-                        <input type="text" formControlName="isHidden" class="form-control"/>
+                        <input type="text" formControlName="isHidden" class="form-control" />
                     </div>
                 </div>
                 <div class="form-group">
                     <button [disabled]="loading" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                        Dodaj
+                        Zapisz
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                        class="btn btn-success">
+                        Dodawanie
                     </button>
                 </div>
             </form>
@@ -187,8 +187,10 @@
                             <td>{{child.isHidden}}</td>
                             <td>{{child.parentId}}</td>
                             <td style="white-space: nowrap">
-                                <button class="btn-ed-del btn btn-sm btn-primary mr-1" (click)="editChild(child.id)">Edytuj</button>
-                                <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user" (click)="deleteChild(child.id)">
+                                <button class="btn-ed-del btn btn-sm btn-primary mr-1"
+                                    (click)="editChild(child.id)">Edytuj</button>
+                                <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user"
+                                    (click)="deleteChild(child.id)">
                                     Usuń
                                 </button>
                             </td>
@@ -200,10 +202,44 @@
                         </tr>
                     </tbody>
                 </table>
-    
+
             </div>
         </mat-tab>
         <mat-tab label="Regiony">
+            <form [formGroup]="formRegion" (ngSubmit)="onSubmitRegion()">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="regionName">Nazwa regionu</label>
+                        <input type="text" formControlName="regionName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fRegion.username.errors }" />
+                        <div *ngIf="submitted && fRegion.regionName.errors" class="invalid-feedback">
+                            <div *ngIf="fRegion.regionName.errors.required">Nazwa regionu jest wymagana!</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="isCity">Czy miasto</label>
+                        <select formControlName="isCity" class="form-control">
+                            <option value="true">true</option>
+                            <option value="false">false</option>
+                        </select>
+                        <div *ngIf="submitted && fRegion.isCity.errors" class="invalid-feedback">
+                            <div *ngIf="fRegion.isCity.errors.required">Pole czy miasto jest wymagane!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Dodaj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                        class="btn btn-success">
+                        Dodawanie
+                    </button>
+                </div>
+            </form>
             <table class="table table-striped">
                 <tr>
                     <th style="width: 15%">ID</th>
@@ -217,8 +253,10 @@
                         <td>{{region.regionName}}</td>
                         <td>{{region.isCity}}</td>
                         <td style="white-space: nowrap">
-                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
-                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1"
+                                (click)="editRegion(region.id)">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user"
+                                (click)="deleteRegion(region.id)">
                                 Usuń
                             </button>
                         </td>
@@ -233,6 +271,29 @@
 
         </mat-tab>
         <mat-tab label="Stopnie edukacji">
+            <form [formGroup]="formEducation" (ngSubmit)="onSubmitEducation()">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="educationDegree">Stopień edukacji</label>
+                        <input type="text" formControlName="educationDegree" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fEducation.educationDegree.errors }" />
+                        <div *ngIf="submitted && fEducation.educationDegree.errors" class="invalid-feedback">
+                            <div *ngIf="fEducation.educationDegree.errors.required">Stopień edukacji jest wymagany!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Dodaj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                        class="btn btn-success">
+                        Dodawanie
+                    </button>
+                </div>
+            </form>
             <table class="table table-striped">
                 <tr>
                     <th style="width: 15%">ID</th>
@@ -244,8 +305,10 @@
                         <td>{{education.id}}</td>
                         <td>{{education.educationDegree}}</td>
                         <td style="white-space: nowrap">
-                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
-                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1"
+                                (click)="editEducation(education.id)">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user"
+                                (click)="deleteEducation(education.id)">
                                 Usuń
                             </button>
                         </td>
@@ -260,6 +323,38 @@
 
         </mat-tab>
         <mat-tab label="Administratorzy">
+            <form [formGroup]="formAdmin" (ngSubmit)="onSubmitAdmin()">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="username">Nazwa użytkownika</label>
+                        <input type="text" formControlName="username" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fAdmin.username.errors }" />
+                        <div *ngIf="submitted && fAdmin.username.errors" class="invalid-feedback">
+                            <div *ngIf="fAdmin.username.errors.required">Login jest wymagany!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="password">Hasło</label>
+                        <input type="text" formControlName="password" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fAdmin.password.errors }" />
+                        <div *ngIf="submitted && fAdmin.password.errors" class="invalid-feedback">
+                            <div *ngIf="fAdmin.password.errors.required">Hasło jest wymagane!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Dodaj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                        class="btn btn-success">
+                        Dodawanie
+                    </button>
+                </div>
+            </form>
             <table class="table table-striped">
                 <tr>
                     <th style="width: 15%">ID</th>
@@ -273,8 +368,8 @@
                         <td>{{admin.username}}</td>
                         <td>{{admin.password}}</td>
                         <td style="white-space: nowrap">
-                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
-                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1" (click)="editAdmin(admin.id)">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user" (click)="editAdmin(admin.id)">
                                 Usuń
                             </button>
                         </td>

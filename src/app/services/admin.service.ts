@@ -64,4 +64,64 @@ export class AdminService {
   getAdministrators() {
     return this.http.get<Admin[]>(`${environment.apiUrl}/admin/panel/administrators`);
   }
+
+  deleteChild(childId: string) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/children/delete`, { childId });
+  }
+  
+  deleteParent(parentId: string) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/parents/delete`, { parentId });
+  }
+
+  deleteRegion(regionId: string) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/regions/delete`, { regionId });
+  }
+
+  deleteEducation(educationId: string) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/educations/delete`, { educationId });
+  }
+
+  deleteAdmin(adminId: string) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/administrators/delete`, { adminId });
+  }
+
+  addChild(child: Child) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/children/add`, { child });
+  }
+  
+  addParent(parent: User) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/parents/add`, { parent });
+  }
+
+  addRegion(region: Region) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/regions/add`, { region });
+  }
+
+  addEducation(education: Education) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/educations/add`, { education });
+  }
+
+  addAdmin(admin: Admin) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/administrators/add`, { admin });
+  }
+
+  updateChild(child: Child) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/children/update`, { child });
+  }
+  
+  updateParent(parent: User) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/parents/update`, { parent });
+  }
+
+  updateRegion(region: Region) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/regions/update`, { region });
+  }
+
+  updateEducation(education: Education) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/educations/update`, { education });
+  }
+
+  updateAdmin(admin: Admin) {
+    return this.http.post(`${environment.apiUrl}/admin/panel/administrators/update`, { admin });
+  }
 }
