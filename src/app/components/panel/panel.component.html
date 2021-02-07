@@ -1,7 +1,7 @@
 <div class="panelBorder">
     <mat-tab-group>
         <mat-tab label="Użytkownicy">
-            <form [formGroup]="formParent" (ngSubmit)="onSubmitParent()">
+            <form [formGroup]="formParent" class="form" (ngSubmit)="onSubmitParent()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="username">Nazwa użytkownika</label>
@@ -95,7 +95,7 @@
             </table>
         </mat-tab>
         <mat-tab label="Rekordy dziecka">
-            <form [formGroup]="formChild" (ngSubmit)="onSubmitChild()">
+            <form [formGroup]="formChild" class="form"  (ngSubmit)="onSubmitChild()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="name">ID rodzica</label>
@@ -206,7 +206,7 @@
             </div>
         </mat-tab>
         <mat-tab label="Regiony">
-            <form [formGroup]="formRegion" (ngSubmit)="onSubmitRegion()">
+            <form [formGroup]="formRegion" class="form"  (ngSubmit)="onSubmitRegion()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="regionName">Nazwa regionu</label>
@@ -271,7 +271,7 @@
 
         </mat-tab>
         <mat-tab label="Stopnie edukacji">
-            <form [formGroup]="formEducation" (ngSubmit)="onSubmitEducation()">
+            <form [formGroup]="formEducation" class="form"  (ngSubmit)="onSubmitEducation()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="educationDegree">Stopień edukacji</label>
@@ -323,7 +323,7 @@
 
         </mat-tab>
         <mat-tab label="Administratorzy">
-            <form [formGroup]="formAdmin" (ngSubmit)="onSubmitAdmin()">
+            <form [formGroup]="formAdmin" class="form"  (ngSubmit)="onSubmitAdmin()">
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="username">Nazwa użytkownika</label>
