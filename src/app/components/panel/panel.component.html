@@ -1,1 +1,293 @@
-<p>panel works!</p>
+<div class="panelBorder">
+    <mat-tab-group>
+        <mat-tab label="Użytkownicy">
+            <form [formGroup]="formParent" (ngSubmit)="onSubmitParent()">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="ID">ID</label>
+                        <input type="text" formControlName="ID" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="username">Nazwa użytkownika</label>
+                        <input type="text" formControlName="username" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fParent.username.errors }" />
+                        <div *ngIf="submitted && fParent.username.errors" class="invalid-feedback">
+                            <div *ngIf="fParent.username.errors.required">Nazwa użytkownika jest wymagana!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="password">Hasło</label>
+                        <input type="text" formControlName="password" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fParent.password.errors }" />
+                        <div *ngIf="submitted && fParent.password.errors" class="invalid-feedback">
+                            <div *ngIf="fParent.password.errors.required">Hasło jest wymagane!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="email">E-mail</label>
+                        <input type="text" formControlName="email" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fParent.email.errors }" />
+                        <div *ngIf="submitted && fParent.email.errors" class="invalid-feedback">
+                            <div *ngIf="fParent.email.errors.required">E-mail jest wymagany!</div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label for="birthdate">Data urodzenia</label>
+                        <input type="text" formControlName="birthdate" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fParent.email.errors }" />
+                        <div *ngIf="submitted && fParent.email.errors" class="invalid-feedback">
+                            <div *ngIf="fParent.email.errors.required">E-mail jest wymagany!</div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label for="isActive">Czy aktywny</label>
+                        <input type="text" formControlName="birthdate" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fParent.email.errors }" />
+                        <div *ngIf="submitted && fParent.email.errors" class="invalid-feedback">
+                            <div *ngIf="fParent.email.errors.required">E-mail jest wymagany!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Dodaj
+                    </button>
+                </div>
+            </form>
+            <table class="table table-striped">
+                <tr>
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 15%">Login</th>
+                    <th style="width: 20%">Hasło</th>
+                    <th style="width: 20%">E-mail</th>
+                    <th style="width: 20%">Data urodzenia</th>
+                    <th style="width: 10%">Czy aktywny</th>
+                    <th style="width: 5%"></th>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.password}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.birthDate}}</td>
+                        <td>{{user.isActive}}</td>
+                        <td style="white-space: nowrap">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
+                            <button (click)="deleteUser(user.id)" class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                                Usuń
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="loading">
+                        <td colspan="6" class="text-center">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </mat-tab>
+        <mat-tab label="Rekordy dziecka">
+            <form [formGroup]="formChild" (ngSubmit)="onSubmitChild()">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="name">ID</label>
+                        <input type="text" formControlName="ID" class="form-control"/>
+                    </div>
+                    <div class="form-group col">
+                        <label for="name">ID rodzica</label>
+                        <input type="text" formControlName="parentID" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="name">Imię</label>
+                        <input type="text" formControlName="name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fChild.name.errors }" />
+                        <div *ngIf="submitted && fChild.name.errors" class="invalid-feedback">
+                            <div *ngIf="fChild.name.errors.required">Imię jest wymagane!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="education">Stopień edukacji</label>
+                        <select formControlName="education" class="form-control" 
+                            [ngClass]="{ 'is-invalid': submitted && fChild.education.errors }">
+                            <option *ngFor="let education of educations" [value]="education.educationDegree">
+                                {{education.educationDegree}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="education">Region</label>
+                        <select formControlName="region" class="form-control" 
+                            [ngClass]="{ 'is-invalid': submitted && fChild.region.errors }">
+                                <option *ngFor="let region of regions" [value]="region.regionName">
+                                    {{region.regionName}}
+                                </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="plannedAmount">Kwota planowana</label>
+                        <input type="number" formControlName="plannedAmount" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && fChild.plannedAmount.errors }" />
+                        <div *ngIf="submitted && fChild.plannedAmount.errors" class="invalid-feedback">
+                            <div *ngIf="fChild.plannedAmount.errors.required">Kwota planowana jest wymagana</div>
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label for="actualAmount">Kwota faktyczna</label>
+                        <input type="number" formControlName="actualAmount" class="form-control"/>
+                    </div>
+                    <div class="form-group col">
+                        <label for="isHidden">Czy ukryty</label>
+                        <input type="text" formControlName="isHidden" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Dodaj
+                    </button>
+                </div>
+            </form>
+            <div class="pane">
+                <table class="table table-striped">
+                    <tr>
+                        <th style="width: 10%">ID</th>
+                        <th style="width: 15%">Imię</th>
+                        <th style="width: 20%">Region</th>
+                        <th style="width: 15%">Stopień edukacji</th>
+                        <th style="width: 15%">Kwota planowana</th>
+                        <th style="width: 15%">Kwota faktyczna</th>
+                        <th style="width: 5%">Czy ukryty</th>
+                        <th style="width: 10%">ID rodzica</th>
+                        <th style="width: 5%"></th>
+                    </tr>
+                    <tbody>
+                        <tr *ngFor="let child of children">
+                            <td>{{child.id}}</td>
+                            <td>{{child.name}}</td>
+                            <td>{{child.region.regionName}}</td>
+                            <td>{{child.education.educationDegree}}</td>
+                            <td>{{child.plannedAmount}}</td>
+                            <td>{{child.actualAmount}}</td>
+                            <td>{{child.isHidden}}</td>
+                            <td>{{child.parentId}}</td>
+                            <td style="white-space: nowrap">
+                                <button class="btn-ed-del btn btn-sm btn-primary mr-1" (click)="editChild(child.id)">Edytuj</button>
+                                <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user" (click)="deleteChild(child.id)">
+                                    Usuń
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="loading">
+                            <td colspan="6" class="text-center">
+                                <span class="spinner-border spinner-border-lg align-center"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+            </div>
+        </mat-tab>
+        <mat-tab label="Regiony">
+            <table class="table table-striped">
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 15%">Nazwa regionu</th>
+                    <th style="width: 20%">Czy miasto</th>
+                    <th style="width: 5%"></th>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let region of regions">
+                        <td>{{region.id}}</td>
+                        <td>{{region.regionName}}</td>
+                        <td>{{region.isCity}}</td>
+                        <td style="white-space: nowrap">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                                Usuń
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="loading">
+                        <td colspan="6" class="text-center">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </mat-tab>
+        <mat-tab label="Stopnie edukacji">
+            <table class="table table-striped">
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 15%">Stopień edukacji</th>
+                    <th style="width: 5%"></th>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let education of educations">
+                        <td>{{education.id}}</td>
+                        <td>{{education.educationDegree}}</td>
+                        <td style="white-space: nowrap">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                                Usuń
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="loading">
+                        <td colspan="6" class="text-center">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </mat-tab>
+        <mat-tab label="Administratorzy">
+            <table class="table table-striped">
+                <tr>
+                    <th style="width: 15%">ID</th>
+                    <th style="width: 15%">Login</th>
+                    <th style="width: 20%">Hasło</th>
+                    <th style="width: 5%"></th>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let admin of admins">
+                        <td>{{admin.id}}</td>
+                        <td>{{admin.username}}</td>
+                        <td>{{admin.password}}</td>
+                        <td style="white-space: nowrap">
+                            <button class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</button>
+                            <button class="btn-ed-del btn btn-sm btn-danger btn-delete-user">
+                                Usuń
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="loading">
+                        <td colspan="6" class="text-center">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </mat-tab>
+
+    </mat-tab-group>
+</div>

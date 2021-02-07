@@ -1,0 +1,20 @@
+.panelBorder{
+    border:5px solid #766caa;
+    width: 80%;
+    height: 80%;
+    font-family: "Open Sans", sans-serif;  
+    top: 20%;
+    left: 35%;
+    margin-top: 2%;
+    margin-left: 16%;
+}
+
+.pane {
+    display: inline-block;
+    overflow-y: scroll;
+    max-height:75%;
+    width: 100%;
+}
+table {
+    text-align: center;
+}

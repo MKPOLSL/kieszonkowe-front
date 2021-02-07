@@ -3,6 +3,7 @@ export class User {
     username: string;
     password: string;
     email: string;
+    birthDate: string;
     isActive: boolean;
     token: string;
 }

@@ -6,6 +6,10 @@ import { Admin } from '@app/_models/admin';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { Child } from '@app/_models/child';
+import { User } from '@app/_models';
+import { Education } from '@app/_models/education';
+import { Region } from '@app/_models/region';
 
 @Injectable({providedIn: 'root'})
 export class AdminService {
@@ -23,6 +27,7 @@ export class AdminService {
   public get adminValue(): Admin {
     return this.adminSubject.value;
   }
+
   login(username, password) {
     return this.http.post<Admin>(`${environment.apiUrl}/admin/authenticate`, { username, password })
         .pipe(map(admin => {
@@ -38,5 +43,25 @@ export class AdminService {
     localStorage.removeItem('admin');
     this.adminSubject.next(null);
     this.router.navigate(['/home']);
+  }
+
+  getChildren() {
+    return this.http.get<Child[]>(`${environment.apiUrl}/admin/panel/children`);
+  }
+  
+  getParents() {
+    return this.http.get<User[]>(`${environment.apiUrl}/admin/panel/parents`);
+  }
+
+  getRegions() {
+    return this.http.get<Region[]>(`${environment.apiUrl}/admin/panel/regions`);
+  }
+
+  getEducations() {
+    return this.http.get<Education[]>(`${environment.apiUrl}/admin/panel/educations`);
+  }
+
+  getAdministrators() {
+    return this.http.get<Admin[]>(`${environment.apiUrl}/admin/panel/administrators`);
   }
 }

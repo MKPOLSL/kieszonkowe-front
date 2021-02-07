@@ -55,10 +55,6 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/children/addChild`, { parentId, child });
     }
 
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
-    }
-
     getChildren(parentId: string) {
         return this.http.get<Child[]>(`${environment.apiUrl}/children/children?parentId=${parentId}`);
     }
