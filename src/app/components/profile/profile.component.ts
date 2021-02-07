@@ -40,8 +40,8 @@ export class ProfileComponent implements OnInit {
 
     this.dataForm = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
-      login: ['', Validators.required],
-      birthdate: ['', Validators.required],
+      username: ['', Validators.required],
+      birthDate: ['', Validators.required],
     })
 
     this.passwordForm = this.formBuilder.group({
@@ -51,9 +51,9 @@ export class ProfileComponent implements OnInit {
     
     this.user = JSON.parse(localStorage.getItem('user'));
           
-    this.dataF.login.setValue(this.user.username);
+    this.dataF.username.setValue(this.user.username);
     this.dataF.email.setValue(this.user.email);
-    this.dataF.birthdate.setValue(this.user.birthDate);
+    this.dataF.birthDate.setValue(this.user.birthDate);
 
 
   }
