@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '@app/services';
 import { AccountService } from '@app/services/account.service';
-
+import { User } from '@app/_models/user';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -24,6 +24,8 @@ export class ProfileComponent implements OnInit {
   dataChanged = false;
   dataSubmitted = false;
 
+  user : User;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -33,6 +35,7 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     this.dataForm = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
       login: ['', Validators.required],
@@ -42,8 +45,19 @@ export class ProfileComponent implements OnInit {
     this.passwordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmation: ['', [Validators.required, Validators.minLength(6)]]
-    },
-    )
+    })
+    
+    this.user = JSON.parse(localStorage.getItem('user'));
+          
+    this.dataF.login.setValue(this.user.username);
+    this.dataF.email.setValue(this.user.email);
+    this.dataF.birthdate.setValue(this.user.)
+
+        this.f.name.setValue(child.name);
+        this.f.education.setValue(child.education.educationDegree);
+        this.f.region.setValue(child.region.regionName);
+        this.f.plannedAmount.setValue(child.plannedAmount);
+
   }
 
   setMaxDate() {
