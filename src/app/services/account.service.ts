@@ -43,11 +43,6 @@ export class AccountService {
         this.router.navigate(['/home']);
     }
 
-    onAdminLogin() {
-        localStorage.removeItem('user');
-        this.userSubject.next(null);
-    }
-
     deleteChild(childId: string){
         return this.http.post(`${environment.apiUrl}/children/deleteChild`, JSON.stringify(childId), {'headers': { 'content-type': 'application/json'}});
     }

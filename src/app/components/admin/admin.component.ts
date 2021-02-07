@@ -55,8 +55,8 @@ export class AdminComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.accountService.onAdminLogin();
-                    this.router.navigate([this.returnUrl]);
+                    this.accountService.logout();
+                    //this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.alertService.error(error);

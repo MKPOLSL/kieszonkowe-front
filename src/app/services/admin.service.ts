@@ -20,7 +20,9 @@ export class AdminService {
       this.admin = this.adminSubject.asObservable();
   }
 
-
+  public get adminValue(): Admin {
+    return this.adminSubject.value;
+  }
   login(username, password) {
     return this.http.post<Admin>(`${environment.apiUrl}/admin/authenticate`, { username, password })
         .pipe(map(admin => {
