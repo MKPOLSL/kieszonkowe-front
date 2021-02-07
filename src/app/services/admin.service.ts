@@ -86,7 +86,7 @@ export class AdminService {
   }
 
   addChild(child: Child) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/children/add`, { child });
+    return this.http.post(`${environment.apiUrl}/admin/panel/children/add`, child);
   }
   
   addParent(parent: User) {
@@ -94,11 +94,11 @@ export class AdminService {
   }
 
   addRegion(region: Region) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/regions/add`, { region });
+    return this.http.post(`${environment.apiUrl}/admin/panel/regions/add`, region);
   }
 
   addEducation(education: Education) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/educations/add`, { education });
+    return this.http.post(`${environment.apiUrl}/admin/addd`, education);
   }
 
   addAdmin(admin: Admin) {
