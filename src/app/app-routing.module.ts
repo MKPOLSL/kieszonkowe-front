@@ -9,6 +9,7 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { AuthGuard } from './_helpers';
 import { AdminComponent } from './components/admin/admin.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PanelComponent } from './components/panel/panel.component';
 
 // const accountModule = () => import('@app/components/register-mock/account.module').then(x => x.AccountModule);
 const usersModule = () => import('@app/components/childs/users.module').then(x => x.UsersModule);
@@ -22,7 +23,8 @@ const routes: Routes = [
 { path: 'children', loadChildren: usersModule, canActivate: [AuthGuard] },
 { path: 'statistics', component: StatisticsComponent },
 { path: 'profile', component: ProfileComponent },
-{ path: 'admin', component: AdminComponent }
+{ path: 'admin', component: AdminComponent },
+{ path: 'panel', component: PanelComponent }
 ];
 
 @NgModule({
