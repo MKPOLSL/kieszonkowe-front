@@ -28,7 +28,6 @@ export class PanelComponent implements OnInit {
   isAddMode = true;
 
   formChild = this.formBuilder.group({
-    ID: [''],
     parentID: [''],
     name: ['', Validators.required],
     education: ['', Validators.required],
@@ -39,13 +38,11 @@ export class PanelComponent implements OnInit {
   });
 
   formAdmin = this.formBuilder.group({
-    ID: [''],
     username: ['', Validators.required],
     password: ['', Validators.required]
   });
 
   formParent = this.formBuilder.group({
-    ID: [''],
     username: ['', Validators.required],
     password: ['', Validators.required],
     email: ['', Validators.required],
@@ -54,13 +51,11 @@ export class PanelComponent implements OnInit {
   });
 
   formRegion = this.formBuilder.group({
-    ID: [''],
     regionName: ['', Validators.required],
     isCity: ['', Validators.required]
   });
 
   formEducation = this.formBuilder.group({
-    ID: [''],
     educationDegree: ['', Validators.required]
   });
 
@@ -177,7 +172,6 @@ export class PanelComponent implements OnInit {
 
 
   onSubmitChild() {
-    this.submitted = true;
 
     this.alertService.clear();
 
@@ -222,10 +216,80 @@ export class PanelComponent implements OnInit {
 
   onSubmitRegion() {
 
+    this.alertService.clear();
+
+    if (this.formRegion.invalid) {
+        return;
+    }
+
+    this.loading = true;
+    if(this.isAddMode){
+      this.adminService.addRegion(this.formRegion.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var region = Object.assign(new Region(), data);
+            this.regions.push(region);
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+    }
+    else {
+      this.adminService.updateRegion(this.formRegion.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var region = Object.assign(new Region(), data);
+            this.regions = this.regions.filter(element => element.id != region.id);
+            this.regions.push(region);
+            this.regions.sort();
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+        }
   }
 
   onSubmitEducation() {
 
+    this.alertService.clear();
+
+    if (this.formEducation.invalid) {
+        return;
+    }
+
+    this.loading = true;
+    if(this.isAddMode){
+      this.adminService.addEducation(this.formEducation.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var education = Object.assign(new Education(), data);
+            this.educations.push(education);
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+    }
+    else {
+      this.adminService.updateEducation(this.formEducation.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var child = Object.assign(new Child(), data);
+            this.children = this.children.filter(element => element.id != child.id);
+            this.children.push(child);
+            this.children.sort();
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+        }
   }
 
   onSubmitAdmin() {
