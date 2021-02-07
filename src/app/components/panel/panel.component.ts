@@ -33,7 +33,6 @@ export class PanelComponent implements OnInit {
     education: ['', Validators.required],
     region: ['', Validators.required],
     plannedAmount: ['', Validators.required],
-    isHidden: ['', Validators.required],
     actualAmount: ['']
   });
 
@@ -106,7 +105,6 @@ export class PanelComponent implements OnInit {
   editChild(childId) {  
     this.isAddMode = false;
     var child = this.children.find(child => child.id === childId);
-    this.fChild.ID.setValue(child.id);
     this.fChild.parentID.setValue(child.parentId);
     this.fChild.name.setValue(child.name);
     this.fChild.education.setValue(child.education.educationDegree);
@@ -123,7 +121,6 @@ export class PanelComponent implements OnInit {
   editUser(userId) {  
     this.isAddMode = false;
     var user = this.users.find(user => user.id === userId);
-    this.fParent.ID.setValue(user.id);
     this.fParent.username.setValue(user.username);
     this.fParent.password.setValue(user.password);
     this.fParent.email.setValue(user.email);
@@ -138,7 +135,6 @@ export class PanelComponent implements OnInit {
   editAdmin(adminId) {  
     this.isAddMode = false;
     var admin = this.admins.find(admin => admin.id === adminId);
-    this.fAdmin.ID.setValue(admin.id);
     this.fAdmin.username.setValue(admin.username);
     this.fAdmin.password.setValue(admin.password);
   }
@@ -150,7 +146,6 @@ export class PanelComponent implements OnInit {
   editRegion(regionId) {  
     this.isAddMode = false;
     var region = this.regions.find(region => region.id === regionId);
-    this.fRegion.ID.setValue(region.id);
     this.fRegion.regionName.setValue(region.regionName);
     this.fRegion.isCity.setValue(region.isCity);
   }
@@ -162,7 +157,6 @@ export class PanelComponent implements OnInit {
   editEducation(educationId) {  
     this.isAddMode = false;
     var education = this.educations.find(user => user.id === educationId);
-    this.fEducation.ID.setValue(education.id);
     this.fEducation.educationDegree.setValue(education.educationDegree);
   }
 
@@ -211,7 +205,41 @@ export class PanelComponent implements OnInit {
   }
 
   onSubmitParent() {
+    this.alertService.clear();
 
+    if (this.formParent.invalid) {
+        return;
+    }
+
+    this.loading = true;
+    if(this.isAddMode){
+      this.adminService.addParent(this.formParent.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var parent = Object.assign(new User(), data);
+            this.users.push(parent);
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+    }
+    else {
+      this.adminService.updateParent(this.formParent.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var parent = Object.assign(new User(), data);
+            this.users = this.users.filter(element => element.id != parent.id);
+            this.users.push(parent);
+            this.users.sort();
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+        }
   }
 
   onSubmitRegion() {
@@ -280,10 +308,10 @@ export class PanelComponent implements OnInit {
         .pipe(first())
         .subscribe( 
           data => {
-            var child = Object.assign(new Child(), data);
-            this.children = this.children.filter(element => element.id != child.id);
-            this.children.push(child);
-            this.children.sort();
+            var education = Object.assign(new Education(), data);
+            this.educations = this.educations.filter(element => element.id != education.id);
+            this.educations.push(education);
+            this.educations.sort();
           },
           error => {
             this.alertService.error(error);
@@ -293,7 +321,41 @@ export class PanelComponent implements OnInit {
   }
 
   onSubmitAdmin() {
+    this.alertService.clear();
 
+    if (this.formAdmin.invalid) {
+        return;
+    }
+
+    this.loading = true;
+    if(this.isAddMode){
+      this.adminService.addAdmin(this.formAdmin.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var admin = Object.assign(new Admin(), data);
+            this.admins.push(admin);
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+    }
+    else {
+      this.adminService.updateAdmin(this.formEducation.value)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            var admin = Object.assign(new Admin(), data);
+            this.admins = this.admins.filter(element => element.id != admin.id);
+            this.admins.push(admin);
+            this.admins.sort();
+          },
+          error => {
+            this.alertService.error(error);
+            this.loading = false;
+          });
+        }
   }
 
 }

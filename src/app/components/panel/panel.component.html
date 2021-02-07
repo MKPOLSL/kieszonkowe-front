@@ -147,10 +147,6 @@
                         <label for="actualAmount">Kwota faktyczna</label>
                         <input type="number" formControlName="actualAmount" class="form-control" />
                     </div>
-                    <div class="form-group col">
-                        <label for="isHidden">Czy ukryty</label>
-                        <input type="text" formControlName="isHidden" class="form-control" />
-                    </div>
                 </div>
                 <div class="form-group">
                     <button [disabled]="loading" class="btn btn-primary">
@@ -172,7 +168,6 @@
                         <th style="width: 15%">Stopień edukacji</th>
                         <th style="width: 15%">Kwota planowana</th>
                         <th style="width: 15%">Kwota faktyczna</th>
-                        <th style="width: 5%">Czy ukryty</th>
                         <th style="width: 10%">ID rodzica</th>
                         <th style="width: 5%"></th>
                     </tr>
@@ -184,7 +179,6 @@
                             <td>{{child.education.educationDegree}}</td>
                             <td>{{child.plannedAmount}}</td>
                             <td>{{child.actualAmount}}</td>
-                            <td>{{child.isHidden}}</td>
                             <td>{{child.parentId}}</td>
                             <td style="white-space: nowrap">
                                 <button class="btn-ed-del btn btn-sm btn-primary mr-1"
