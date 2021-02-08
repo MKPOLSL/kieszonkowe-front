@@ -9,6 +9,7 @@ import { Chart } from 'chart.js'
 import { Region } from '@app/_models/region';
 import { User } from '@app/_models';
 import { Education } from '@app/_models/education';
+import { SnackBarService } from '@app/snack-bar.service';
 
 @Component({
   selector: 'app-statistics',
@@ -71,8 +72,8 @@ export class StatisticsComponent implements OnInit {
     private statisticsService: StatisticsService,
     private alertService: AlertService,
     private router: Router,
-    private route: ActivatedRoute
-
+    private route: ActivatedRoute,
+    private snackService: SnackBarService
   ) { }
 
   get f() { return this.form.controls; }
@@ -143,6 +144,8 @@ export class StatisticsComponent implements OnInit {
         this.educationsActual = educations;
         if(this.educationsActual.length > 0) {
           this.hasChildrenWithActualAmount = true;
+        } else {
+          this.snackService.openSnackBar("Aby oglądać statystyki dla kwot faktycznych, musisz dokończyć wprowadzanie rekordu w zakładce 'Twoje dzieci'", "OK");
         }
       });
 

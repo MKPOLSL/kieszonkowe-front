@@ -21,7 +21,7 @@ export class AddEditComponent implements OnInit {
     isAddMode: boolean;
     loading = false;
     submitted = false;
-    
+
     child: Child = null;
     educations: Education[] = new Array();
     cities: Region[] = new Array();
@@ -49,10 +49,11 @@ export class AddEditComponent implements OnInit {
         this.id = this.route.snapshot.params['id'];
         this.isAddMode = !this.id;
 
-        if(!this.isAddMode) {
+        if (!this.isAddMode) {
             this.childrenService.getChild(this.id)
                 .pipe(first())
-                .subscribe(child => { this.child = child
+                .subscribe(child => {
+                    this.child = child
                     this.f.name.setValue(child.name);
                     this.f.education.setValue(child.education.educationDegree);
                     this.f.region.setValue(child.region.regionName);
@@ -123,7 +124,7 @@ export class AddEditComponent implements OnInit {
 
     private createChild() {
         let user = JSON.parse(localStorage.getItem('user'));
-        if(!user.isActive) {
+        if (!user.isActive) {
             user.isActive = true;
             localStorage.setItem('user', JSON.stringify(user));
         }
@@ -131,10 +132,23 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate(['.', { relativeTo: this.route }])
-                       .then(() => {
-                           window.location.reload();
-                       });
+                    this.childrenService.getChildren(user.id)
+                        .pipe(first())
+                        .subscribe(
+                            data => {
+                                if (data.length == 1) {
+                                    this.router.navigate(['/statistics'])
+                                        .then(() => {
+                                            window.location.reload();
+                                        });
+                                } else {
+                                    this.router.navigate(['/children'])
+                                        .then(() => {
+                                            window.location.reload();
+                                        });
+                                }
+                            }
+                        )
                 },
                 error => {
                     this.alertService.error(error);
