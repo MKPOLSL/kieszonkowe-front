@@ -133,6 +133,11 @@
                 </div>
             </mat-tab>
             <mat-tab label="Wykres średnich" [disabled]="!visualizeStatistics || !statisticsArray">
+                <label class="checkbox">
+                    <input type="checkbox" name="sortAscending" value="true" [(ngModel)]="sortAscending"
+                    (change)="onCheckboxSortChange($event)"> 
+                    Sortuj rosnąco po średniej
+                </label>
                 <div id="divChart">
                     <canvas id="Statistics"></canvas>
                 </div>
