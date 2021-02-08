@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { Child } from '@app/_models/child'
 
@@ -9,6 +9,7 @@ import { StatisticsService } from 'app/services/statistics.service';
 import { Region } from '@app/_models/region';
 import { Education } from '@app/_models/education';
 import { AppRoutingModule } from '@app/app-routing.module';
+import { ChildrenService } from '@app/services/children.service';
 
 @Component({
     selector: 'add-edit',
@@ -31,9 +32,9 @@ export class AddEditComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService,
         private alertService: AlertService,
-        private appRoutingModule: AppRoutingModule
+        private appRoutingModule: AppRoutingModule,
+        private childrenService: ChildrenService
     ) { }
 
     form = this.formBuilder.group({
@@ -49,7 +50,7 @@ export class AddEditComponent implements OnInit {
         this.isAddMode = !this.id;
 
         if(!this.isAddMode) {
-            this.accountService.getChild(this.id)
+            this.childrenService.getChild(this.id)
                 .pipe(first())
                 .subscribe(child => { this.child = child
                     this.f.name.setValue(child.name);
@@ -103,10 +104,10 @@ export class AddEditComponent implements OnInit {
 
     private updateChild() {
         let user = JSON.parse(localStorage.getItem('user'));
-        this.accountService.deleteChild(this.child.id)
+        this.childrenService.deleteChild(this.child.id)
             .pipe(first())
             .subscribe();
-        this.accountService.addChild(this.form.value, user.id)
+        this.childrenService.addChild(this.form.value, user.id)
             .pipe(first())
             .subscribe(
                 data => {
@@ -126,7 +127,7 @@ export class AddEditComponent implements OnInit {
             user.isActive = true;
             localStorage.setItem('user', JSON.stringify(user));
         }
-        this.accountService.addChild(this.form.value, user.id)
+        this.childrenService.addChild(this.form.value, user.id)
             .pipe(first())
             .subscribe(
                 data => {

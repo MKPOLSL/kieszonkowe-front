@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
-import { AccountService } from '@app/services';
+import { ChildrenService } from '@app/services/children.service';
 
 
 @Component({
@@ -14,12 +13,12 @@ export class ListComponent implements OnInit {
     childs = null;
     loading: any = true;
 
-    constructor(private accountService: AccountService) {}
+    constructor(private childrenService: ChildrenService) {}
 
     ngOnInit() {
         
         let user = JSON.parse(localStorage.getItem('user'))
-        this.accountService.getChildren(user.id)
+        this.childrenService.getChildren(user.id)
             .pipe(first())
             .subscribe(
                 childs => {
@@ -29,15 +28,5 @@ export class ListComponent implements OnInit {
                     this.loading = false
                 });
 
-    }
-
-    deleteUser(id: string) {
-        const user = this.users.find(x => x.id === id);
-        user.isDeleting = true;
-        this.accountService.delete(id)
-            .pipe(first())
-            .subscribe(() => {
-                this.users = this.users.filter(x => x.id !== id) 
-            });
-    }
+    } 
 }

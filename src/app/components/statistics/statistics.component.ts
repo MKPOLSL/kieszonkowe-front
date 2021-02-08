@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from 'app/services/statistics.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from '@app/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Statistics } from '@app/_models/statistics';
 import { Chart } from 'chart.js'
-import { MatRadioModule } from '@angular/material/radio';
-import { FormsModule } from '@angular/forms';
-import { NgForm } from '@angular/forms';
 import { Region } from '@app/_models/region';
-import { MatTabsModule } from '@angular/material/tabs';
 import { User } from '@app/_models';
 import { Education } from '@app/_models/education';
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { AccountService, AlertService } from '@app/services';
-import { StatisticsService } from 'app/services/statistics.service';
+import { AlertService } from '@app/services';
 import { first } from 'rxjs/operators';
+import { ChildrenService } from '@app/services/children.service';
 
 @Component({
     selector: 'complete',
@@ -22,8 +22,8 @@ export class CompleteComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private childrenService: ChildrenService
     ) { }
     
     form = this.formBuilder.group({
@@ -42,7 +42,7 @@ export class CompleteComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-        this.accountService.completeChildRecord(this.id, this.f.actualAmount.value)
+        this.childrenService.completeChildRecord(this.id, this.f.actualAmount.value)
             .pipe(first())
             .subscribe(data => {
                 this.alertService.success('Pomyślnie uzupełniono rekord', { keepAfterRouteChange: true });

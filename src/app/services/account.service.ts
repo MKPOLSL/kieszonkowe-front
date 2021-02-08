@@ -51,58 +51,11 @@ export class AccountService {
         return this.http.post(`${environment.apiUrl}/profile/updateUserData`, {Id, username, email, birthDate});
     }
 
-    deleteChild(childId: string){
-        return this.http.post(`${environment.apiUrl}/children/deleteChild`, JSON.stringify(childId), {'headers': { 'content-type': 'application/json'}});
-    }
-
     register(user: User) {
         return this.http.post(`${environment.apiUrl}/profile/register`, user);
     }
 
-    addChild(child: Child, parentId: string) {
-        return this.http.post(`${environment.apiUrl}/children/addChild`, { parentId, child });
-    }
-
-    getChildren(parentId: string) {
-        return this.http.get<Child[]>(`${environment.apiUrl}/children/children?parentId=${parentId}`);
-    }
-
-    getChild(childId: string) {
-        return this.http.get<Child>(`${environment.apiUrl}/children/child?childId=${childId}`);
-    }
-
-    completeChildRecord(childId: string, actualAmount: number) {
-        return this.http.post(`${environment.apiUrl}/children/complete`, { childId, actualAmount });
-    }
-
     getById(id: string) {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
-    }
-
-    update(id, params) {
-        return this.http.put(`${environment.apiUrl}/users/${id}`, params)
-            .pipe(map(x => {
-                // update stored user if the logged in user updated their own record
-                if (id == this.userValue.id) {
-                    // update local storage
-                    const user = { ...this.userValue, ...params };
-                    localStorage.setItem('user', JSON.stringify(user));
-
-                    // publish updated user to subscribers
-                    this.userSubject.next(user);        
-                }
-                return x;
-            }));
-    }
-
-    delete(id: string) {
-        return this.http.delete(`${environment.apiUrl}/users/${id}`)
-            .pipe(map(x => {
-                // auto logout if the logged in user deleted their own record
-                if (id == this.userValue.id) {
-                    this.logout();
-                }
-                return x;
-            }));
     }
 }

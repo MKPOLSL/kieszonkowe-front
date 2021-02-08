@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { AccountService, AlertService } from '@app/services';
-import { StatisticsService } from 'app/services/statistics.service';
+import { AlertService } from '@app/services';
 import { first } from 'rxjs/operators';
 import { User } from '@app/_models/user';
+import { ChildrenService } from '@app/services/children.service';
 
 @Component({
     selector: 'delete',
@@ -28,7 +28,7 @@ export class DeleteComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService,
+        private childrenService: ChildrenService,
         private alertService: AlertService
     ) { }
     
@@ -53,7 +53,7 @@ export class DeleteComponent implements OnInit {
         this.user = JSON.parse(localStorage.getItem('user'));
 
         if(this.user.password == this.f.password.value){
-            this.accountService.deleteChild(this.id)
+            this.childrenService.deleteChild(this.id)
             .pipe(first())
             .subscribe(
                 data => {
