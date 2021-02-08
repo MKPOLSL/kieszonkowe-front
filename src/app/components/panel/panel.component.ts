@@ -23,6 +23,12 @@ export class PanelComponent implements OnInit {
   users: User[] = null;
   educations: Education[] = null;
 
+  region: Region = null;
+  admin: Admin = null;
+  child: Child = null;
+  user: User = null;
+  education: Education = null;
+
   loading = false;
   submitted = false;
   isAddMode = true;
@@ -104,64 +110,108 @@ export class PanelComponent implements OnInit {
 
   editChild(childId) {  
     this.isAddMode = false;
-    var child = this.children.find(child => child.id === childId);
-    this.fChild.parentID.setValue(child.parentId);
-    this.fChild.name.setValue(child.name);
-    this.fChild.education.setValue(child.education.educationDegree);
-    this.fChild.region.setValue(child.region.regionName);
-    this.fChild.plannedAmount.setValue(child.plannedAmount);
-    this.fChild.isHidden.setValue(child.isHidden);
-    this.fChild.actualAmount.setValue(child.actualAmount);
+    this.child = this.children.find(child => child.id === childId);
+    this.fChild.parentID.setValue(this.child.parentId);
+    this.fChild.name.setValue(this.child.name);
+    this.fChild.education.setValue(this.child.education.educationDegree);
+    this.fChild.region.setValue(this.child.region.regionName);
+    this.fChild.plannedAmount.setValue(this.child.plannedAmount);
+    this.fChild.actualAmount.setValue(this.child.actualAmount);
   }
 
   deleteChild(childId) {
-    this.children = this.children.filter(element => element.id != childId);
+    this.adminService.deleteChild(childId)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            this.children = this.children.filter(element => element.id != childId);
+            this.loading = false;
+          },
+          error => {
+            this.loading = false;
+          });
   }
 
   editUser(userId) {  
     this.isAddMode = false;
-    var user = this.users.find(user => user.id === userId);
-    this.fParent.username.setValue(user.username);
-    this.fParent.password.setValue(user.password);
-    this.fParent.email.setValue(user.email);
-    this.fParent.birthdate.setValue(user.birthDate);
-    this.fParent.isActive.setValue(user.isActive);
+    this.user = this.users.find(user => user.id === userId);
+    this.fParent.username.setValue(this.user.username);
+    this.fParent.password.setValue(this.user.password);
+    this.fParent.email.setValue(this.user.email);
+    this.fParent.birthdate.setValue(this.user.birthDate);
+    this.fParent.isActive.setValue(this.user.isActive);
   }
 
   deleteUser(userId) {
-    this.users = this.users.filter(element => element.id != userId);
+    this.adminService.deleteParent(userId)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            this.users = this.users.filter(element => element.id != userId);
+            this.loading = false;
+          },
+          error => {
+            this.loading = false;
+          });
   }
 
   editAdmin(adminId) {  
     this.isAddMode = false;
-    var admin = this.admins.find(admin => admin.id === adminId);
-    this.fAdmin.username.setValue(admin.username);
-    this.fAdmin.password.setValue(admin.password);
+    this.admin = this.admins.find(admin => admin.id === adminId);
+    this.fAdmin.username.setValue(this.admin.username);
+    this.fAdmin.password.setValue(this.admin.password);
   }
 
   deleteAdmin(adminId) {
-    this.admins = this.admins.filter(element => element.id != adminId);
+    this.adminService.deleteAdmin(adminId)
+        .pipe(first())
+        .subscribe( 
+          data => {
+            this.admins = this.admins.filter(element => element.id != adminId);
+            this.loading = false;
+          },
+          error => {
+            this.loading = false;
+          });
   }
 
   editRegion(regionId) {  
     this.isAddMode = false;
-    var region = this.regions.find(region => region.id === regionId);
-    this.fRegion.regionName.setValue(region.regionName);
-    this.fRegion.isCity.setValue(region.isCity);
+    this.region = this.regions.find(region => region.id === regionId);
+    this.fRegion.regionName.setValue(this.region.regionName);
+    this.fRegion.isCity.setValue(this.region.isCity);
   }
 
   deleteRegion(regionId) {
-    this.regions = this.regions.filter(element => element.id != regionId);
+    this.adminService.deleteAdmin(regionId)
+    .pipe(first())
+    .subscribe( 
+      data => {
+        this.regions = this.regions.filter(element => element.id != regionId);
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+      });
   }
 
   editEducation(educationId) {  
     this.isAddMode = false;
-    var education = this.educations.find(user => user.id === educationId);
-    this.fEducation.educationDegree.setValue(education.educationDegree);
+    this.education = this.educations.find(user => user.id === educationId);
+    this.fEducation.educationDegree.setValue(this.education.educationDegree);
   }
 
   deleteEducation(educationId) {
-    this.educations = this.educations.filter(element => element.id != educationId);
+    this.adminService.deleteEducation(educationId)
+    .pipe(first())
+    .subscribe( 
+      data => {
+        this.educations = this.educations.filter(element => element.id != educationId);
+        this.loading = false;
+      },
+      error => {
+        this.loading = false;
+      });
   }
 
 
@@ -184,12 +234,11 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
     }
     else {
-      this.adminService.updateChild(this.formChild.value)
+      this.adminService.updateChild(this.formChild.value, this.child.id)
         .pipe(first())
         .subscribe( 
           data => {
@@ -200,7 +249,6 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
         }
@@ -224,12 +272,11 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
     }
     else {
-      this.adminService.updateParent(this.formParent.value)
+      this.adminService.updateParent(this.formParent.value, this.user.id)
         .pipe(first())
         .subscribe( 
           data => {
@@ -240,7 +287,6 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
         }
@@ -265,12 +311,11 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
     }
     else {
-      this.adminService.updateRegion(this.formRegion.value)
+      this.adminService.updateRegion(this.formRegion.value, this.region.id)
         .pipe(first())
         .subscribe( 
           data => {
@@ -281,7 +326,6 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
         }
@@ -306,12 +350,11 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
     }
     else {
-      this.adminService.updateEducation(this.formEducation.value)
+      this.adminService.updateEducation(this.formEducation.value, this.education.id)
         .pipe(first())
         .subscribe( 
           data => {
@@ -322,7 +365,6 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
         }
@@ -346,12 +388,11 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
     }
     else {
-      this.adminService.updateAdmin(this.formEducation.value)
+      this.adminService.updateAdmin(this.formEducation.value, this.admin.id)
         .pipe(first())
         .subscribe( 
           data => {
@@ -362,10 +403,58 @@ export class PanelComponent implements OnInit {
             this.loading = false;
           },
           error => {
-            this.alertService.error(error);
             this.loading = false;
           });
         }
+  }
+
+  changeModeParents() {
+    this.isAddMode = true;
+    this.user = null;
+    this.fParent.username.setValue('');
+    this.fParent.password.setValue('');
+    this.fParent.email.setValue('');
+    this.fParent.birthdate.setValue('');
+    this.fParent.isActive.setValue(false);
+  }
+
+  changeModeAdmins() {
+    this.isAddMode = true;
+    this.admin = null;
+    this.fAdmin.username.setValue('');
+    this.fAdmin.password.setValue('');
+  }
+
+  changeModeChildren() {
+    this.isAddMode = true;
+    this.child = null;
+    this.fChild.parentID.setValue('');
+    this.fChild.name.setValue('');
+    this.fChild.education.setValue('');
+    this.fChild.region.setValue('');
+    this.fChild.plannedAmount.setValue('');
+    this.fChild.actualAmount.setValue('');
+  }
+
+  changeModeRegions() {
+    this.isAddMode = true;
+    this.region = null;
+    this.fRegion.regionName.setValue('');
+    this.fRegion.isCity.setValue(false);
+  }
+
+  changeModeEducations() {
+    this.isAddMode = true;
+    this.education = null;
+    this.fEducation.educationDegree.setValue('');
+  }
+
+  onTabChanged(event) {
+    this.changeModeAdmins();
+    this.changeModeChildren();
+    this.changeModeParents();
+    this.changeModeEducations();
+    this.changeModeParents();
   }
 
 }

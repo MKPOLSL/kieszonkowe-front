@@ -1,5 +1,5 @@
 <div class="panelBorder">
-    <mat-tab-group>
+    <mat-tab-group (selectedTabChange)="onTabChanged($event)">
         <mat-tab label="Użytkownicy">
             <form [formGroup]="formParent" class="form" (ngSubmit)="onSubmitParent()">
                 <div class="form-row">
@@ -52,11 +52,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <button [disabled]="loading" *ngIf="isAddMode" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Dodaj
                     </button>
-                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                    <button [disabled]="loading" *ngIf="!isAddMode" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Edytuj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="changeModeParents()"
                         class="btn btn-success">
                         Dodawanie
                     </button>
@@ -152,11 +156,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <button [disabled]="loading" *ngIf="isAddMode" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                        Zapisz
+                        Dodaj
                     </button>
-                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                    <button [disabled]="loading" *ngIf="!isAddMode" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Edytuj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="changeModeChildren()"
                         class="btn btn-success">
                         Dodawanie
                     </button>
@@ -226,11 +234,15 @@
                 </div>
 
                 <div class="form-group">
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <button [disabled]="loading" *ngIf="isAddMode" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Dodaj
                     </button>
-                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                    <button [disabled]="loading" *ngIf="!isAddMode" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Edytuj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="changeModeRegions()"
                         class="btn btn-success">
                         Dodawanie
                     </button>
@@ -281,11 +293,15 @@
                 </div>
 
                 <div class="form-group">
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <button [disabled]="loading" *ngIf="isAddMode" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Dodaj
                     </button>
-                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                    <button [disabled]="loading" *ngIf="!isAddMode" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Edytuj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="changeModeEducations()"
                         class="btn btn-success">
                         Dodawanie
                     </button>
@@ -342,11 +358,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <button [disabled]="loading" *ngIf="isAddMode" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Dodaj
                     </button>
-                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="isAddMode = true;"
+                    <button [disabled]="loading" *ngIf="!isAddMode" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Edytuj
+                    </button>
+                    <button *ngIf="!isAddMode" style="margin-left: 20px" (click)="changeModeAdmins()"
                         class="btn btn-success">
                         Dodawanie
                     </button>

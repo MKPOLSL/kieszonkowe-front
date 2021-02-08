@@ -66,23 +66,23 @@ export class AdminService {
   }
 
   deleteChild(childId: string) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/children/delete`, childId);
+    return this.http.post(`${environment.apiUrl}/admin/panel/children/delete`, JSON.stringify(childId), {'headers': { 'content-type': 'application/json'}});
   }
   
   deleteParent(parentId: string) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/parents/delete`, parentId);
+    return this.http.post(`${environment.apiUrl}/admin/panel/parents/delete`, JSON.stringify(parentId), {'headers': { 'content-type': 'application/json'}});
   }
 
   deleteRegion(regionId: string) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/regions/delete`, regionId);
+    return this.http.post(`${environment.apiUrl}/admin/panel/regions/delete`, JSON.stringify(regionId), {'headers': { 'content-type': 'application/json'}});
   }
 
   deleteEducation(educationId: string) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/educations/delete`, educationId);
+    return this.http.post(`${environment.apiUrl}/admin/panel/educations/delete`, JSON.stringify(educationId), {'headers': { 'content-type': 'application/json'}});
   }
 
   deleteAdmin(adminId: string) {
-    return this.http.post(`${environment.apiUrl}/admin/panel/administrators/delete`, adminId);
+    return this.http.post(`${environment.apiUrl}/admin/panel/administrators/delete`, JSON.stringify(adminId), {'headers': { 'content-type': 'application/json'}});
   }
 
   addChild(child: Child) {
@@ -105,23 +105,28 @@ export class AdminService {
     return this.http.post(`${environment.apiUrl}/admin/panel/administrators/add`, admin);
   }
 
-  updateChild(child: Child) {
+  updateChild(child: Child, childId: string) {
+    child.id = childId;
     return this.http.post(`${environment.apiUrl}/admin/panel/children/update`, child);
   }
   
-  updateParent(parent: User) {
+  updateParent(parent: User, parentId: string) {
+    parent.id = parentId;
     return this.http.post(`${environment.apiUrl}/admin/panel/parents/update`, parent);
   }
 
-  updateRegion(region: Region) {
+  updateRegion(region: Region, regionId: string) {
+    region.id = regionId;
     return this.http.post(`${environment.apiUrl}/admin/panel/regions/update`, region);
   }
 
-  updateEducation(education: Education) {
+  updateEducation(education: Education, educationId: string) {
+    education.id = educationId;
     return this.http.post(`${environment.apiUrl}/admin/panel/educations/update`, education);
   }
 
-  updateAdmin(admin: Admin) {
+  updateAdmin(admin: Admin, adminId: string) {
+    admin.id = adminId;
     return this.http.post(`${environment.apiUrl}/admin/panel/administrators/update`, admin);
   }
 }
