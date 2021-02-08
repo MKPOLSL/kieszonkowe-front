@@ -45,7 +45,7 @@
         <div class="form-row">
             <div class="form-group col">
                 <label for="plannedAmount">Planned amount</label>
-                <input type="number" formControlName="plannedAmount" class="form-control"
+                <input type="number" formControlName="plannedAmount" class="form-control" min="0" step="1" oninput="validity.valid||(value='');"
                     [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
                 <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
                     <div *ngIf="f.plannedAmount.errors.required">Planned amount is required</div>

@@ -53,7 +53,7 @@ export class DeleteComponent implements OnInit {
         this.user = JSON.parse(localStorage.getItem('user'));
 
         if(this.user.password == this.f.password.value){
-            this.accountService.hideChild(this.id)
+            this.accountService.deleteChild(this.id)
             .pipe(first())
             .subscribe(
                 data => {

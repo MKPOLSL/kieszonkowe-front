@@ -1,5 +1,5 @@
 <div class="card">
-    <h4 class="card-header">Od twego wyboru zależy ludzkie życie</h4>
+    <h4 class="card-header">Na pewno chcesz usunąć rekord dziecka?</h4>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -12,7 +12,7 @@
             <div class="form-group">
                 <button [disabled]="loading" class="btn btn-primary">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Aborcja
+                    Usuń
                 </button>
                 <a routerLink="/children" class="btn btn-link">Anuluj</a>
             </div>

@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { Region } from '@app/_models/region';
 import { MatTabsModule } from '@angular/material/tabs';
+import { User } from '@app/_models';
+import { Education } from '@app/_models/education';
 
 @Component({
   selector: 'app-statistics',
@@ -20,16 +22,19 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 export class StatisticsComponent implements OnInit {
 
-  isSubmitted = false;
+  user: User = null;
+  hasChildrenWithActualAmount = false;
 
+  isSubmitted = false;
 
   loading = false;
   submitted = false;
   returnUrl: string;
 
   regions: Region[] = null;
-  educations = null;
-
+  educations: Education[] = null;
+  educationsActual: Education[] = null;
+  
   statistics: Statistics = null;
   statisticsArray: Statistics[] = null;
 
@@ -128,10 +133,22 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('user'));
+
     this.statisticsService
-      .getEducations()
+      .getEducationsPlanned(this.user.id)
       .pipe(first())
       .subscribe(educations => (this.educations = educations));
+
+    this.statisticsService
+      .getEducationsActual(this.user.id)
+      .pipe(first())
+      .subscribe(educations => {
+        this.educationsActual = educations;
+        if(this.educationsActual.length > 0) {
+          this.hasChildrenWithActualAmount = true;
+        }
+      });
 
     this.statisticsService
       .getRegions()

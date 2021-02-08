@@ -147,7 +147,7 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="plannedAmount">Kwota planowana</label>
-                        <input type="number" formControlName="plannedAmount" class="form-control"
+                        <input type="number" formControlName="plannedAmount" class="form-control" min="0" step="1" oninput="validity.valid||(value='');"
                             [ngClass]="{ 'is-invalid': submittedChild && fChild.plannedAmount.errors }" />
                         <div *ngIf="submittedChild && fChild.plannedAmount.errors" class="invalid-feedback">
                             <div *ngIf="fChild.plannedAmount.errors.required">Kwota planowana jest wymagana</div>
@@ -155,7 +155,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="actualAmount">Kwota faktyczna</label>
-                        <input type="number" formControlName="actualAmount" class="form-control" />
+                        <input type="number" formControlName="actualAmount" class="form-control" min="0" step="1" oninput="validity.valid||(value='');"/>
                     </div>
                 </div>
                 <div class="form-group">

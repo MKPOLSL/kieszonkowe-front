@@ -70,10 +70,6 @@ export class AccountService {
     getChild(childId: string) {
         return this.http.get<Child>(`${environment.apiUrl}/children/child?childId=${childId}`);
     }
-    
-    hideChild(childId: string) {
-        return this.http.post(`${environment.apiUrl}/children/hide`, JSON.stringify(childId), {'headers': { 'content-type': 'application/json'}});
-    }   
 
     completeChildRecord(childId: string, actualAmount: number) {
         return this.http.post(`${environment.apiUrl}/children/complete`, { childId, actualAmount });

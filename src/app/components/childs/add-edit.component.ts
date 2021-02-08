@@ -40,7 +40,7 @@ export class AddEditComponent implements OnInit {
         name: ['', Validators.required],
         education: ['', Validators.required],
         region: ['', Validators.required],
-        plannedAmount: ['', Validators.required],
+        plannedAmount: ['', Validators.required]
     });
 
 
@@ -103,7 +103,7 @@ export class AddEditComponent implements OnInit {
 
     private updateChild() {
         let user = JSON.parse(localStorage.getItem('user'));
-        this.accountService.hideChild(this.child.id)
+        this.accountService.deleteChild(this.child.id)
             .pipe(first())
             .subscribe();
         this.accountService.addChild(this.form.value, user.id)

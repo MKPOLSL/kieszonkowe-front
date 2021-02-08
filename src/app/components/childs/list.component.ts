@@ -21,9 +21,14 @@ export class ListComponent implements OnInit {
         let user = JSON.parse(localStorage.getItem('user'))
         this.accountService.getChildren(user.id)
             .pipe(first())
-            .subscribe(childs => {
-                this.childs = childs
-                this.loading = false});
+            .subscribe(
+                childs => {
+                    this.childs = childs
+                    this.loading = false},
+                errors => {
+                    this.loading = false
+                });
+
     }
 
     deleteUser(id: string) {

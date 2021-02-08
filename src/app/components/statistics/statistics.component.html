@@ -29,7 +29,7 @@
                     </button>
                 </form>
             </mat-tab>
-            <mat-tab label="Kwota faktyczna">
+            <mat-tab label="Kwota faktyczna" [disabled]="!hasChildrenWithActualAmount">
                 <form [formGroup]="formActual" class="reg-and-ed" (ngSubmit)="onSubmitActual()">
                     <h2>Regiony</h2>
                     <select formControlName="regionActual" class="select" (change)="changeRegionActual($event)">
@@ -48,7 +48,7 @@
                     <h2>Stopnie edukacji</h2>
                     <select formControlName="educationActual" class="select"
                         (change)="changeEducationDegreeActual($event)">
-                        <option *ngFor="let education of educations" [value]="education.id">
+                        <option *ngFor="let education of educationsActual" [value]="education.id">
                             {{education.educationDegree}}
                         </option>
                     </select>

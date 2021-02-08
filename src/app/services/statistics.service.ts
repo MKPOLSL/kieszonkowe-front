@@ -26,26 +26,34 @@ export class StatisticsService {
         this.education = this.educationSubject.asObservable();
     }
     getRegions(){
-        return this.http.get<Region[]>(`${environment.apiUrl}/pocketmoney/regions`);
+        return this.http.get<Region[]>(`${environment.apiUrl}/statistics/regions`);
     }
     
     getEducations() {
-        return this.http.get<Education[]>(`${environment.apiUrl}/pocketmoney/educations`);
+        return this.http.get<Education[]>(`${environment.apiUrl}/statistics/educations`);
+      }
+
+    getEducationsPlanned(parentId: string) {
+        return this.http.get<Education[]>(`${environment.apiUrl}/statistics/educationsPlanned?parentId=${parentId}`);
+    }
+
+    getEducationsActual(parentId: string) {
+        return this.http.get<Education[]>(`${environment.apiUrl}/statistics/educationsActual?parentId=${parentId}`);
     }
 
     sendRegionAndEducation(educationId, regionId){
-        return this.http.post(`${environment.apiUrl}/pocketmoney/statistics`, { educationId, regionId});
+        return this.http.post(`${environment.apiUrl}/statistics/statistics`, { educationId, regionId});
     }
 
     sendEducation(educationId, isCity) {
-        return this.http.get(`${environment.apiUrl}/pocketmoney/statisticsEducation?educationId=${educationId}&isCity=${isCity}`);
+        return this.http.get(`${environment.apiUrl}/statistics/statisticsEducation?educationId=${educationId}&isCity=${isCity}`);
     }
 
     sendRegionAndEducationActual(educationId, regionId){
-        return this.http.post(`${environment.apiUrl}/pocketmoney/statisticsActual`, { educationId, regionId});
+        return this.http.post(`${environment.apiUrl}/statistics/statisticsActual`, { educationId, regionId});
     }
 
     sendEducationActual(educationId, isCity) {
-        return this.http.get(`${environment.apiUrl}/pocketmoney/statisticsEducationActual?educationId=${educationId}&isCity=${isCity}`);
+        return this.http.get(`${environment.apiUrl}/statistics/statisticsEducationActual?educationId=${educationId}&isCity=${isCity}`);
     }
 }
