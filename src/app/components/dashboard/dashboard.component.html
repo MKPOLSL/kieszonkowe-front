@@ -4,11 +4,11 @@
       <section class="band band-a">
         <div class="band-container">
           <div class="band-inner">
-            <h1>Witaj w najlepszym serwisie o dofinansowywaniu dzieci</h1>
-            <div *ngIf="user" style="text-align: center;">
-              <h1>
-                {{user.username}}
-              </h1>
+            <div *ngIf="user">
+              <h1>Witaj {{user.username}}!</h1>
+            </div>
+            <div *ngIf="!user">
+              <h1>Witaj adminie!</h1>
             </div>
             <br>
             <h3> Kieszonkowe.pl</h3>
@@ -23,7 +23,10 @@
         <div class="band-container">
           <div class="band-inner">
             <h1>Korzyści dla zarejestrowanych użytkowników</h1>
-            <p>Rejestrując się na stronie Kieszonkowe.pl uzyskujesz dostęp do całkowicie darmowych usług pozwalających na sprawdzanie statystyk dotyczących stawek kieszonkowego w poszczególnych obszarach Polski. Udostępnione przez nas statystyki pomogą Ci odpowiednio dobrać stawkę kieszonkowego dla Twojego dziecka w opraciu o faktyczne kwoty ustalane przez innych rodziców.
+            <p>Rejestrując się na stronie Kieszonkowe.pl uzyskujesz dostęp do całkowicie darmowych usług pozwalających
+              na sprawdzanie statystyk dotyczących stawek kieszonkowego w poszczególnych obszarach Polski. Udostępnione
+              przez nas statystyki pomogą Ci odpowiednio dobrać stawkę kieszonkowego dla Twojego dziecka w opraciu o
+              faktyczne kwoty ustalane przez innych rodziców.
             </p>
           </div>
         </div>
@@ -32,8 +35,10 @@
         <div class="band-container">
           <div class="band-inner">
             <h1>Etap edukacji Twojego dziecka</h1>
-            <p>Twoje dziecko dorasta, zmienia szkołę, a Ty nie wiesz, czy dotychczasowa kwota kieszonkowego wciąż bedzie dla niego wystarczająca?</p>
-            <p><b> Żaden problem! </b> <br> Nasz serwis pozwoli Ci dobrać kieszonkowe biorąc pod uwagę aktualny stopień eduakcji Twoich pociech.</p>
+            <p>Twoje dziecko dorasta, zmienia szkołę, a Ty nie wiesz, czy dotychczasowa kwota kieszonkowego wciąż bedzie
+              dla niego wystarczająca?</p>
+            <p><b> Żaden problem! </b> <br> Nasz serwis pozwoli Ci dobrać kieszonkowe biorąc pod uwagę aktualny stopień
+              eduakcji Twoich pociech.</p>
           </div>
         </div>
       </section>
