@@ -19,12 +19,13 @@ export class ProfileComponent implements OnInit {
 
   isAdult = false;
 
-  passwordChanged = false; // <---------------------------- Komunikaty 
   passwordSubmitted = false;
   passwordNotConfirmed = true;
 
-  dataChanged = false; // <---------------------------- Komunikaty 
   dataSubmitted = false;
+
+  passwordValidation = false;
+  dataValidation = false;
 
   user : User;
 
@@ -40,9 +41,11 @@ export class ProfileComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       username: ['', Validators.required],
       birthDate: ['', Validators.required],
+      actual: ['', Validators.required]
     })
 
     this.passwordForm = this.formBuilder.group({
+      actual: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmation: ['', [Validators.required, Validators.minLength(6)]]
     })
@@ -77,19 +80,23 @@ export class ProfileComponent implements OnInit {
     this.dataSubmitted = true;
     this.alertService.clear();
        
-    if (this.dataForm.invalid) {
-        return;
-    }
+    if(this.user.password === this.dataF.actual.value){
 
-    var date = parseInt(this.dataF.birthDate.value.substring(0, 4));
-    var currentDate = parseInt(new Date().toISOString().substring(0,4));
-    if(currentDate - date < 18) {
-        this.alertService.error('Aby korzystać z tej strony musisz mieć conajmniej 18 lat!', { keepAfterRouteChange: true });
-        return;
-    }
+      this.dataValidation = true; 
 
-    this.loadingDataForm = true;
-    this.accountService.updateParentData(
+      if (this.dataForm.invalid) {
+          return;
+      }
+
+      var date = parseInt(this.dataF.birthDate.value.substring(0, 4));
+      var currentDate = parseInt(new Date().toISOString().substring(0,4));
+      if(currentDate - date < 18) {
+          this.alertService.error('Aby korzystać z tej strony musisz mieć conajmniej 18 lat!', { keepAfterRouteChange: true });
+          return;
+      }
+
+      this.loadingDataForm = true;
+      this.accountService.updateParentData(
       this.user.id, this.dataF.username.value,
       this.dataF.email.value, this.dataF.birthDate.value)
             .pipe(first())
@@ -102,7 +109,11 @@ export class ProfileComponent implements OnInit {
             error => {
               this.alertService.error(error);
               this.loadingDataForm = false;
-          });         
+          }); 
+        }   
+
+    return;
+            
   }
 
   onSubmitPasswordChange(){
@@ -110,12 +121,16 @@ export class ProfileComponent implements OnInit {
     this.passwordNotConfirmed = !this.checkPasswordConfirmation();
     this.alertService.clear();
 
-    if (this.passwordForm.invalid) {
-        return;
-    }
+    if(this.user.password === this.passwordF.actual.value){
 
-    this.loadingPasswordForm = true;
-    this.accountService.updateParentPassword(
+      this.passwordValidation = true; 
+
+      if (this.passwordForm.invalid) {
+         return;
+      }
+
+      this.loadingPasswordForm = true;
+      this.accountService.updateParentPassword(
       this.user.id, this.passwordF.password.value)
       .pipe(first()).subscribe(data => {
         this.user = Object.assign(new User(), data);
@@ -126,6 +141,11 @@ export class ProfileComponent implements OnInit {
         this.alertService.error(error);
         this.loadingPasswordForm = false;
     });
+    
+    }
+
+    return;
   }
+
 
 }
