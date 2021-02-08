@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { User } from '@app/_models';
 import { AccountService } from '@app/services';
@@ -8,10 +8,14 @@ import { AccountService } from '@app/services';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
   })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
     user: User;
 
     constructor(private accountService: AccountService) {
+       
+    }
+
+    ngOnInit(){
         this.user = this.accountService.userValue;
     }
 }

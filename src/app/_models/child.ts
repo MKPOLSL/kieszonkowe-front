@@ -8,4 +8,6 @@ export class Child {
     region: Region;
     plannedAmount: number;
     actualAmount: number;
+    isHidden: boolean;
+    parentId: string;
 }

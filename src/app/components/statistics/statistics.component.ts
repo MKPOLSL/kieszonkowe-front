@@ -41,6 +41,7 @@ export class StatisticsComponent implements OnInit {
 
   visualizeStatistics = false;
   myChart: Chart = null;
+  sortAscending = false;
 
   selectedTabIndex = 0;
 
@@ -310,9 +311,23 @@ export class StatisticsComponent implements OnInit {
       this.displayDataonChart(this.statisticsArray);
     }
   }
+
   onCheckboxChange(event) {
     if(!this.visualizeStatistics){
       this.selectedTabIndex = 0;
+    }
+  }
+
+  onCheckboxSortChange(event){
+    if(this.sortAscending){
+      this.statisticsArray.sort((data1, data2) => 
+        (data1.meanAmount - data2.meanAmount));
+        this.displayDataonChart(this.statisticsArray);
+    }
+    else{
+      this.statisticsArray.sort((data1, data2) => 
+        (data2.meanAmount - data1.meanAmount));
+        this.displayDataonChart(this.statisticsArray);
     }
   }
 }
