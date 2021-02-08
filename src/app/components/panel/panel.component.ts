@@ -30,7 +30,13 @@ export class PanelComponent implements OnInit {
   education: Education = null;
 
   loading = false;
-  submitted = false;
+
+  submittedParent = false;
+  submittedChild = false;
+  submittedRegion = false;
+  submittedEducation = false;
+  submittedAdmin = false;
+
   isAddMode = true;
 
   formChild = this.formBuilder.group({
@@ -50,7 +56,7 @@ export class PanelComponent implements OnInit {
   formParent = this.formBuilder.group({
     username: ['', Validators.required],
     password: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', Validators.required, Validators.email],
     birthdate: ['', Validators.required],
     isActive: [false, Validators.required]
   });
@@ -81,6 +87,7 @@ export class PanelComponent implements OnInit {
 
 
   ngOnInit(): void {
+    let admin = JSON.parse(localStorage.getItem('admin'));
     this.adminService.getRegions()
       .pipe(first())
       .subscribe(data => {
@@ -91,7 +98,7 @@ export class PanelComponent implements OnInit {
       .subscribe(data => {
          this.educations = data;
       })
-    this.adminService.getAdministrators()
+    this.adminService.getAdministrators(admin.id)
       .pipe(first())
       .subscribe(data => {
          this.admins = data;
@@ -183,7 +190,7 @@ export class PanelComponent implements OnInit {
   }
 
   deleteRegion(regionId) {
-    this.adminService.deleteAdmin(regionId)
+    this.adminService.deleteRegion(regionId)
     .pipe(first())
     .subscribe( 
       data => {
@@ -216,11 +223,15 @@ export class PanelComponent implements OnInit {
 
 
   onSubmitChild() {
-
+    this.submittedChild = true;
     this.alertService.clear();
 
     if (this.formChild.invalid) {
         return;
+    }
+
+    if(this.fChild.actualAmount.value == ''){
+      this.fChild.actualAmount.setValue(-1);
     }
 
     this.loading = true;
@@ -246,6 +257,7 @@ export class PanelComponent implements OnInit {
             this.children = this.children.filter(element => element.id != child.id);
             this.children.push(child);
             this.children.sort();
+            this.changeModeChildren();
             this.loading = false;
           },
           error => {
@@ -255,6 +267,7 @@ export class PanelComponent implements OnInit {
   }
 
   onSubmitParent() {
+    this.submittedParent = true;
     this.alertService.clear();
 
     if (this.formParent.invalid) {
@@ -284,6 +297,7 @@ export class PanelComponent implements OnInit {
             this.users = this.users.filter(element => element.id != parent.id);
             this.users.push(parent);
             this.users.sort();
+            this.changeModeParents();
             this.loading = false;
           },
           error => {
@@ -293,7 +307,7 @@ export class PanelComponent implements OnInit {
   }
 
   onSubmitRegion() {
-
+    this.submittedRegion = true;
     this.alertService.clear();
 
     if (this.formRegion.invalid) {
@@ -323,6 +337,7 @@ export class PanelComponent implements OnInit {
             this.regions = this.regions.filter(element => element.id != region.id);
             this.regions.push(region);
             this.regions.sort();
+            this.changeModeRegions();
             this.loading = false;
           },
           error => {
@@ -332,7 +347,7 @@ export class PanelComponent implements OnInit {
   }
 
   onSubmitEducation() {
-
+    this.submittedEducation = true;
     this.alertService.clear();
 
     if (this.formEducation.invalid) {
@@ -362,6 +377,7 @@ export class PanelComponent implements OnInit {
             this.educations = this.educations.filter(element => element.id != education.id);
             this.educations.push(education);
             this.educations.sort();
+            this.changeModeEducations();
             this.loading = false;
           },
           error => {
@@ -371,6 +387,7 @@ export class PanelComponent implements OnInit {
   }
 
   onSubmitAdmin() {
+    this.submittedAdmin = true;
     this.alertService.clear();
 
     if (this.formAdmin.invalid) {
@@ -400,6 +417,7 @@ export class PanelComponent implements OnInit {
             this.admins = this.admins.filter(element => element.id != admin.id);
             this.admins.push(admin);
             this.admins.sort();
+            this.changeModeAdmins();
             this.loading = false;
           },
           error => {

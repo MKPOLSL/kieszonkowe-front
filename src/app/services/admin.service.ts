@@ -61,8 +61,8 @@ export class AdminService {
     return this.http.get<Education[]>(`${environment.apiUrl}/admin/panel/educations`);
   }
 
-  getAdministrators() {
-    return this.http.get<Admin[]>(`${environment.apiUrl}/admin/panel/administrators`);
+  getAdministrators(adminId: string) {
+    return this.http.get<Admin[]>(`${environment.apiUrl}/admin/panel/administrators?adminId=${adminId}`);
   }
 
   deleteChild(childId: string) {
