@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                    this.alertService.error(error);
+                    this.alertService.error("Nie ma takiego konta, lub twoje konto zostało zablokowane!");
                     this.loading = false;
                 });
     }

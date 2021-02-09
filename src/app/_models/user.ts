@@ -5,5 +5,6 @@ export class User {
     email: string;
     birthDate: string;
     isActive: boolean;
+    isBanned: boolean;
     token: string;
 }

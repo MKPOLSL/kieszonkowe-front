@@ -115,6 +115,14 @@ export class PanelComponent implements OnInit {
       })  
   }
 
+  banOrUnbanUser(user: User) {
+    this.adminService.banOrUnbanUser(user.id)
+      .pipe(first())
+      .subscribe(data => {
+        user.isBanned = !user.isBanned
+      })
+  }
+
   editChild(childId) {  
     this.isAddMode = false;
     this.child = this.children.find(child => child.id === childId);

@@ -88,6 +88,10 @@
                         <td>{{user.birthDate}}</td>
                         <td>{{user.isActive}}</td>
                         <td style="white-space: nowrap">
+                            <button *ngIf="!user.isBanned" class="btn-danger btn btn-sm btn-primary mr-1"
+                                (click)="banOrUnbanUser(user)">Zbanuj</button>
+                            <button *ngIf="user.isBanned" class="btn-success btn btn-sm btn-primary mr-1"
+                                (click)="banOrUnbanUser(user)">Odbanuj</button>
                             <button class="btn-ed-del btn btn-sm btn-primary mr-1"
                                 (click)="editUser(user.id)">Edytuj</button>
                             <button (click)="deleteUser(user.id)"

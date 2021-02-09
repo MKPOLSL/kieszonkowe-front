@@ -61,6 +61,10 @@ export class AdminService {
     return this.http.get<Education[]>(`${environment.apiUrl}/admin/panel/educations`);
   }
 
+  banOrUnbanUser(parentId: string){
+    return this.http.post(`${environment.apiUrl}/admin/ban`, JSON.stringify(parentId), {'headers': { 'content-type': 'application/json'}})
+  }
+
   getAdministrators(adminId: string) {
     return this.http.get<Admin[]>(`${environment.apiUrl}/admin/panel/administrators?adminId=${adminId}`);
   }
