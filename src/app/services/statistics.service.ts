@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment'
 
 import { Region } from '../_models/region'
 import { Education } from '../_models/education'
+import { Statistics } from '@app/_models/statistics';
 
 @Injectable({ providedIn: 'root' })
 export class StatisticsService {
@@ -35,6 +36,10 @@ export class StatisticsService {
 
     getEducationsPlanned(parentId: string) {
         return this.http.get<Education[]>(`${environment.apiUrl}/statistics/educationsPlanned?parentId=${parentId}`);
+    }
+
+    getRandomStatistics() {
+        return this.http.get<Statistics>(`${environment.apiUrl}/statistics/random`);
     }
 
     getEducationsActual(parentId: string) {

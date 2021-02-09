@@ -17,9 +17,7 @@ export class SnackBarService {
   
   openSnackBar(message: string, action: string) { 
     this.snackBar.open(message, action, { 
-       duration: 10000, 
-       verticalPosition: "top",
-       horizontalPosition: "right"
+       duration: 10000
     }); 
   } 
 } 

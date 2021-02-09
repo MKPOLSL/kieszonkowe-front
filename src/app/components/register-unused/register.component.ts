@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PersonalData } from './personalData'
-import { personData } from './person-mock'
 import { PersonalDataService } from '@app/services/personal-data.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { notUniqueUsernameValidator } from '@app/components/register-unused/register-validators.directive'
-import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({

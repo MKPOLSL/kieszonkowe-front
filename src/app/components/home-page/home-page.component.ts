@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '@app/services';
 import { AdminService } from '@app/services/admin.service';
-import { PocketMoneyService } from 'app/services/pocket-money.service';
+import { StatisticsService } from '@app/services/statistics.service';
+import { Statistics } from '@app/_models/statistics';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-page',
@@ -11,10 +13,13 @@ import { PocketMoneyService } from 'app/services/pocket-money.service';
 })
 export class HomePageComponent implements OnInit {
   data: string[] = [];
-  constructor(private service: PocketMoneyService,
+  randStatistics: Statistics = null;
+  
+  constructor(
     private router: Router,
     private accountService: AccountService,
-    private adminService: AdminService) {
+    private adminService: AdminService, 
+    private statisticsService: StatisticsService) {
     // redirect to dashboard if already logged in
     if (this.accountService.userValue) {  
       this.router.navigate(['/dashboard']);
@@ -25,6 +30,10 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.getAll().subscribe((data) => (this.data = data));
+    this.statisticsService.getRandomStatistics()
+        .pipe(first())
+        .subscribe(data => {
+          this.randStatistics = Object.assign(new Statistics(), data);
+        })
   }
 }
