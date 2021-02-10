@@ -222,7 +222,7 @@
                     <div class="form-group col">
                         <label for="regionName">Nazwa regionu</label>
                         <input type="text" formControlName="regionName" class="form-control"
-                            [ngClass]="{ 'is-invalid': submittedRegion && fRegion.username.errors }" />
+                            [ngClass]="{ 'is-invalid': submittedRegion && fRegion.regionName.errors }" />
                         <div *ngIf="submittedRegion && fRegion.regionName.errors" class="invalid-feedback">
                             <div *ngIf="fRegion.regionName.errors.required">Nazwa regionu jest wymagana!</div>
                         </div>
