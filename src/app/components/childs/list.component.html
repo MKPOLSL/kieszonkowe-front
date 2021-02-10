@@ -1,38 +1,45 @@
 ﻿<div class="adding-child">
     <h1>Twoje dzieci</h1>
-    <a routerLink="add" class="btn btn-sm btn-success mb-2">Dodaj dziecko</a>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th style="width: 15%">Imię</th>
-                <th style="width: 20%">Stopień edukacji</th>
-                <th style="width: 20%">Region</th>
-                <th style="width: 20%">Kwota planowana</th>
-                <th style="width: 20%">Kwota wybrana</th>
-                <th style="width: 5%"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let child of childs">
-                <td>{{child.name}}</td>
-                <td>{{child.education.educationDegree}}</td>
-                <td>{{child.region.regionName}}</td>
-                <td>{{child.plannedAmount}} pln</td>
-                <td><div *ngIf="child.actualAmount != null">{{child.actualAmount}} pln</div></td>
-                <td style="white-space: nowrap">
-                    <a *ngIf="child.actualAmount" routerLink="edit/{{child.id}}" class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</a>
-                    <a *ngIf="!child.actualAmount" routerLink="complete/{{child.id}}" class="btn-ed-del btn btn-sm btn-primary mr-1">Dokończ</a>
-                    <a routerLink="delete/{{child.id}}" class="btn-ed-del btn btn-sm btn-danger btn-delete-user" [disabled]="child.isDeleting">
-                        <span *ngIf="child.isDeleting" class="spinner-border spinner-border-sm"></span>
-                        <span *ngIf="!child.isDeleting">Usuń</span>
-                    </a>
-                </td>
-            </tr>
-            <tr *ngIf="loading">
-                <td colspan="6" class="text-center">
-                    <span class="spinner-border spinner-border-lg align-center"></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <a routerLink="add" class="btn btn-sm btn-success mb-2">Dodaj dziecko</a> <br>
+    <div class="pane">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Imię</th>
+                    <th style="width: 20%">Stopień edukacji</th>
+                    <th style="width: 20%">Region</th>
+                    <th style="width: 20%">Kwota planowana</th>
+                    <th style="width: 20%">Kwota wybrana</th>
+                    <th style="width: 5%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let child of childs">
+                    <td>{{child.name}}</td>
+                    <td>{{child.education.educationDegree}}</td>
+                    <td>{{child.region.regionName}}</td>
+                    <td>{{child.plannedAmount}} pln</td>
+                    <td>
+                        <div *ngIf="child.actualAmount != null">{{child.actualAmount}} pln</div>
+                    </td>
+                    <td style="white-space: nowrap">
+                        <a *ngIf="child.actualAmount" routerLink="edit/{{child.id}}"
+                            class="btn-ed-del btn btn-sm btn-primary mr-1">Edytuj</a>
+                        <a *ngIf="!child.actualAmount" routerLink="complete/{{child.id}}"
+                            class="btn-ed-del btn btn-sm btn-primary mr-1">Dokończ</a>
+                        <a routerLink="delete/{{child.id}}" class="btn-ed-del btn btn-sm btn-danger btn-delete-user"
+                            [disabled]="child.isDeleting">
+                            <span *ngIf="child.isDeleting" class="spinner-border spinner-border-sm"></span>
+                            <span *ngIf="!child.isDeleting">Usuń</span>
+                        </a>
+                    </td>
+                </tr>
+                <tr *ngIf="loading">
+                    <td colspan="6" class="text-center">
+                        <span class="spinner-border spinner-border-lg align-center"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

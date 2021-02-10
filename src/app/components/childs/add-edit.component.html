@@ -1,5 +1,5 @@
 ﻿<div *ngIf="isAddMode">
-    <h1>Dodaj rekord dziecka</h1>
+    <h1 class="adding-child">Dodaj rekord dziecka</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmitAdd()" class="adding-child">
         <div class="form-row">
             <div class="form-group col">
@@ -14,7 +14,7 @@
         <div class="form-row">
             <div class="form-group col">
                 <label for="education">Stopień edukacji</label>
-                <select formControlName="education" class="form-control" 
+                <select formControlName="education" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
                     <option *ngFor="let education of educations" [value]="education.educationDegree">
                         {{education.educationDegree}}
@@ -25,7 +25,7 @@
         <div class="form-row">
             <div class="form-group col">
                 <label for="education">Region</label>
-                <select formControlName="region" class="form-control" 
+                <select formControlName="region" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.region.errors }">
                     <optgroup label="Miasta">
                         <option *ngFor="let city of cities" [value]="city.regionName">
@@ -39,16 +39,16 @@
                     </optgroup>
 
                 </select>
-                <div>{{selectedEducation}} {{selectedRegion}}</div>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col">
-                <label for="plannedAmount">Planned amount</label>
-                <input type="number" formControlName="plannedAmount" class="form-control" min="0" step="1" oninput="validity.valid||(value='');"
+                <label for="plannedAmount">Kwota planowana</label>
+                <input type="number" formControlName="plannedAmount" class="form-control" min="0" step="1"
+                    oninput="validity.valid||(value='');"
                     [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
                 <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
-                    <div *ngIf="f.plannedAmount.errors.required">Planned amount is required</div>
+                    <div *ngIf="f.plannedAmount.errors.required">Kwota planowana jest wymagana!</div>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
 </div>
 
 <div *ngIf="!isAddMode">
-    <h1>Edycja rekordu dziecka</h1>
+    <h1 class="adding-child">Edycja rekordu dziecka</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmitEdit()" class="adding-child">
         <div class="form-row">
             <div class="form-group col">
@@ -78,7 +78,7 @@
         <div class="form-row">
             <div class="form-group col">
                 <label for="education">Stopień edukacji</label>
-                <select formControlName="education" class="form-control" 
+                <select formControlName="education" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
                     <option *ngFor="let education of educations" [value]="education.educationDegree">
                         {{education.educationDegree}}
@@ -89,7 +89,7 @@
         <div class="form-row">
             <div class="form-group col">
                 <label for="education">Region</label>
-                <select formControlName="region" class="form-control" 
+                <select formControlName="region" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.region.errors }">
                     <optgroup label="Miasta">
                         <option *ngFor="let city of cities" [value]="city.regionName">
@@ -103,13 +103,13 @@
                     </optgroup>
 
                 </select>
-                <div>{{selectedEducation}} {{selectedRegion}}</div>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col">
                 <label for="plannedAmount">Kwota planowana</label>
-                <input type="number" formControlName="plannedAmount" class="form-control"
+                <input type="number" formControlName="plannedAmount" class="form-control" min="0" step="1"
+                    oninput="validity.valid||(value='');"
                     [ngClass]="{ 'is-invalid': submitted && f.plannedAmount.errors }" />
                 <div *ngIf="submitted && f.plannedAmount.errors" class="invalid-feedback">
                     <div *ngIf="f.plannedAmount.errors.required">Kwota planowana jest wymagana</div>

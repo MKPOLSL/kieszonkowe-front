@@ -40,7 +40,7 @@ export class PanelComponent implements OnInit {
   isAddMode = true;
 
   formChild = this.formBuilder.group({
-    parentID: [''],
+    parentID: ['', Validators.required],
     name: ['', Validators.required],
     education: ['', Validators.required],
     region: ['', Validators.required],
@@ -251,6 +251,7 @@ export class PanelComponent implements OnInit {
             var child = Object.assign(new Child(), data);
             this.children.push(child);
             this.loading = false;
+            this.submittedChild = false;
           },
           error => {
             this.loading = false;
@@ -267,6 +268,7 @@ export class PanelComponent implements OnInit {
             this.children.sort();
             this.changeModeChildren();
             this.loading = false;
+            this.submittedChild = false;
           },
           error => {
             this.loading = false;
@@ -291,6 +293,7 @@ export class PanelComponent implements OnInit {
             var parent = Object.assign(new User(), data);
             this.users.push(parent);
             this.loading = false;
+            this.submittedParent = false;
           },
           error => {
             this.loading = false;
@@ -307,6 +310,7 @@ export class PanelComponent implements OnInit {
             this.users.sort();
             this.changeModeParents();
             this.loading = false;
+            this.submittedParent = false;
           },
           error => {
             this.loading = false;
@@ -331,6 +335,7 @@ export class PanelComponent implements OnInit {
             var region = Object.assign(new Region(), data);
             this.regions.push(region);
             this.loading = false;
+            this.submittedRegion = false;
           },
           error => {
             this.loading = false;
@@ -347,6 +352,7 @@ export class PanelComponent implements OnInit {
             this.regions.sort();
             this.changeModeRegions();
             this.loading = false;
+            this.submittedRegion = false;
           },
           error => {
             this.loading = false;
@@ -371,6 +377,7 @@ export class PanelComponent implements OnInit {
             var education = Object.assign(new Education(), data);
             this.educations.push(education);
             this.loading = false;
+            this.submittedEducation = false;
           },
           error => {
             this.loading = false;
@@ -387,6 +394,7 @@ export class PanelComponent implements OnInit {
             this.educations.sort();
             this.changeModeEducations();
             this.loading = false;
+            this.submittedEducation = false;
           },
           error => {
             this.loading = false;
@@ -411,13 +419,14 @@ export class PanelComponent implements OnInit {
             var admin = Object.assign(new Admin(), data);
             this.admins.push(admin);
             this.loading = false;
+            this.submittedAdmin = false;
           },
           error => {
             this.loading = false;
           });
     }
     else {
-      this.adminService.updateAdmin(this.formEducation.value, this.admin.id)
+      this.adminService.updateAdmin(this.formAdmin.value, this.admin.id)
         .pipe(first())
         .subscribe( 
           data => {
@@ -427,6 +436,7 @@ export class PanelComponent implements OnInit {
             this.admins.sort();
             this.changeModeAdmins();
             this.loading = false;
+            this.submittedAdmin = false;
           },
           error => {
             this.loading = false;
