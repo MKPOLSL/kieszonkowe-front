@@ -108,6 +108,8 @@ export class ProfileComponent implements OnInit {
           this.updateDataFormFields();
           this.snackBarService.openSnackBar("Pomyślnie zmodyfikowano dane użytkownika", "OK");
           this.loadingDataForm = false;
+          this.dataF.actual.setValue('');
+          this.dataSubmitted = false;
         },
           error => {
             this.alertService.error(error);
@@ -139,6 +141,10 @@ export class ProfileComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(this.user));
           this.snackBarService.openSnackBar("Pomyślnie zmodyfikowano dane użytkownika", "OK");
           this.loadingPasswordForm = false;
+          this.passwordF.actual.setValue('');
+          this.passwordF.password.setValue('');
+          this.passwordF.confirmation.setValue('');
+          this.passwordSubmitted = false;
         },
           error => {
             this.alertService.error(error);
